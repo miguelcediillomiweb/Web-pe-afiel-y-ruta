@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#081321">
+<meta name="description" content="Catálogo digital de bebidas Peñafiel y Ruta.">
+<title>Peñafiel y Ruta | Tienda de bebidas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tienda.css">
+<link rel="stylesheet" href="css/catalogo.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/carrito.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./"><span class="brand__symbol">P</span><span>PEÑAFIEL <small>& RUTA</small></span></a>
+  <nav><a href="#marcas">Marcas</a><a href="#promociones">Promociones</a></nav>
+  <div class="topbar__actions"><button class="btn-quiet" id="search-open" aria-label="Buscar">⌕</button><button class="bag-button" id="cart-open">Mi pedido <b id="cart-count">0</b></button></div>
+</header>
+<main>
+<section class="hero">
+  <div class="hero__copy"><p class="eyebrow">CATÁLOGO DIGITAL · PEÑAFIEL Y RUTA</p><h1>Encuentra tu<br><em>sabor favorito.</em></h1><p class="hero__lead">Explora nuestras marcas, descubre sus sabores y elige la presentación ideal.</p><a class="gold-button" href="#marcas">Explorar bebidas <span>↗</span></a></div>
+  <div class="hero__visual" aria-hidden="true"><div class="hero__halo"></div><div class="hero__glass">✦</div><span class="hero__caption">FRESCURA<br>EN CADA MOMENTO</span></div>
+  <div class="hero__foot">UNA SELECCIÓN PARA CADA MOMENTO</div>
+</section>
+<section class="intro section-wrap" id="marcas">
+  <div><p class="eyebrow">NUESTRA SELECCIÓN</p><h2>Explora por <em>marca</em></h2></div>
+  <p class="muted">Selecciona una marca para descubrir los sabores y tamaños disponibles en una sola ventana.</p>
+</section>
+<section class="catalog-tools section-wrap">
+  <label class="search-box"><span>⌕</span><input id="brand-search" type="search" placeholder="Buscar una marca..."></label>
+  <span id="brand-total" class="muted small">Cargando catálogo…</span>
+</section>
+<section class="brand-grid section-wrap" id="brand-grid" aria-live="polite">
+  <div class="loading-state">Preparando catálogo…</div>
+</section>
+<section class="promo section-wrap" id="promociones"><div><p class="eyebrow">PEÑAFIEL Y RUTA</p><h2>Tu próxima bebida<br><em>está por aquí.</em></h2><p>Consulta presentaciones y disponibilidad directamente.</p></div><span class="promo__ornament">✧</span></section>
+</main>
+<footer class="footer"><a class="brand" href="./"><span class="brand__symbol">P</span><span>PEÑAFIEL <small>& RUTA</small></span></a><span>Catálogo digital · © <span id="year"></span></span></footer>
+
+<div class="modal-backdrop" id="brand-modal-backdrop" hidden></div>
+<section class="brand-modal" id="brand-modal" role="dialog" aria-modal="true" aria-labelledby="modal-brand-title" hidden>
+  <header class="modal-header"><div><p class="eyebrow">CATÁLOGO DE MARCA</p><h2 id="modal-brand-title">Marca</h2></div><button class="modal-close" id="brand-modal-close" aria-label="Cerrar ventana">×</button></header>
+  <div id="brand-loading" class="brand-loading" hidden><div class="loader-ring"></div><p class="eyebrow">PREPARANDO TU SELECCIÓN</p><p id="loading-phrase">Un momento, estamos preparando algo especial…</p><span>4 segundos</span></div>
+  <div id="brand-products" class="brand-products" hidden></div>
+  <footer class="modal-footer"><button class="outline-button" id="brand-modal-exit">Cerrar ventana</button></footer>
+</section>
+
+<div class="detail-backdrop" id="detail-backdrop" hidden></div>
+<section class="detail-modal" id="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title" hidden>
+  <button class="modal-close detail-close" id="detail-close" aria-label="Cerrar detalle">×</button>
+  <div id="detail-content"></div>
+</section>
+
+<div class="cart-backdrop" id="cart-backdrop" hidden></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Mi pedido" aria-hidden="true">
+  <header class="cart-head"><div><p class="eyebrow">TU SELECCIÓN</p><h2>Mi pedido</h2></div><button class="modal-close" id="cart-close" aria-label="Cerrar carrito">×</button></header>
+  <div class="cart-lines" id="cart-lines"><p class="empty-cart">Todavía no agregas productos.</p></div>
+  <footer class="cart-foot"><div class="cart-total"><span>Total estimado</span><strong id="cart-total">$0.00</strong></div><p class="muted tiny">Confirma disponibilidad y precio final al enviar tu consulta.</p><button class="gold-button full" id="send-whatsapp">Consultar por WhatsApp ↗</button></footer>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="js/config.js"></script>
+<script src="js/productos.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/tienda.js"></script>
+</body>
+</html>
