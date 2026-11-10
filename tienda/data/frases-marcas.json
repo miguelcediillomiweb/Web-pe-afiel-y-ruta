@@ -1,0 +1,9 @@
+{
+  "_comentario": "Añade frases por marca cuando estén listas. Ejemplo: { \"Doctor Pepe\": [\"Frase 1\", \"Frase 2\"] }",
+  "default": [
+    "Estamos preparando tu selección.",
+    "Un buen momento merece un gran sabor.",
+    "Descubre las presentaciones disponibles.",
+    "Ya casi está lista tu experiencia."
+  ]
+}
