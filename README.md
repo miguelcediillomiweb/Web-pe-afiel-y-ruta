@@ -1,28 +1,62 @@
-# Web Peñafiel y Ruta — tienda de bebidas
+# Peñafiel & Ruta · Tienda digital
 
-La tienda vive dentro de `/tienda/` y mantiene su código aislado del resto del sitio.
+Catálogo premium de bebidas, adaptable a móvil y escritorio. La web funciona como catálogo y carrito de interés: **no muestra precios, no calcula totales y no procesa pagos**. El cliente envía su selección por WhatsApp para recibir información y disponibilidad.
 
 ## Estructura
-- `index.html`: entrada que dirige a la tienda.
-- `tienda/index.html`: página de la tienda.
-- `tienda/css/`: estilos separados por responsabilidad.
-- `tienda/js/`: lógica separada por responsabilidad.
-- `tienda/data/productos.json`: catálogo editable, una fila por presentación.
-- `tienda/data/frases-marcas.json`: frases de carga por marca.
 
-## Agrupación del catálogo
-Los productos se agrupan automáticamente por marca y sabor. Cada combinación marca+sabor se muestra en una sola tarjeta; sus tamaños aparecen como opciones dentro de esa tarjeta. Por ejemplo, una naranjada con cinco tamaños ocupa una sola tarjeta.
+```
+/
+├── index.html
+├── tienda/
+│   ├── index.html
+│   ├── data/
+│   │   ├── productos.json
+│   │   └── frases-marcas.json
+│   ├── css/
+│   │   ├── tienda.css
+│   │   ├── catalogo.css
+│   │   ├── modal.css
+│   │   └── carrito.css
+│   └── js/
+│       ├── config.js
+│       ├── productos.js
+│       ├── carrito.js
+│       ├── modal.js
+│       └── tienda.js
+└── integracion/
+    └── Code.gs
+```
 
-## Ventana emergente
-Al elegir una marca, se abre un modal con una pantalla de carga de 4 segundos. Después muestra los productos de esa marca. Las frases son editables en `data/frases-marcas.json`. La X y el botón Cerrar permiten salir sin abandonar la página.
+## Experiencia
 
-## Actualizar productos
-Editar `data/productos.json`. Cada presentación debe tener:
-`id, marca, sabor, tamano, precio, imagen, descripcion`.
-No dupliques tarjetas manualmente: el sistema agrupa por `marca+sabor`.
+- Portada premium azul noche y dorado.
+- Catálogo organizado por marca.
+- Modal de marca con pantalla de preparación de 4 segundos.
+- Sabores agrupados con sus presentaciones en una misma tarjeta.
+- Ficha de detalle y selección de producto.
+- Carrito de interés con cantidades y opción de eliminar.
+- Envío de la selección a WhatsApp.
+- Sin precios, subtotales, totales ni cobro en línea.
+
+## Conectar Google Sheets
+
+1. Abre el Google Sheets original.
+2. En **Extensiones → Apps Script**, sustituye el código por `integracion/Code.gs`.
+3. Guarda y publica como **Aplicación web**, ejecutando como propietario y con acceso para cualquier persona.
+4. Actualiza la implementación existente o crea una nueva versión.
+5. Copia la URL terminada en `/exec` y colócala en `tienda/js/config.js`, propiedad `catalogApi`.
+6. El servicio recorre todas las pestañas y publica solamente los campos de catálogo reconocidos: marca, sabor/producto, presentación, imagen, descripción e identificador. No publica columnas de precios, costos, clientes o ventas.
+
+El lector reconoce encabezados como Marca, Sabor, Producto, Presentación, Tamaño, Formato, Imagen y Descripción. Para que un registro aparezca debe tener marca, sabor/producto y presentación. Si tu hoja utiliza otros encabezados, se ajusta el mapeo en `Code.gs`.
+
+## Configurar WhatsApp
+
+En `tienda/js/config.js`, sustituye `whatsapp` por el número de WhatsApp Business con código de país y lada, solo números. Ejemplo de formato: `5215512345678`.
 
 ## Publicación
-GitHub Pages debe configurarse desde Settings → Pages → Deploy from a branch → main → /(root).
 
-## Pendiente de completar
-El enlace de Google Sheets facilitado no se pudo leer desde esta conexión. El archivo `productos.json` queda preparado, pero vacío para no inventar productos, precios ni marcas. Cuando se facilite el XLSX/CSV o un enlace publicado accesible, se importará el catálogo real.
+La página principal está en `tienda/index.html`; el `index.html` raíz redirige a esa carpeta. Para GitHub Pages, configura la fuente de publicación en la rama `main` y carpeta raíz `/ (root)`.
+
+## Estado de conexión
+
+La URL de Apps Script configurada en el proyecto es la última que compartiste. La publicación del código nuevo de `integracion/Code.gs` requiere actualizar la implementación de Apps Script; subir el archivo a GitHub no cambia por sí solo el código publicado en Google.
