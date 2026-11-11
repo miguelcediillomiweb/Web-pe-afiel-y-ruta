@@ -1,7 +1,8 @@
-// Configuración exclusiva de la tienda. No afecta al resto del sitio.
+// Configuración centralizada de la tienda.
 window.TIENDA_CONFIG = {
-  whatsapp: "5210000000000", // Sustituir por el número real, con código de país y sin signos.
+  // Implementación de Apps Script compartida por el propietario.
+  catalogApi: "https://script.google.com/macros/s/AKfycbzqHluV1BLWTOcNJ7bRcxblozA3rcGSJ1juI1IGpDPpJUekASeCnvaOtZ2biSUHb8FUxg/exec",
+  whatsapp: "5210000000000", // Sustituir por el número de WhatsApp Business, con país y lada.
   loadingMilliseconds: 4000,
-  currency: "MXN",
-  locale: "es-MX"
+  requestTimeout: 12000
 };
