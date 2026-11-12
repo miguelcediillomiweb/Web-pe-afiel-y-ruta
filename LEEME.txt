@@ -1,0 +1,22 @@
+CARPETA DE LOGOS
+================
+Sube aquí los logos en PNG (de preferencia con fondo transparente).
+El nombre de cada archivo debe ser IGUAL al de la columna "Logo" de la
+pestaña Marcas de tu Sheet:
+
+  aguafiel.png
+  snapple.png
+  clamato.png
+  dr-pepper.png
+  orange-crush.png
+  energetizante.png
+  rc-cola.png
+  schweppes.png
+  agua-mineral.png
+  penafiel-twist.png
+  penafiel-sabores.png
+  penafiel-adas.png
+
+Mientras un logo no esté subido, la web muestra el nombre de la marca en
+letras. Si agregas una marca nueva, escribe en el Sheet el nombre del
+archivo y sube el PNG con ese mismo nombre.
