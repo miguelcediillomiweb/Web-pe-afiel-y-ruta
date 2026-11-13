@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grupo Peñafiel · Bebidas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+  <header class="cabecera">
+    <a class="cabecera__marca" href="#">Grupo Peñafiel</a>
+  </header>
+
+  <main>
+    <!-- Sección 1: logos de las marcas (se llena en el siguiente paso) -->
+    <section id="vista-logos" aria-label="Marcas">
+      <div id="rejilla-logos"></div>
+    </section>
+
+    <!-- Sección 2: productos de la marca elegida (se llena en el siguiente paso) -->
+    <section id="vista-marca" aria-label="Productos" hidden>
+      <div id="rejilla-productos"></div>
+    </section>
+
+    <!-- Aviso temporal: confirma que la hoja se lee bien. Se quita después. -->
+    <p id="estado-datos" class="estado" role="status">Leyendo la hoja…</p>
+  </main>
+
+  <!-- Pantalla de carga al abrir una marca (siguiente pasos) -->
+  <div id="pantalla-carga" hidden></div>
+
+  <!-- Barra con los productos elegidos para WhatsApp (siguientes pasos) -->
+  <div id="barra-pedido" hidden></div>
+
+  <script src="js/config.js"></script>
+  <script src="js/agrupar.js"></script>
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Diagnóstico temporal: dice qué archivo no cargó. Se quita después. -->
+  <script>
+    window.addEventListener("load", function () {
+      var falta = [];
+      if (!window.CONFIG) falta.push("js/config.js");
+      if (!window.Agrupar) falta.push("js/agrupar.js");
+      if (!window.Datos) falta.push("js/datos.js");
+      if (!window.__appListo) falta.push("js/app.js");
+      if (falta.length) {
+        var a = document.getElementById("estado-datos");
+        a.className = "estado estado--error";
+        a.textContent = "No cargaron estos archivos: " + falta.join(", ") +
+          ". Revisa que estén en esas carpetas del repositorio.";
+      }
+    });
+  </script>
+</body>
+</html>
