@@ -1,0 +1,73 @@
+/* ============================================================
+   BASE — colores, tipografía y reglas generales.
+   Los colores se cambian aquí, en :root, y afectan toda la web.
+   ============================================================ */
+:root {
+  --fondo: #f4f9fa;
+  --superficie: #ffffff;
+  --tinta: #14262b;
+  --tinta-suave: #4d6368;
+  --mineral: #0b4f5c;
+  --tapa: #e4432d;
+  --limon: #f2c230;
+  --linea: #d6e3e6;
+
+  --fuente-titulo: "Bricolage Grotesque", system-ui, sans-serif;
+  --fuente-texto: "Figtree", system-ui, sans-serif;
+
+  --ancho: 72rem;
+  --espacio: clamp(1rem, 4vw, 2rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+img { max-width: 100%; display: block; }
+
+button { font: inherit; cursor: pointer; }
+
+:focus-visible { outline: 3px solid var(--tapa); outline-offset: 2px; }
+
+[hidden] { display: none !important; }
+
+.cabecera {
+  display: flex;
+  align-items: center;
+  padding: 0.9rem var(--espacio);
+  background: var(--mineral);
+}
+
+.cabecera__marca {
+  color: #fff;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+main {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: var(--espacio);
+}
+
+.estado {
+  color: var(--tinta-suave);
+  font-size: 0.9rem;
+}
+
+.estado--error { color: var(--tapa); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
