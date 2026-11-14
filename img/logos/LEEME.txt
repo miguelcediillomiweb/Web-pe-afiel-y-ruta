@@ -1,0 +1,16 @@
+AQUÍ VAN LOS LOGOS DE LAS 12 MARCAS (PNG transparente, ~400 px de ancho).
+
+aguafiel.png
+snapple.png
+clamato.png
+dr-pepper.png
+orange-crush.png
+energetizante.png
+rc-cola.png
+schweppes.png
+agua-mineral.png
+penafiel-twist.png
+penafiel-sabores.png
+penafiel-adas.png
+
+Los nombres deben coincidir exactamente con la columna Logo de la hoja. Si falta uno, la web muestra el nombre de la marca en texto.
