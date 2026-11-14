@@ -12,7 +12,6 @@ sea exactamente igual** (minúsculas, sin espacios, con guion).
 | Logos de las 12 marcas | `img/logos/` | PNG con fondo transparente, unos 400 px de ancho (nombres abajo) |
 | Pósters de la pantalla de carga | `img/carga/` | JPG vertical (1080×1920), menos de 300 KB. El nombre se escribe en la columna **Cartel** de la hoja |
 | 5 imágenes del anuncio "Tendencia" | `img/tendencia/` | JPG, unos 800 px de ancho: `tendencia-1.jpg` … `tendencia-5.jpg` |
-| Camión del reloj | `img/camion.png` | Ya está puesto |
 
 ### Nombres de los 12 logos (carpeta `img/logos/`)
 `aguafiel.png` · `snapple.png` · `clamato.png` · `dr-pepper.png` · `orange-crush.png` ·
@@ -34,7 +33,7 @@ sea exactamente igual** (minúsculas, sin espacios, con guion).
 | Segundos del carrusel y de la pantalla de carga | `js/config.js` |
 | Nombres de las imágenes del anuncio, texto y cada cuánto sale (120 s = 2 min) | `js/config.js` |
 | Colores y tipografías de toda la web | `css/base.css` |
-| Banner principal, reloj, camión | `css/hero.css`, `css/reloj.css`, `css/escena.css` |
+| Banner principal, reloj, camión (el camión está dibujado en `index.html`, no es imagen) | `css/hero.css`, `css/reloj.css`, `css/escena.css` |
 | Carrusel, marcas, pie | `css/carrusel.css`, `css/marcas.css`, `css/pie.css` |
 | Tarjetas de productos | `css/productos.css` |
 | Pantalla de carga, anuncio, lista | `css/carga.css`, `css/anuncio.css`, `css/lista.css` |
@@ -46,6 +45,6 @@ LEEME.md
 css/    base · hero · reloj · escena · carrusel · marcas · pie · carga · productos · pedido · anuncio · lista
 js/     config · agrupar · datos · reloj · escena · marcas · carrusel · pedido · carga · productos
         · whatsapp · lista · barra · anuncio · app
-img/    camion.png · placa-productos.png · logos/ · carga/ · tendencia/
+img/    placa-productos.png · logos/ · carga/ · tendencia/
 video/  banner.mp4
 ```
