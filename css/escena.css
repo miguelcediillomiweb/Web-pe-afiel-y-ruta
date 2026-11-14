@@ -1,0 +1,124 @@
+/* ============================================================
+   ESCENA — camión que avanza por el día, con cielo, sol y luna
+   Las variables (--avance, --elev, --noche, colores) las pone escena.js
+   ============================================================ */
+.escena {
+  --camion-ancho: clamp(5.2rem, 24vw, 8.4rem);
+  --avance: 0; --elev: 0; --noche: 1;
+  --cielo-arriba: #070b1f; --cielo-abajo: #14234a;
+  --loma-atras: #16294a; --loma-frente: #0b1830;
+  --cuerpo-nucleo: #ffe066; --cuerpo-brillo: #ffd24a;
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+.escena__cielo {
+  position: relative;
+  height: clamp(8.8rem, 34vw, 11.5rem);
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: linear-gradient(to bottom, var(--cielo-arriba), var(--cielo-abajo));
+}
+
+/* ---------- Estrellas y nubes ---------- */
+.escena__estrellas { position: absolute; inset: 0; opacity: var(--noche); }
+.estrella {
+  position: absolute;
+  width: var(--tam); height: var(--tam);
+  border-radius: 50%;
+  background: #fff;
+  animation: titilar var(--ciclo) ease-in-out var(--retraso) infinite;
+}
+
+.escena__nubes { position: absolute; inset: 0; opacity: calc(1 - var(--noche) * 0.88); }
+.nube {
+  position: absolute; left: -6rem;
+  width: 3.6rem; height: 0.95rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.92);
+  animation: nube 60s linear infinite;
+}
+.nube::before, .nube::after { content: ""; position: absolute; background: inherit; border-radius: 50%; }
+.nube::before { width: 1.5rem; height: 1.5rem; left: 0.5rem; bottom: 0.3rem; }
+.nube::after  { width: 1.1rem; height: 1.1rem; left: 1.7rem; bottom: 0.3rem; }
+.nube--1 { top: 18%; animation-duration: 70s; animation-delay: -10s; }
+.nube--2 { top: 36%; transform: scale(0.75); animation-duration: 95s; animation-delay: -48s; }
+.nube--3 { top: 10%; transform: scale(1.2); animation-duration: 120s; animation-delay: -80s; }
+
+/* ---------- Sol y luna (siguen al camión) ---------- */
+.escena__cuerpo {
+  position: absolute;
+  width: 2.8rem; height: 2.8rem;
+  border-radius: 50%;
+  right: calc(var(--avance) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2 - 1.4rem);
+  bottom: calc(1.3rem + var(--elev) * (100% - 4.4rem));
+  background: radial-gradient(circle, #fff6c8 0, var(--cuerpo-nucleo) 55%, var(--cuerpo-brillo) 100%);
+  box-shadow: 0 0 1.1rem 0.5rem var(--cuerpo-brillo), 0 0 2.6rem 1.2rem rgba(255, 190, 90, 0.35);
+}
+.escena[data-cuerpo="luna"] .escena__cuerpo {
+  background:
+    radial-gradient(circle at 62% 62%, rgba(90, 90, 110, 0.28) 0 9%, transparent 10%),
+    radial-gradient(circle at 36% 40%, rgba(90, 90, 110, 0.22) 0 12%, transparent 13%),
+    radial-gradient(circle at 66% 28%, rgba(90, 90, 110, 0.18) 0 6%, transparent 7%),
+    radial-gradient(circle at 35% 35%, #fffef2, #e9e6d2 62%, #bfbba4);
+  box-shadow: 0 0 1rem 0.3rem rgba(200, 215, 255, 0.45), 0 0 2.4rem 1rem rgba(160, 185, 255, 0.22);
+}
+
+/* ---------- Lomas y camino ---------- */
+.escena__lomas {
+  position: absolute; left: 0; bottom: 1rem;
+  width: 100%; height: 40%;
+}
+.loma--atras  { fill: var(--loma-atras); }
+.loma--frente { fill: var(--loma-frente); }
+
+.escena__camino {
+  position: absolute; left: 0; bottom: 0;
+  width: 100%; height: 1.15rem;
+  background: #1d1511;
+  border-top: 2px solid #3a2a20;
+}
+.escena__rayas {
+  position: absolute; left: 0; right: 0; top: 50%;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #f2c230 0 0.9rem, transparent 0.9rem 1.8rem);
+  animation: rayas 0.9s linear infinite;
+}
+
+/* ---------- Camión ---------- */
+.escena__camion {
+  position: absolute;
+  bottom: 0.45rem;
+  right: calc(var(--avance) * (100% - var(--camion-ancho)));
+  width: var(--camion-ancho);
+  height: auto;
+  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.45));
+  animation: baches 0.42s ease-in-out infinite alternate;
+}
+
+/* Movimiento suave solo cuando la escena ya está lista (no al cargar) */
+.escena--lista .escena__camion { transition: right 1s linear; }
+.escena--lista .escena__cuerpo { transition: right 1s linear, bottom 1s linear; }
+.escena--lista .escena__cielo  { transition: background 1s linear; }
+.escena--salto .escena__camion, .escena--salto .escena__cuerpo { transition: none !important; }
+
+/* ---------- Etiquetas Mañana · Tarde · Noche ---------- */
+.escena__etiquetas { position: relative; height: 1.5rem; margin-top: 0.35rem; }
+.etiqueta {
+  position: absolute; top: 0;
+  right: calc(var(--p) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2);
+  transform: translateX(50%);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  transition: opacity 0.4s, color 0.4s;
+}
+.etiqueta--activa { opacity: 1; color: var(--ambar); }
+
+@keyframes rayas   { to { background-position-x: 1.8rem; } }
+@keyframes baches  { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
+@keyframes nube    { to { transform: translateX(110vw); } }
+@keyframes titilar { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }

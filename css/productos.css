@@ -1,0 +1,134 @@
+/* ============================================================
+   PRODUCTOS — vista de una marca
+   ============================================================ */
+body.en-marca .hero,
+body.en-marca .carrusel,
+body.en-marca .marcas { display: none; }
+
+.vista {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: var(--espacio) var(--espacio) 4.5rem;
+  animation: aparecer 0.5s ease both;
+}
+
+.vista__volver {
+  padding: 0.55rem 1.1rem;
+  border: 2px solid var(--tinta);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tinta);
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+.vista__volver:hover { background: var(--tinta); color: #fff; }
+
+.vista__cabecera {
+  display: flex; align-items: center; gap: 1.1rem;
+  margin: 1.1rem 0 1.5rem;
+  padding: 1rem 1.2rem;
+  border: 2px solid var(--linea);
+  border-radius: 1.3rem;
+  background: var(--superficie);
+}
+.vista__logo { flex: 0 0 auto; width: clamp(5rem, 24vw, 8rem); display: grid; place-items: center; }
+.vista__logo .logo img { max-height: 5rem; width: auto; object-fit: contain; }
+.vista__titulo h2 {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 5.5vw, 2.2rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+.vista__lema {
+  margin: 0.3rem 0 0;
+  font-family: var(--fuente-acento);
+  font-style: italic; font-weight: 600;
+  color: var(--tapa);
+}
+.vista__vacio { color: var(--tinta-suave); }
+
+.sabores { display: grid; gap: 1.1rem; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 880px) { .sabores { grid-template-columns: 1fr 1fr; } }
+
+.sabor {
+  border: 2px solid var(--linea);
+  border-left: 8px solid var(--tapa);
+  border-radius: 1.2rem;
+  background: var(--superficie);
+  overflow: hidden;
+}
+.sabor__nombre {
+  margin: 0;
+  padding: 1rem 1.1rem 0.5rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.45rem;
+  line-height: 1.1;
+}
+
+.presentaciones { list-style: none; margin: 0; padding: 0 1.1rem 0.5rem; }
+
+.pres {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "info boton" "precios boton";
+  gap: 0.45rem 0.8rem;
+  align-items: center;
+  padding: 0.85rem 0;
+  border-top: 2px dashed var(--linea);
+}
+.pres__info { grid-area: info; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; }
+.pres__precios { grid-area: precios; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; }
+.pres__agregar { grid-area: boton; }
+
+.pres__tamano { font-family: var(--fuente-titulo); font-weight: 800; font-size: 1.2rem; }
+.pres__chip {
+  padding: 0.1rem 0.55rem;
+  border-radius: 999px;
+  background: #efe3c4;
+  color: var(--tinta-suave);
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.pres__piezas { width: 100%; font-size: 0.82rem; color: var(--tinta-suave); }
+
+.precio { display: inline-flex; flex-direction: column; line-height: 1.15; }
+.precio__etq { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-suave); }
+.precio__valor { font-weight: 600; font-variant-numeric: tabular-nums; font-size: 1.05rem; }
+.precio--publico .precio__valor {
+  align-self: flex-start;
+  padding: 0 0.5rem;
+  border-radius: 0.35rem;
+  background: var(--ambar);
+  color: var(--tinta);
+  font-weight: 800;
+}
+.precio__consulta { font-size: 0.9rem; font-style: italic; color: var(--tinta-suave); }
+
+/* Botón Agregar con tapa corona */
+.pres__agregar {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.3rem 1rem 0.3rem 0.3rem;
+  border: 2px solid var(--tapa);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--tapa);
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+}
+.pres__agregar:active { transform: scale(0.94); }
+.pres__tapa {
+  display: grid; place-items: center;
+  width: 2rem; height: 2rem;
+  background: var(--tapa); color: #fff;
+  font-weight: 800; font-size: 1.1rem; line-height: 1;
+  clip-path: polygon(50.0% 0.0%, 59.6% 8.1%, 71.7% 5.0%, 76.8% 16.4%, 89.1% 18.8%, 88.7% 31.3%, 98.7% 38.9%, 93.0% 50.0%, 98.7% 61.1%, 88.7% 68.7%, 89.1% 81.2%, 76.8% 83.6%, 71.7% 95.0%, 59.6% 91.9%, 50.0% 100.0%, 40.4% 91.9%, 28.3% 95.0%, 23.2% 83.6%, 10.9% 81.2%, 11.3% 68.7%, 1.3% 61.1%, 7.0% 50.0%, 1.3% 38.9%, 11.3% 31.3%, 10.9% 18.8%, 23.2% 16.4%, 28.3% 5.0%, 40.4% 8.1%);
+  transition: transform 0.4s, background 0.2s, color 0.2s;
+}
+.pres__agregar:hover .pres__tapa { transform: rotate(60deg); }
+.pres__agregar[aria-pressed="true"] { background: var(--botella); border-color: var(--botella); color: #fff; }
+.pres__agregar[aria-pressed="true"] .pres__tapa { background: #fff; color: var(--botella); }
+
+@keyframes aparecer { from { opacity: 0; transform: translateY(0.8rem); } to { opacity: 1; transform: none; } }

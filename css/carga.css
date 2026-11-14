@@ -1,0 +1,90 @@
+/* ============================================================
+   CARGA — pantalla al elegir una marca
+   ============================================================ */
+body.sin-scroll { overflow: hidden; }
+
+#pantalla-carga {
+  position: fixed; inset: 0; z-index: 100;
+  display: grid; place-items: center;
+  overflow: hidden;
+  background: linear-gradient(160deg, #2b1b14, #5a2416 60%, #8a3a14);
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+#pantalla-carga.carga--visible { opacity: 1; }
+
+/* Póster de fondo con un zoom lento */
+.carga__fondo {
+  position: absolute; inset: -4%;
+  background-size: cover; background-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.carga__fondo--listo { opacity: 0.55; animation: acercar 9s ease-out forwards; }
+.carga__fondo::after {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at center, transparent 20%, rgba(25, 12, 7, 0.75) 100%);
+}
+
+.carga__burbujas { position: absolute; inset: 0; pointer-events: none; }
+.carga__burbuja {
+  position: absolute; bottom: -3rem;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.05) 60%);
+  animation: burbuja linear infinite;
+}
+
+.carga__centro {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; gap: 1.3rem;
+  padding: var(--espacio);
+  width: min(100%, 30rem);
+  text-align: center;
+}
+
+.carga__logo {
+  display: grid; place-items: center;
+  width: min(62vw, 15rem); min-height: 9rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 1.6rem;
+  background: var(--fondo);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45), 0 0 0 6px rgba(255, 255, 255, 0.15);
+  animation: rebote 0.8s cubic-bezier(0.2, 1.4, 0.4, 1) 0.15s both;
+}
+.carga__logo .logo img { max-height: 8rem; width: auto; }
+.carga__logo .logo--texto { font-size: 1.6rem; }
+
+.carga__lema {
+  margin: 0;
+  font-family: var(--fuente-acento);
+  font-style: italic; font-weight: 600;
+  font-size: clamp(1.2rem, 5vw, 1.7rem);
+  color: #fff;
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6);
+  text-wrap: balance;
+  animation: subir 0.8s 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.carga__barra {
+  width: min(70%, 16rem); height: 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  overflow: hidden;
+}
+.carga__barra span {
+  display: block; height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ambar), var(--tapa));
+  transform-origin: left;
+  animation: llenar linear forwards;
+}
+
+@keyframes llenar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes acercar { from { transform: scale(1); } to { transform: scale(1.12); } }
+@keyframes rebote { from { opacity: 0; transform: scale(0.6) translateY(1rem); } to { opacity: 1; transform: none; } }
+@keyframes burbuja {
+  from { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  to   { transform: translateY(-110vh) translateX(1.5rem); opacity: 0.2; }
+}

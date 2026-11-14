@@ -1,0 +1,40 @@
+/* ============================================================
+   RELOJ — números que ruedan (hora y fecha)
+   ============================================================ */
+.reloj {
+  display: flex; justify-content: center; align-items: center;
+  margin: 0.6rem 0 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 600;
+  font-size: clamp(2.3rem, 10vw, 3.5rem);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.reloj--fecha {
+  margin-top: 0.15rem;
+  font-size: clamp(1.35rem, 5.4vw, 1.9rem);
+  opacity: 0.92;
+}
+
+.reloj__grupo { display: inline-flex; }
+
+/* Cada dígito es una ventanita de una sola altura */
+.digito {
+  display: inline-block;
+  width: 0.62em; height: 1.15em;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.digito__cinta { display: flex; flex-direction: column; will-change: transform; }
+.digito__num { display: block; height: 1.15em; line-height: 1.15em; text-align: center; }
+
+.reloj__sep {
+  padding: 0 0.04em;
+  color: var(--ambar);
+  line-height: 1.05;
+}
+.reloj:not(.reloj--fecha) .reloj__sep { animation: parpadeo 1s steps(1) infinite; }
+
+@keyframes parpadeo { 50% { opacity: 0.2; } }

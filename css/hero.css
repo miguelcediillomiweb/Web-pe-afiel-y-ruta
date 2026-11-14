@@ -1,0 +1,124 @@
+/* ============================================================
+   HERO — banner principal: video, placa, bienvenida, saludo, reloj
+   ============================================================ */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  min-height: clamp(36rem, 92svh, 52rem);
+  overflow: hidden;
+  color: #fff;
+  /* Fondo de respaldo mientras no hay video */
+  background:
+    radial-gradient(circle at 20% 15%, rgba(232, 163, 23, 0.35), transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(200, 50, 30, 0.4), transparent 50%),
+    linear-gradient(165deg, #2b1b14, #5a2416 60%, #8a3a14);
+}
+
+.hero__video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* Velo oscuro arriba y degradado largo y suave hacia el crema de abajo */
+.hero__velo {
+  position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to bottom,
+    rgba(25, 12, 7, 0.55) 0%,
+    rgba(25, 12, 7, 0.35) 40%,
+    rgba(25, 12, 7, 0.45) 62%,
+    rgba(250, 243, 227, 0.55) 86%,
+    var(--fondo) 100%);
+}
+
+.hero__contenido {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.9rem;
+  width: 100%; max-width: 42rem;
+  padding: 2.5rem var(--espacio) 6rem;
+  text-align: center;
+}
+
+.hero__placa {
+  width: min(80vw, 27rem);
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.45));
+  animation: subir 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both, flotar 6s ease-in-out 1s infinite;
+}
+
+.hero__titulo {
+  margin: 0.4rem 0 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 7vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.4);
+  animation: subir 0.9s 0.15s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.hero__ruta {
+  display: flex; align-items: center; gap: 0.8rem;
+  margin: 0;
+  font-family: var(--fuente-acento);
+  font-style: italic; font-weight: 600;
+  font-size: clamp(1.2rem, 4vw, 1.7rem);
+  color: var(--ambar);
+  animation: subir 0.9s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.hero__ruta::before, .hero__ruta::after {
+  content: ""; width: 2.2rem; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--ambar));
+}
+.hero__ruta::after { transform: scaleX(-1); }
+
+/* ---------- Saludo, fecha y reloj ---------- */
+.saludo {
+  width: min(100%, 34rem);
+  margin-top: 0.8rem;
+  padding: 1.1rem clamp(0.8rem, 3vw, 1.6rem) 1.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 1.4rem;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  animation: subir 0.9s 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.saludo__gracias {
+  margin: 0;
+  font-family: var(--fuente-acento);
+  font-style: italic; font-weight: 600;
+  font-size: 1.05rem;
+  opacity: 0.9;
+}
+
+.saludo__hora {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  margin: 0.3rem 0 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+}
+
+.saludo__emoji { display: inline-block; font-size: 1.15em; transform-origin: center; }
+.saludo__emoji--sol { animation: girar 14s linear infinite; }
+.saludo__emoji--tarde { animation: flotar 4s ease-in-out infinite; }
+.saludo__emoji--noche { animation: mecer 5s ease-in-out infinite; }
+
+@keyframes subir  { from { opacity: 0; transform: translateY(1.2rem); } to { opacity: 1; transform: none; } }
+@keyframes flotar { 50% { transform: translateY(-0.5rem); } }
+@keyframes girar  { to { transform: rotate(360deg); } }
+@keyframes mecer  { 0%, 100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg) translateY(-2px); } }
+
+.saludo__dia {
+  margin: 0.55rem 0 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ambar);
+}

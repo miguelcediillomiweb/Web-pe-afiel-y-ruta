@@ -1,0 +1,37 @@
+/* ============================================================
+   PIE — créditos y derechos
+   ============================================================ */
+.pie {
+  margin-top: 2rem;
+  padding: 2.4rem var(--espacio) 5rem;   /* espacio para que la franja de la lista no tape el texto */
+  background: var(--tinta);
+  color: #f3e7cc;
+  text-align: center;
+}
+.pie p { margin: 0.3rem 0; }
+
+.pie__titulo {
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #fff;
+}
+.pie__creador { font-family: var(--fuente-acento); font-style: italic; color: var(--ambar); }
+.pie__hecho { font-size: 0.95rem; }
+
+.pie__corazon { display: inline-block; animation: latido 1.3s ease-in-out infinite; }
+
+.pie__derechos {
+  margin-top: 1rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(243, 231, 204, 0.2);
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+@keyframes latido {
+  0%, 100% { transform: scale(1); }
+  15%      { transform: scale(1.3); }
+  30%      { transform: scale(1); }
+  45%      { transform: scale(1.22); }
+}

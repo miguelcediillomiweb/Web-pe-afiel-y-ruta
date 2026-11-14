@@ -1,50 +1,70 @@
 /* ============================================================
-   BASE — estilos generales del catálogo Grupo Peñafiel.
+   BASE — colores, tipografía y reglas generales.
+   Los colores se cambian aquí, en :root, y afectan toda la web.
    ============================================================ */
 :root {
-  --fondo:#f4f9fa; --superficie:#fff; --tinta:#14262b; --tinta-suave:#4d6368;
-  --mineral:#0b4f5c; --tapa:#e4432d; --limon:#f2c230; --linea:#d6e3e6;
-  --fuente-titulo:"Bricolage Grotesque",system-ui,sans-serif;
-  --fuente-texto:"Figtree",system-ui,sans-serif;
-  --ancho:72rem; --espacio:clamp(1rem,4vw,2rem);
+  --fondo: #faf3e3;          /* crema, como papel antiguo */
+  --superficie: #fffdf7;
+  --tinta: #2b1b14;          /* café muy oscuro */
+  --tinta-suave: #6b5546;
+  --tapa: #c8321e;           /* rojo de tapa corona */
+  --ambar: #e8a317;
+  --botella: #2f6b4f;        /* verde botella */
+  --linea: #e6d9bd;
+
+  --fuente-titulo: "Bricolage Grotesque", system-ui, sans-serif;
+  --fuente-texto: "Figtree", system-ui, sans-serif;
+  --fuente-acento: "Fraunces", Georgia, serif;
+
+  --ancho: 72rem;
+  --espacio: clamp(1rem, 4vw, 2rem);
 }
-*,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--fondo);color:var(--tinta);font-family:var(--fuente-texto);font-size:1rem;line-height:1.5}
-img{max-width:100%;display:block}
-button{font:inherit;cursor:pointer}
-:focus-visible{outline:3px solid var(--tapa);outline-offset:3px}
-[hidden]{display:none!important}
-.cabecera{display:flex;align-items:center;padding:1rem var(--espacio);background:var(--mineral);box-shadow:0 3px 14px #102c3320}
-.cabecera__marca{color:#fff;font-family:var(--fuente-titulo);font-weight:800;font-size:1.35rem;text-decoration:none}
-main{max-width:var(--ancho);margin:0 auto;padding:var(--espacio)}
-#vista-logos:before{content:"Nuestras marcas";display:block;font:800 clamp(1.8rem,5vw,2.7rem) var(--fuente-titulo);margin:0 0 1.2rem}
-#rejilla-logos{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:1rem}
-.tarjeta-marca{min-height:160px;border:1px solid var(--linea);border-radius:18px;background:var(--superficie);padding:1.15rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;text-align:center;color:var(--tinta);box-shadow:0 5px 18px #102c330b;transition:transform .2s,box-shadow .2s}
-.tarjeta-marca:hover{transform:translateY(-4px);box-shadow:0 12px 26px #102c3318}
-.tarjeta-marca img{width:100%;height:88px;object-fit:contain}
-.tarjeta-marca--sin-logo:before{content:"🥤";font-size:2.6rem}
-.tarjeta-marca__nombre{font:800 1.05rem var(--fuente-titulo)}
-.tarjeta-marca__cantidad{color:var(--tinta-suave)}
-.marca-cabecera{margin-bottom:1.5rem}
-.marca-cabecera h1{font:800 clamp(2rem,6vw,3rem) var(--fuente-titulo);margin:.65rem 0 .15rem}
-.marca-eslogan{color:var(--tinta-suave);margin:.2rem 0}
-.boton{border:0;border-radius:999px;padding:.7rem 1rem;font-weight:700}
-.boton--volver{background:#e3eff1;color:var(--mineral)}
-.grupo-sabor{margin:1.8rem 0}
-.grupo-sabor__titulo{font:800 1.45rem var(--fuente-titulo);margin:0 0 .8rem}
-.rejilla-presentaciones{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.85rem}
-.producto{background:var(--superficie);border:1px solid var(--linea);border-radius:16px;padding:1rem;box-shadow:0 4px 14px #102c3309}
-.producto__nombre{font:700 1.05rem var(--fuente-titulo);margin:0 0 .3rem}
-.producto__detalle{color:var(--tinta-suave);font-size:.9rem;margin:.2rem 0 .7rem}
-.producto__precios{display:flex;flex-direction:column;gap:.15rem;font-weight:600;font-size:.92rem}
-.producto__seleccion{display:flex;align-items:center;gap:.45rem;margin-top:.9rem;color:var(--mineral);font-weight:700}
-.producto__seleccion input{width:18px;height:18px;accent-color:var(--mineral)}
-.estado{color:var(--tinta-suave);padding:1rem}
-.estado--error{color:#a51e16;background:#fff0ee;border:1px solid #f0b7b1;border-radius:12px}
-#barra-pedido{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:.65rem;flex-wrap:wrap;padding:.8rem var(--espacio);background:#fff;border-top:1px solid var(--linea);box-shadow:0 -5px 20px #102c3312}
-#barra-pedido[hidden]{display:none!important}
-.boton--whatsapp{background:#168b51;color:white}
-.boton--texto{background:transparent;color:var(--tinta-suave)}
-@media(max-width:480px){#rejilla-logos{grid-template-columns:repeat(2,minmax(0,1fr))}.tarjeta-marca{min-height:135px;padding:.8rem}#barra-pedido{justify-content:center}#barra-pedido span{width:100%;text-align:center}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente-texto);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+img { max-width: 100%; display: block; }
+
+button { font: inherit; cursor: pointer; }
+
+:focus-visible { outline: 3px solid var(--tapa); outline-offset: 2px; }
+
+[hidden] { display: none !important; }
+
+main {
+  max-width: var(--ancho);
+  margin: 0 auto;
+  padding: 0 var(--espacio) var(--espacio);
+}
+
+.estado { color: var(--tinta-suave); font-size: 0.9rem; }
+.estado--error { color: var(--tapa); }
+
+/* Aviso corto que aparece abajo */
+.aviso {
+  position: fixed;
+  left: 50%; bottom: 1.25rem;
+  transform: translateX(-50%);
+  max-width: min(92vw, 28rem);
+  padding: 0.75rem 1.1rem;
+  background: var(--tinta);
+  color: #fff;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  z-index: 50;
+  box-shadow: 0 8px 24px rgba(43, 27, 20, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

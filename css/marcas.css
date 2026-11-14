@@ -1,0 +1,83 @@
+/* ============================================================
+   MARCAS — rejilla "Selecciona una marca y conócela"
+   ============================================================ */
+.marcas { padding-top: 2.8rem; }
+
+.marcas__titulo {
+  margin: 0 0 1.6rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.marcas__titulo::after {
+  content: ""; display: block;
+  width: 4rem; height: 5px; margin-top: 0.7rem;
+  border-radius: 3px;
+  background: var(--tapa);
+}
+
+.marcas__rejilla {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+}
+@media (min-width: 640px) { .marcas__rejilla { grid-template-columns: repeat(3, 1fr); gap: 1.1rem; } }
+@media (min-width: 960px) { .marcas__rejilla { grid-template-columns: repeat(4, 1fr); } }
+
+.marca {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  gap: 0.7rem;
+  min-height: 12rem;
+  padding: 1.2rem 0.8rem 1rem;
+  border: 2px solid var(--linea);
+  border-radius: 1.2rem;
+  background: var(--superficie);
+  color: inherit;
+  text-align: center;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s, box-shadow 0.25s;
+}
+.marca:hover, .marca:focus-visible {
+  transform: translateY(-6px) rotate(-0.8deg);
+  border-color: var(--tapa);
+  box-shadow: 0 14px 26px rgba(43, 27, 20, 0.16);
+}
+.marca:active { transform: scale(0.97); }
+
+/* Aparecer al hacer scroll */
+.marca.revelar { opacity: 0; transform: translateY(1.4rem); }
+.marca.revelar.visto {
+  opacity: 1; transform: none;
+  transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.marca__logo { flex: 1; display: grid; place-items: center; width: 100%; min-height: 6rem; }
+.marca__logo .logo img { max-height: 6rem; width: auto; object-fit: contain; }
+
+.marca__nombre {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+/* Chapa tipo tapa corona con el número de sabores */
+.marca__chapa {
+  position: absolute; top: -0.7rem; right: -0.5rem;
+  display: grid; place-items: center;
+  width: 2.7rem; height: 2.7rem;
+  background: var(--tapa);
+  color: #fff;
+  font-family: var(--fuente-titulo);
+  font-weight: 800; font-size: 1rem; line-height: 1;
+  clip-path: polygon(50.0% 0.0%, 59.6% 8.1%, 71.7% 5.0%, 76.8% 16.4%, 89.1% 18.8%, 88.7% 31.3%, 98.7% 38.9%, 93.0% 50.0%, 98.7% 61.1%, 88.7% 68.7%, 89.1% 81.2%, 76.8% 83.6%, 71.7% 95.0%, 59.6% 91.9%, 50.0% 100.0%, 40.4% 91.9%, 28.3% 95.0%, 23.2% 83.6%, 10.9% 81.2%, 11.3% 68.7%, 1.3% 61.1%, 7.0% 50.0%, 1.3% 38.9%, 11.3% 31.3%, 10.9% 18.8%, 23.2% 16.4%, 28.3% 5.0%, 40.4% 8.1%);
+  transition: transform 0.4s;
+}
+.marca:hover .marca__chapa { transform: rotate(60deg); }
+
+.marca__sabores { margin: 0; font-size: 0.82rem; color: var(--tinta-suave); }

@@ -1,0 +1,94 @@
+/* ============================================================
+   LISTA — hoja que sube desde abajo (no ocupa toda la pantalla)
+   ============================================================ */
+.lista {
+  position: fixed; inset: 0; z-index: 95;
+  display: flex; align-items: flex-end; justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.lista.lista--visible { opacity: 1; }
+
+.lista__fondo { position: absolute; inset: 0; background: rgba(25, 12, 7, 0.5); }
+
+.lista__hoja {
+  position: relative;
+  display: flex; flex-direction: column;
+  width: min(100%, 32rem);
+  max-height: 78svh;
+  border-radius: 1.4rem 1.4rem 0 0;
+  background: var(--fondo);
+  box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.35);
+  transform: translateY(100%);
+  transition: transform 0.38s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+.lista--visible .lista__hoja { transform: none; }
+
+.lista__cabecera {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.1rem 0.6rem;
+}
+.lista__cabecera h2 {
+  margin: 0;
+  font-family: var(--fuente-titulo);
+  font-weight: 800; font-size: 1.4rem;
+}
+.lista__cerrar {
+  width: 2.3rem; height: 2.3rem;
+  border: 0; border-radius: 50%;
+  background: var(--tinta); color: #fff;
+  font-size: 1.4rem; line-height: 1;
+}
+
+.lista__cuerpo { padding: 0 1.1rem; overflow-y: auto; overscroll-behavior: contain; }
+.lista__ayuda { margin: 0 0 0.6rem; font-size: 0.88rem; color: var(--tinta-suave); }
+
+.lista__marca {
+  margin: 0.9rem 0 0.2rem;
+  font-family: var(--fuente-titulo);
+  font-weight: 800; font-size: 0.95rem;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  color: var(--tapa);
+}
+.lista__items { list-style: none; margin: 0; padding: 0; }
+.lista__item {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+  padding: 0.6rem 0;
+  border-top: 2px dashed var(--linea);
+}
+.lista__texto { display: flex; flex-direction: column; line-height: 1.2; }
+.lista__texto small { color: var(--tinta-suave); font-size: 0.82rem; }
+
+.lista__quitar {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.8rem;
+  border: 2px solid var(--linea);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tapa);
+  font-size: 0.82rem; font-weight: 600;
+}
+.lista__quitar:hover { border-color: var(--tapa); }
+
+.lista__pie {
+  display: flex; gap: 0.7rem; align-items: center; justify-content: space-between;
+  padding: 0.9rem 1.1rem calc(1rem + env(safe-area-inset-bottom, 0px));
+  border-top: 2px solid var(--linea);
+  background: var(--superficie);
+}
+.lista__vaciar {
+  padding: 0.6rem 0.9rem;
+  border: 2px solid var(--linea);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--tinta);
+  font-weight: 600; font-size: 0.88rem;
+}
+.lista__enviar {
+  flex: 1; text-align: center;
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  background: #25d366; color: #0b2e1a;
+  font-weight: 700; text-decoration: none;
+}
+.lista__enviar:hover { background: #3ee67c; }
