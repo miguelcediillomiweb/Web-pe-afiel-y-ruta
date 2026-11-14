@@ -1,4 +1,4 @@
-AQUÍ VA EL VIDEO DEL BANNER PRINCIPAL.
+AQUÍ VA EL VIDEO DEL BANNER PRINCIPAL
 
 Nombre: banner.mp4
 MP4 (H.264), horizontal 1280x720, 10 a 20 segundos, menos de 8 MB.
