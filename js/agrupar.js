@@ -90,6 +90,7 @@
   function armar(filasMarcas, filasProductos, opc) {
     opc = opc || {};
     var carpetaLogos = opc.carpetaLogos || "";
+    var carpetaCarga = opc.carpetaCarga || "";
     var original = opc.nombreOriginal || "Original";
     var marcas = [], porSlug = {};
 
@@ -109,7 +110,7 @@
       m.logo = f.Logo ? carpetaLogos + limpiar(f.Logo) : "";
       m.video = limpiar(f.Video_URL);
       m.eslogan = limpiar(f.Eslogan);
-      m.cartel = limpiar(f.Cartel);
+      m.cartel = f.Cartel ? carpetaCarga + limpiar(f.Cartel) : "";
     });
 
     filasProductos.forEach(function (f) {
