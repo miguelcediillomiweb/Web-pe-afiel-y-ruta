@@ -3,7 +3,7 @@
    Las variables (--avance, --elev, --noche, colores) las pone escena.js
    ============================================================ */
 .escena {
-  --camion-ancho: clamp(5.2rem, 24vw, 8.4rem);
+  --camion-ancho: clamp(6.4rem, 29vw, 9.8rem);
   --avance: 0; --elev: 0; --noche: 1;
   --cielo-arriba: #070b1f; --cielo-abajo: #14234a;
   --loma-atras: #16294a; --loma-frente: #0b1830;
@@ -51,7 +51,7 @@
   position: absolute;
   width: 2.8rem; height: 2.8rem;
   border-radius: 50%;
-  right: calc(var(--avance) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2 - 1.4rem);
+  left: calc(var(--avance) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2 - 1.4rem);
   bottom: calc(1.3rem + var(--elev) * (100% - 4.4rem));
   background: radial-gradient(circle, #fff6c8 0, var(--cuerpo-nucleo) 55%, var(--cuerpo-brillo) 100%);
   box-shadow: 0 0 1.1rem 0.5rem var(--cuerpo-brillo), 0 0 2.6rem 1.2rem rgba(255, 190, 90, 0.35);
@@ -89,17 +89,20 @@
 /* ---------- Camión ---------- */
 .escena__camion {
   position: absolute;
-  bottom: 0.45rem;
-  right: calc(var(--avance) * (100% - var(--camion-ancho)));
+  bottom: 0.1rem;
+  left: calc(var(--avance) * (100% - var(--camion-ancho)));
   width: var(--camion-ancho);
   height: auto;
-  filter: drop-shadow(0 3px 2px rgba(0, 0, 0, 0.45));
+  overflow: visible;
   animation: baches 0.42s ease-in-out infinite alternate;
 }
 
+/* Las ruedas giran mientras avanza */
+.rueda { transform-box: fill-box; transform-origin: center; animation: rodar 0.5s linear infinite; }
+
 /* Movimiento suave solo cuando la escena ya está lista (no al cargar) */
-.escena--lista .escena__camion { transition: right 1s linear; }
-.escena--lista .escena__cuerpo { transition: right 1s linear, bottom 1s linear; }
+.escena--lista .escena__camion { transition: left 1s linear; }
+.escena--lista .escena__cuerpo { transition: left 1s linear, bottom 1s linear; }
 .escena--lista .escena__cielo  { transition: background 1s linear; }
 .escena--salto .escena__camion, .escena--salto .escena__cuerpo { transition: none !important; }
 
@@ -107,8 +110,8 @@
 .escena__etiquetas { position: relative; height: 1.5rem; margin-top: 0.35rem; }
 .etiqueta {
   position: absolute; top: 0;
-  right: calc(var(--p) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2);
-  transform: translateX(50%);
+  left: calc(var(--p) * (100% - var(--camion-ancho)) + var(--camion-ancho) / 2);
+  transform: translateX(-50%);
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -118,7 +121,8 @@
 }
 .etiqueta--activa { opacity: 1; color: var(--ambar); }
 
-@keyframes rayas   { to { background-position-x: 1.8rem; } }
+@keyframes rayas   { to { background-position-x: -1.8rem; } }
+@keyframes rodar   { to { transform: rotate(360deg); } }
 @keyframes baches  { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
 @keyframes nube    { to { transform: translateX(110vw); } }
 @keyframes titilar { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
