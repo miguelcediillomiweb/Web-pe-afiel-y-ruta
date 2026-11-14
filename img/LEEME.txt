@@ -1,5 +1,6 @@
 Aquí va la placa con todos los productos Peñafiel:
 
-placa-productos.png (PNG con fondo transparente, unos 900 px de ancho).
+placa-productos.png  (PNG con fondo transparente, unos 900 px de ancho)
 
-El camión del reloj (camion.png) viene incluido en el ZIP. Las demás imágenes van en logos, carga y tendencia.
+El camión del reloj (camion.png) ya está puesto.
+Las demás imágenes van en las carpetas logos, carga y tendencia.
