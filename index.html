@@ -4,53 +4,153 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Grupo Peñafiel · Bebidas</title>
+  <meta name="description" content="Catálogo de bebidas de Grupo Peñafiel: marcas, sabores, presentaciones y precios.">
+  <meta name="theme-color" content="#2b1b14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Figtree:wght@400;500;600&family=Fraunces:ital,wght@1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/hero.css">
+  <link rel="stylesheet" href="css/reloj.css">
+  <link rel="stylesheet" href="css/escena.css">
+  <link rel="stylesheet" href="css/carrusel.css">
+  <link rel="stylesheet" href="css/marcas.css">
+  <link rel="stylesheet" href="css/pie.css">
+  <link rel="stylesheet" href="css/carga.css">
+  <link rel="stylesheet" href="css/productos.css">
+  <link rel="stylesheet" href="css/pedido.css">
+  <link rel="stylesheet" href="css/anuncio.css">
+  <link rel="stylesheet" href="css/lista.css">
 </head>
 <body>
 
-  <header class="cabecera">
-    <a class="cabecera__marca" href="#">Grupo Peñafiel</a>
+  <!-- BANNER 1: inicio (video de fondo, placa, bienvenida, saludo y reloj) -->
+  <header class="hero" id="inicio">
+    <video class="hero__video" id="hero-video" autoplay muted loop playsinline preload="auto"></video>
+    <div class="hero__velo"></div>
+
+    <div class="hero__contenido">
+      <img class="hero__placa" id="hero-placa" alt="Productos Peñafiel" hidden>
+      <h1 class="hero__titulo" data-config="tituloBienvenida"></h1>
+      <p class="hero__ruta" data-config="ruta"></p>
+
+      <div class="saludo">
+        <p class="saludo__gracias" data-config="mensajeGracias"></p>
+        <p class="saludo__hora">
+          <span class="saludo__emoji" id="saludo-emoji" aria-hidden="true"></span>
+          <span id="saludo-texto"></span>
+        </p>
+        <!-- Camión que avanza por el día: sol o luna arriba, cielo que cambia -->
+        <div class="escena" id="escena" aria-hidden="true">
+          <div class="escena__cielo">
+            <div class="escena__estrellas" id="escena-estrellas"></div>
+            <div class="escena__nubes"><i class="nube nube--1"></i><i class="nube nube--2"></i><i class="nube nube--3"></i></div>
+            <div class="escena__cuerpo" id="escena-cuerpo"></div>
+            <svg class="escena__lomas" viewBox="0 0 400 100" preserveAspectRatio="none">
+              <path class="loma loma--atras" d="M0 62 C60 22 120 32 190 56 S330 22 400 52 L400 100 L0 100 Z"/>
+              <path class="loma loma--frente" d="M0 82 C80 52 150 88 230 68 S350 48 400 72 L400 100 L0 100 Z"/>
+            </svg>
+            <div class="escena__camino"><span class="escena__rayas"></span></div>
+            <img class="escena__camion" id="escena-camion" alt="">
+          </div>
+          <div class="escena__etiquetas">
+            <span class="etiqueta" data-fase="manana" style="--p:0.125">Mañana</span>
+            <span class="etiqueta" data-fase="tarde"  style="--p:0.40">Tarde</span>
+            <span class="etiqueta" data-fase="noche"  style="--p:0.77">Noche</span>
+          </div>
+        </div>
+
+        <p class="reloj" id="reloj" role="timer" aria-label="Hora actual"></p>
+        <p class="saludo__dia" id="fecha-dia"></p>
+        <p class="reloj reloj--fecha" id="fecha" aria-label="Fecha de hoy"></p>
+      </div>
+    </div>
   </header>
 
   <main>
-    <!-- Sección 1: logos de las marcas (se llena en el siguiente paso) -->
-    <section id="vista-logos" aria-label="Marcas">
-      <div id="rejilla-logos"></div>
+    <!-- BANNER 2: carrusel de logos + aviso de actualización -->
+    <section class="carrusel" id="carrusel" aria-label="Marcas del grupo">
+      <div class="carrusel__ventana">
+        <div class="carrusel__pista" id="carrusel-pista"></div>
+      </div>
+      <p class="actualizacion">
+        <span class="actualizacion__pildora">
+          <span class="actualizacion__punto" aria-hidden="true"></span>
+          <span>Última actualización: <strong data-config="ultimaActualizacion"></strong></span>
+        </span>
+      </p>
     </section>
 
-    <!-- Sección 2: productos de la marca elegida (se llena en el siguiente paso) -->
-    <section id="vista-marca" aria-label="Productos" hidden>
-      <div id="rejilla-productos"></div>
+    <!-- BANNER 3: marcas -->
+    <section class="marcas" id="marcas" aria-label="Marcas">
+      <h2 class="marcas__titulo" data-config="tituloMarcas"></h2>
+      <div class="marcas__rejilla" id="rejilla-marcas"></div>
     </section>
 
-    <!-- Aviso temporal: confirma que la hoja se lee bien. Se quita después. -->
-    <p id="estado-datos" class="estado" role="status">Leyendo la hoja…</p>
+    <p id="estado-datos" class="estado" role="status" hidden></p>
   </main>
 
-  <!-- Pantalla de carga al abrir una marca (siguiente pasos) -->
-  <div id="pantalla-carga" hidden></div>
+  <!-- Vista de productos de la marca elegida -->
+  <section class="vista" id="vista-marca" aria-label="Productos de la marca" hidden></section>
 
-  <!-- Barra con los productos elegidos para WhatsApp (siguientes pasos) -->
-  <div id="barra-pedido" hidden></div>
+  <!-- PIE -->
+  <footer class="pie">
+    <p class="pie__titulo" data-config="pieTitulo"></p>
+    <p class="pie__creador"><span data-config="pieCreador"></span> · <span data-config="ruta"></span></p>
+    <p class="pie__hecho"><span data-config="pieHecho"></span> <span class="pie__corazon" aria-hidden="true">❤️</span></p>
+    <p class="pie__derechos" data-config="pieDerechos"></p>
+  </footer>
+
+  <!-- Lista de productos elegidos (se abre desde la franja de abajo) -->
+  <div class="lista" id="lista" hidden></div>
+
+  <!-- Anuncio emergente -->
+  <div class="anuncio" id="anuncio" hidden></div>
+
+  <!-- Pantalla de carga al abrir una marca -->
+  <div id="pantalla-carga" aria-hidden="true" hidden></div>
+
+  <!-- Franja con los productos elegidos -->
+  <div class="barra-pedido" id="barra-pedido" role="status" aria-live="polite" hidden></div>
 
   <script src="js/config.js"></script>
   <script src="js/agrupar.js"></script>
   <script src="js/datos.js"></script>
+  <script src="js/reloj.js"></script>
+  <script src="js/escena.js"></script>
+  <script src="js/marcas.js"></script>
+  <script src="js/carrusel.js"></script>
+  <script src="js/pedido.js"></script>
+  <script src="js/carga.js"></script>
+  <script src="js/productos.js"></script>
+  <script src="js/whatsapp.js"></script>
+  <script src="js/lista.js"></script>
+  <script src="js/barra.js"></script>
+  <script src="js/anuncio.js"></script>
   <script src="js/app.js"></script>
 
-  <!-- Diagnóstico temporal: dice qué archivo no cargó. Se quita después. -->
+  <!-- Aviso de ayuda: si algún archivo no cargó (mala carpeta o nombre), lo dice en pantalla. -->
   <script>
     window.addEventListener("load", function () {
       var falta = [];
       if (!window.CONFIG) falta.push("js/config.js");
       if (!window.Agrupar) falta.push("js/agrupar.js");
       if (!window.Datos) falta.push("js/datos.js");
+      if (!window.Reloj) falta.push("js/reloj.js");
+      if (!window.Escena) falta.push("js/escena.js");
+      if (!window.Marcas) falta.push("js/marcas.js");
+      if (!window.Carrusel) falta.push("js/carrusel.js");
+      if (!window.Pedido) falta.push("js/pedido.js");
+      if (!window.Carga) falta.push("js/carga.js");
+      if (!window.Productos) falta.push("js/productos.js");
+      if (!window.Whatsapp) falta.push("js/whatsapp.js");
+      if (!window.Lista) falta.push("js/lista.js");
+      if (!window.Barra) falta.push("js/barra.js");
+      if (!window.Anuncio) falta.push("js/anuncio.js");
       if (!window.__appListo) falta.push("js/app.js");
       if (falta.length) {
         var a = document.getElementById("estado-datos");
+        a.hidden = false;
         a.className = "estado estado--error";
         a.textContent = "No cargaron estos archivos: " + falta.join(", ") +
           ". Revisa que estén en esas carpetas del repositorio.";

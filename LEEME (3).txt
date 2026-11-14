@@ -1,0 +1,11 @@
+AQUÍ VAN LAS 5 IMÁGENES DEL ANUNCIO "PRUEBA LOS NUEVOS PRODUCTOS TENDENCIA EN PEÑAFIEL"
+
+tendencia-1.jpg
+tendencia-2.jpg
+tendencia-3.jpg
+tendencia-4.jpg
+tendencia-5.jpg
+
+JPG de unos 800 px de ancho (cuadradas o un poco más anchas que altas), menos de 200 KB cada una.
+Cada vez que sale el anuncio muestra la siguiente imagen.
+Si usas otros nombres o otra cantidad, cámbialos en js/config.js (lista "anuncios").
