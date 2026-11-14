@@ -1,6 +1,6 @@
-AQUÍ VAN LOS PÓSTERS DE LA PANTALLA DE CARGA (uno por marca, JPG vertical 1080x1920, menos de 300 KB).
+AQUÍ VAN LOS PÓSTERS DE LA PANTALLA DE CARGA (uno por marca, JPG vertical 1080x1920, menos de 300 KB)
 
-El nombre del archivo se escribe en la columna Cartel de la pestaña Marcas de la hoja.
-Ejemplo: penafiel-adas.jpg -> columna Cartel: penafiel-adas.jpg.
-La frase debajo del logo se escribe en la columna Eslogan.
-Si una marca no tiene póster, se usa un fondo café con burbujas.
+El nombre que le pongas al archivo se escribe en la columna Cartel de la pestaña Marcas de tu hoja.
+Ejemplo: archivo penafiel-adas.jpg  ->  en la hoja, columna Cartel: penafiel-adas.jpg
+La frase que sale debajo del logo se escribe en la columna Eslogan.
+Si una marca no tiene póster, la pantalla de carga usa un fondo café con burbujas.
