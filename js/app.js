@@ -35,12 +35,20 @@
     return null;
   }
 
-  function irInicio() {
+  /* El video del banner se pausa mientras se ven productos (ahorra datos y batería) */
+  function mostrarInicio() {
     window.Productos.ocultar();
+    var r = video.play();
+    if (r && r.catch) r.catch(function () {});
+  }
+
+  function irInicio() {
+    mostrarInicio();
     history.pushState(null, "", location.pathname + location.search);
   }
 
   function verMarca(m) {
+    video.pause();
     window.Productos.mostrar(m, irInicio);
   }
 
@@ -58,7 +66,7 @@
   /* Botón "atrás" del teléfono */
   window.addEventListener("popstate", function (e) {
     var m = e.state && e.state.marca ? porSlug(e.state.marca) : null;
-    if (m) verMarca(m); else window.Productos.ocultar();
+    if (m) verMarca(m); else mostrarInicio();
   });
 
   /* ---------- Datos de la hoja ---------- */

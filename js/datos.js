@@ -48,13 +48,26 @@
     });
   }
 
+  var RESPALDO = "datos-hoja-v1";
+
+  function armar(marcas, productos) {
+    return window.Agrupar.armar(marcas, productos, {
+      carpetaLogos: C.carpetaLogos,
+      carpetaCarga: C.carpetaCarga,
+      nombreOriginal: C.nombreOriginal
+    });
+  }
+
+  /* Lee la hoja. Si no hay señal, usa la última copia que se pudo leer en ese teléfono. */
   function cargarDatos() {
     return Promise.all([leerHoja(C.hojaMarcas), leerHoja(C.hojaProductos)]).then(function (r) {
-      return window.Agrupar.armar(r[0], r[1], {
-        carpetaLogos: C.carpetaLogos,
-        carpetaCarga: C.carpetaCarga,
-        nombreOriginal: C.nombreOriginal
-      });
+      try { localStorage.setItem(RESPALDO, JSON.stringify({ m: r[0], p: r[1] })); } catch (e) { /* sin almacenamiento */ }
+      return armar(r[0], r[1]);
+    }).catch(function (error) {
+      var copia = null;
+      try { copia = JSON.parse(localStorage.getItem(RESPALDO) || "null"); } catch (e) { copia = null; }
+      if (copia && copia.m && copia.p) return armar(copia.m, copia.p);
+      throw error;
     });
   }
 

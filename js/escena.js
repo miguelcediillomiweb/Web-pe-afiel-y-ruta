@@ -1,8 +1,8 @@
 /* ============================================================
    ESCENA — el camión avanza por el día sobre el reloj.
    - Amanece a las 6:00 y atardece a las 19:00 (cámbialo abajo).
-   - Avance del camión: a las 6:00 sale; a las 18:00 va a la mitad;
-     a las 5:59 está casi llegando para empezar un nuevo día.
+   - Avance del camión (de izquierda a derecha): a las 6:00 sale; a las 18:00
+     va a la mitad; a las 5:59 está casi llegando para empezar un nuevo día.
    - El sol o la luna van arriba del camión y el cielo cambia de color.
    ============================================================ */
 (function () {
@@ -88,12 +88,9 @@
   function iniciar() {
     var escena = document.getElementById("escena");
     if (!escena) return;
-    var camion = document.getElementById("escena-camion");
     var etiquetas = escena.querySelectorAll(".etiqueta");
     var anterior = -1;
 
-    camion.addEventListener("error", function () { camion.hidden = true; });
-    camion.src = window.CONFIG.imagenCamion;
     estrellas(document.getElementById("escena-estrellas"));
 
     function pintar() {

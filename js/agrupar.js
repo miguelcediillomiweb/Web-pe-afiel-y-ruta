@@ -27,8 +27,12 @@
     return isNaN(n) ? null : n;
   }
 
+  /* Palabras de la hoja que van con acento (la hoja las trae sin acento) */
+  var ACENTOS = { limon: "limón", arandano: "arándano", sandia: "sandía", tonica: "tónica", sangria: "sangría" };
+
   function titulo(t) {
     return t.toLowerCase().split(" ").map(function (p) {
+      if (ACENTOS[p]) p = ACENTOS[p];
       if (SIGLAS.indexOf(p.toUpperCase()) !== -1) return p.toUpperCase();
       return p.charAt(0).toUpperCase() + p.slice(1);
     }).join(" ");

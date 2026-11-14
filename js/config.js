@@ -17,7 +17,6 @@ window.CONFIG = {
   carpetaCarga: "img/carga/",
   videoBanner: "video/banner.mp4",
   imagenPlaca: "img/placa-productos.png",
-  imagenCamion: "img/camion.png",
 
   /* Pantalla de carga al abrir una marca (segundos) — siguiente paso */
   cargaSegundos: 3.5,

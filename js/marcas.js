@@ -32,11 +32,6 @@
     b.className = "marca revelar";
     b.dataset.slug = m.slug;
 
-    var chapa = document.createElement("span");
-    chapa.className = "marca__chapa";
-    chapa.textContent = m.sabores.length;
-    chapa.setAttribute("aria-hidden", "true");
-
     var logo = document.createElement("span");
     logo.className = "marca__logo";
     logo.appendChild(crearLogo(m));
@@ -45,11 +40,7 @@
     nombre.className = "marca__nombre";
     nombre.textContent = m.nombre;
 
-    var sabores = document.createElement("p");
-    sabores.className = "marca__sabores";
-    sabores.textContent = m.sabores.length + (m.sabores.length === 1 ? " sabor" : " sabores");
-
-    b.append(chapa, logo, nombre, sabores);
+    b.append(logo, nombre);
     b.addEventListener("click", function () { alElegir(m); });
     return b;
   }

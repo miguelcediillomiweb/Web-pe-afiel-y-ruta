@@ -67,13 +67,20 @@
     return t;
   }
 
+  /* Botón "Todas las marcas": se usa arriba y abajo de la lista */
+  function crearVolver(alVolver, abajo) {
+    var b = el("button", "vista__volver" + (abajo ? " vista__volver--abajo" : ""));
+    b.type = "button";
+    var flecha = el("span", "volver__flecha", "←");
+    flecha.setAttribute("aria-hidden", "true");
+    b.append(flecha, el("span", "", "Todas las marcas"));
+    b.addEventListener("click", alVolver);
+    return b;
+  }
+
   function mostrar(marca, alVolver) {
     var vista = document.getElementById("vista-marca");
     vista.textContent = "";
-
-    var volver = el("button", "vista__volver", "← Todas las marcas");
-    volver.type = "button";
-    volver.addEventListener("click", alVolver);
 
     var cab = el("div", "vista__cabecera");
     var logo = el("div", "vista__logo");
@@ -89,7 +96,7 @@
     }
     marca.sabores.forEach(function (s) { sabores.appendChild(crearTarjeta(marca, s)); });
 
-    vista.append(volver, cab, sabores);
+    vista.append(crearVolver(alVolver, false), cab, sabores, crearVolver(alVolver, true));
     vista.hidden = false;
     document.body.classList.add("en-marca");
     window.scrollTo({ top: 0, behavior: "instant" });
