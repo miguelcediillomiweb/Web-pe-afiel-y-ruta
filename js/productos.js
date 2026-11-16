@@ -26,6 +26,16 @@
 
   function crearFila(marca, sabor, f) {
     var li = el("li", "pres");
+    if (f.imagen) {
+      var foto = el("div", "pres__foto");
+      var img = document.createElement("img");
+      img.src = f.imagen;
+      img.alt = (sabor.nombre + " " + (f.tamano || "")).trim();
+      img.loading = "lazy";
+      img.addEventListener("error", function () { foto.hidden = true; });
+      foto.appendChild(img);
+      li.appendChild(foto);
+    }
 
     var info = el("div", "pres__info");
     info.appendChild(el("strong", "pres__tamano", f.tamano || f.producto));
