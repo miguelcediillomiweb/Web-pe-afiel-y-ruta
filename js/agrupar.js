@@ -95,6 +95,7 @@
     opc = opc || {};
     var carpetaLogos = opc.carpetaLogos || "";
     var carpetaCarga = opc.carpetaCarga || "";
+    var carpetaProductos = opc.carpetaProductos || "";
     var original = opc.nombreOriginal || "Original";
     var marcas = [], porSlug = {};
 
@@ -132,6 +133,7 @@
       m._sabores[clave].filas.push({
         id: m.slug + "-" + clave + "-" + (a.ml || "x") + "-" + slug(presentacion) + (a.nota ? "-" + slug(a.nota) : ""),
         producto: limpiar(f.Producto),
+        imagen: f.Imagen ? carpetaProductos + encodeURIComponent(limpiar(f.Imagen)) : "",
         ml: a.ml,
         tamano: textoTamano(a.ml),
         presentacion: presentacion,
