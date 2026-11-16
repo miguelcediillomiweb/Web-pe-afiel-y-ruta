@@ -100,13 +100,41 @@
     if (marca.eslogan) titulo.appendChild(el("p", "vista__lema", marca.eslogan));
     cab.append(logo, titulo);
 
-    var sabores = el("div", "sabores");
-    if (!marca.sabores.length) {
-      sabores.appendChild(el("p", "vista__vacio", "Pronto agregaremos los productos de esta marca."));
+    function grupo(lista) {
+      var g = el("div", "sabores");
+      lista.forEach(function (s) { g.appendChild(crearTarjeta(marca, s)); });
+      return g;
     }
-    marca.sabores.forEach(function (s) { sabores.appendChild(crearTarjeta(marca, s)); });
 
-    vista.append(crearVolver(alVolver, false), cab, sabores, crearVolver(alVolver, true));
+    var contenido = el("div", "lineas");
+
+    /* Una franja por línea: logo arriba y sus productos abajo */
+    marca.lineas.forEach(function (l) {
+      var seccion = el("section", "linea");
+      var cabL = el("div", "linea__cabecera");
+      var nombreL = el("h3", "linea__nombre", l.nombre);
+      if (l.logo) {
+        var im = document.createElement("img");
+        im.className = "linea__logo";
+        im.src = encodeURI(l.logo);
+        im.alt = l.nombre;
+        nombreL.hidden = true;
+        im.addEventListener("error", function () { im.remove(); nombreL.hidden = false; });
+        cabL.append(im, nombreL);
+      } else {
+        cabL.appendChild(nombreL);
+      }
+      seccion.append(cabL, grupo(l.sabores));
+      contenido.appendChild(seccion);
+    });
+
+    /* Productos de marcas sin líneas (o que no encajaron en ninguna) */
+    if (marca.sabores.length) contenido.appendChild(grupo(marca.sabores));
+    if (!contenido.children.length) {
+      contenido.appendChild(el("p", "vista__vacio", "Pronto agregaremos los productos de esta marca."));
+    }
+
+    vista.append(crearVolver(alVolver, false), cab, contenido, crearVolver(alVolver, true));
     vista.hidden = false;
     document.body.classList.add("en-marca");
     window.scrollTo({ top: 0, behavior: "instant" });
