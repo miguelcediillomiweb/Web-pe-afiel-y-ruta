@@ -93,7 +93,7 @@
     if (!escena) return;
     var etiquetas = escena.querySelectorAll(".etiqueta");
     var anterior = -1, cuerpoAnt = "";
-    var prueba = parseFloat((location.search.match(/[?&]hora=([\\d.]+)/) || [])[1]);
+    var prueba = parseFloat((location.search.match(/[?&]hora=([\d.]+)/) || [])[1]);
     function ahora() {
       var f = new Date();
       if (!isNaN(prueba) && prueba >= 0 && prueba < 24) {
