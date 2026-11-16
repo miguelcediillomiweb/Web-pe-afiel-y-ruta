@@ -75,6 +75,8 @@ window.CONFIG = {
   anuncioSegundos: 5,          /* cuánto dura abierto (con cuenta de 5 a 1) */
   anuncioRetraso: 1.2,         /* segundos que espera después de abrir la web */
   anuncioCadaSegundos: 120,    /* se vuelve a mostrar cada 2 minutos de navegar */
+  /* ---------- Clima de la escena (Open-Meteo, gratis y sin clave) ---------- */
+  clima: { latitud: 19.71, longitud: -98.97, cadaMinutos: 15 },
 
   /* ---------- Carrusel de logos ---------- */
   carruselSegundos: 2.5,
