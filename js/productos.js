@@ -20,8 +20,8 @@
 
   function estadoBoton(b, agregado) {
     b.setAttribute("aria-pressed", agregado ? "true" : "false");
-    b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "+";
-    b.querySelector(".pres__texto").textContent = agregado ? "Agregado" : "Agregar";
+    b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "💬";
+    b.querySelector(".pres__texto").textContent = agregado ? "Anotado" : "Quiero conocer más";
   }
 
   function crearFila(marca, sabor, f) {
