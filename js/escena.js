@@ -82,7 +82,7 @@
 
   function pedirClima(alTener) {
     var K = (window.CONFIG && window.CONFIG.clima) || {};
-    var forzado = (location.search.match(/[?&]clima=(\\w+)/) || [])[1];
+    var forzado = (location.search.match(/[?&]clima=(\w+)/) || [])[1];
     var prueba = { despejado: [0, 0.1, 0], nublado: [3, 0.9, 0], niebla: [45, 0.6, 0], lluvia: [63, 0.9, 1] }[forzado];
     if (prueba) { alTener(interpretar(prueba[0], prueba[1], prueba[2])); return; }
     if (!K.latitud) return;
