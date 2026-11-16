@@ -151,3 +151,75 @@
 /* Etiquetas Mañana · Tarde · Noche ocultas */
 .escena__etiquetas { display: none; }
 
+/* ---------- Sol y luna: recorrido propio, asoman por detrás de las lomas ---------- */
+.astro {
+  position: absolute; z-index: 1;
+  width: 2.8rem; height: 2.8rem; border-radius: 50%;
+}
+.astro--sol {
+  left: calc(var(--sx, 0) * (100% - 2.8rem));
+  bottom: calc(0.2rem + var(--se, 0) * (100% - 3.6rem));
+  background: radial-gradient(circle, #fff6c8 0, var(--cuerpo-nucleo) 55%, var(--cuerpo-brillo) 100%);
+  box-shadow: 0 0 1.1rem 0.5rem var(--cuerpo-brillo), 0 0 2.6rem 1.2rem rgba(255, 190, 90, 0.35);
+}
+.astro--luna {
+  left: calc(var(--lx, 0) * (100% - 2.8rem));
+  bottom: calc(0.2rem + var(--le, 0) * (100% - 3.6rem));
+  opacity: var(--luna-op, 0);
+  background:
+    radial-gradient(circle at 62% 62%, rgba(90, 90, 110, 0.28) 0 9%, transparent 10%),
+    radial-gradient(circle at 36% 40%, rgba(90, 90, 110, 0.22) 0 12%, transparent 13%),
+    radial-gradient(circle at 66% 28%, rgba(90, 90, 110, 0.18) 0 6%, transparent 7%),
+    radial-gradient(circle at 35% 35%, #fffef2, #e9e6d2 62%, #bfbba4);
+  box-shadow: 0 0 1rem 0.3rem rgba(200, 215, 255, 0.45), 0 0 2.4rem 1rem rgba(160, 185, 255, 0.22);
+}
+.escena--lista .astro { transition: left 1s linear, bottom 1s linear, opacity 1s linear; }
+.escena--salto .astro { transition: none !important; }
+.escena__estrellas { z-index: 0; }
+
+/* ---------- Aves ---------- */
+.ave { position: absolute; left: -5rem; z-index: 1; animation: ave-vuelo linear forwards; }
+.ave__pajaro {
+  position: absolute; left: var(--dx); top: var(--dy);
+  width: 1.1rem; color: #243247;
+  transform-origin: center;
+  animation: aletear 0.45s ease-in-out infinite alternate;
+}
+.ave__pajaro svg { display: block; width: 100%; height: auto; }
+@keyframes ave-vuelo { from { left: -5rem; } to { left: 105%; } }
+@keyframes aletear { from { transform: scaleY(1); } to { transform: scaleY(0.3); } }
+
+/* ---------- Estrella fugaz ---------- */
+.fugaz {
+  position: absolute; z-index: 1;
+  width: 3.4rem; height: 2px; border-radius: 2px;
+  background: linear-gradient(to right, transparent, #fff);
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8);
+  opacity: 0;
+  animation: fugaz 1.1s ease-out forwards;
+}
+@keyframes fugaz {
+  0%   { opacity: 0; transform: rotate(25deg) translateX(0); }
+  15%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(25deg) translateX(9rem); }
+}
+
+/* ---------- Faros y luz trasera del camión (de noche) ---------- */
+.faro {
+  position: absolute; z-index: 3; pointer-events: none;
+  left: calc(var(--avance) * (100% - var(--camion-ancho)) + var(--camion-ancho) - 0.5rem);
+  bottom: 1.1rem; width: 7rem; height: 2rem;
+  opacity: var(--faros, 0);
+  background: radial-gradient(ellipse at left center, rgba(255, 244, 180, 0.9), rgba(255, 230, 140, 0.35) 40%, transparent 72%);
+  clip-path: polygon(0 38%, 100% 0, 100% 100%, 0 62%);
+}
+.cola-luz {
+  position: absolute; z-index: 5; pointer-events: none;
+  left: calc(var(--avance) * (100% - var(--camion-ancho)) + 0.15rem);
+  bottom: 1.3rem; width: 0.4rem; height: 0.4rem; border-radius: 50%;
+  background: #ff3b30; box-shadow: 0 0 0.6rem 0.2rem rgba(255, 60, 45, 0.7);
+  opacity: var(--faros, 0);
+}
+.escena--lista .faro, .escena--lista .cola-luz { transition: opacity 1s linear, left 1s linear; }
+.escena--salto .faro, .escena--salto .cola-luz { transition: none !important; }
+
