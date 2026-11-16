@@ -52,20 +52,23 @@
   function calcular(ahora) {
     var h = ahora.getHours() + ahora.getMinutes() / 60 + ahora.getSeconds() / 3600;
     var esDia = h >= AMANECER && h < ATARDECER;
-    var elev, cuerpo;
+    var elev, cuerpo, cx;
     if (esDia) {
-      elev = Math.sin(Math.PI * (h - AMANECER) / (ATARDECER - AMANECER));
+      cx = (h - AMANECER) / (ATARDECER - AMANECER);
+      elev = Math.sin(Math.PI * cx);
       cuerpo = "sol";
     } else {
       var noche = 24 - ATARDECER + AMANECER;
       var t = h >= ATARDECER ? h - ATARDECER : h + (24 - ATARDECER);
-      elev = Math.sin(Math.PI * t / noche);
+      cx = t / noche;
+      elev = Math.sin(Math.PI * cx);
       cuerpo = "luna";
     }
     var oscuridad = h < 12 ? 1 - tramo(h, 5, 6.8) : tramo(h, 18, 20.5);
     var fase = h >= 6 && h < 12 ? "manana" : (h >= 12 && h < 19 ? "tarde" : "noche");
     return {
       h: h, elev: Math.max(0, elev), cuerpo: cuerpo, oscuridad: oscuridad, fase: fase,
+      cx: cx, rubor: cuerpo === "sol" ? Math.max(0, 1 - elev / 0.4) : 0,
       avance: (((h - AMANECER) % 24) + 24) % 24 / 24
     };
   }
@@ -89,25 +92,36 @@
     var escena = document.getElementById("escena");
     if (!escena) return;
     var etiquetas = escena.querySelectorAll(".etiqueta");
-    var anterior = -1;
+    var anterior = -1, cuerpoAnt = "";
+    var prueba = parseFloat((location.search.match(/[?&]hora=([\\d.]+)/) || [])[1]);
+    function ahora() {
+      var f = new Date();
+      if (!isNaN(prueba) && prueba >= 0 && prueba < 24) {
+        f.setHours(Math.floor(prueba), Math.round((prueba % 1) * 60), 0, 0);
+      }
+      return f;
+    }
 
     estrellas(document.getElementById("escena-estrellas"));
 
     function pintar() {
-      var d = calcular(new Date());
+      var d = calcular(ahora());
       var c = cielo(d.h);
       var estilo = escena.style;
 
       /* Al empezar un nuevo día el camión vuelve al inicio sin animarse */
-      if (anterior >= 0 && d.avance < anterior - 0.5) {
+      if ((anterior >= 0 && d.avance < anterior - 0.5) || (cuerpoAnt && cuerpoAnt !== d.cuerpo)) {
         escena.classList.add("escena--salto");
         setTimeout(function () { escena.classList.remove("escena--salto"); }, 60);
       }
       anterior = d.avance;
+      cuerpoAnt = d.cuerpo;
 
       estilo.setProperty("--avance", d.avance.toFixed(5));
       estilo.setProperty("--elev", d.elev.toFixed(4));
       estilo.setProperty("--noche", d.oscuridad.toFixed(3));
+      estilo.setProperty("--cx", d.cx.toFixed(4));
+      estilo.setProperty("--rubor", d.rubor.toFixed(3));
       estilo.setProperty("--cielo-arriba", c.arriba);
       estilo.setProperty("--cielo-abajo", c.abajo);
       estilo.setProperty("--loma-atras", mezclar(LOMA_DIA.atras, LOMA_NOCHE.atras, d.oscuridad));
