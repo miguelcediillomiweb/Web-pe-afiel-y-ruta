@@ -15,6 +15,7 @@ window.CONFIG = {
   /* Carpetas y archivos de imágenes y video */
   carpetaLogos: "img/logos/",
   carpetaCarga: "img/carga/",
+  carpetaProductos: "img/productos/",
   videoBanner: "video/banner.mp4",
   imagenPlaca: "img/placa-productos.png",
 
