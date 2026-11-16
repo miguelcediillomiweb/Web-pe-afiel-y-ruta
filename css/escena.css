@@ -129,3 +129,25 @@
 
 /* Se ocultan las etiquetas Mañana · Tarde · Noche (el saludo de arriba ya lo dice) */
 .escena__etiquetas { display: none; }
+
+/* Sol y luna con su propio recorrido; asoman por detrás de las lomas */
+.escena__cuerpo {
+  left: calc(var(--cx, 0) * (100% - 2.8rem));
+  bottom: calc(0.2rem + var(--elev) * (100% - 3.6rem));
+  z-index: 1;
+}
+.escena__lomas { z-index: 2; }
+.escena__camino { z-index: 3; }
+.escena__camion { z-index: 4; }
+
+/* Resplandor en el horizonte al amanecer y al atardecer */
+.escena__cielo::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse 70% 80% at calc(var(--cx, 0) * 100%) 100%,
+    rgba(255, 140, 50, 0.65), rgba(255, 140, 50, 0) 70%);
+  opacity: var(--rubor, 0);
+}
+
+/* Etiquetas Mañana · Tarde · Noche ocultas */
+.escena__etiquetas { display: none; }
+
