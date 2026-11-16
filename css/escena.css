@@ -126,3 +126,6 @@
 @keyframes baches  { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
 @keyframes nube    { to { transform: translateX(110vw); } }
 @keyframes titilar { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+
+/* Se ocultan las etiquetas Mañana · Tarde · Noche (el saludo de arriba ya lo dice) */
+.escena__etiquetas { display: none; }
