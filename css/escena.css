@@ -223,3 +223,38 @@
 .escena--lista .faro, .escena--lista .cola-luz { transition: opacity 1s linear, left 1s linear; }
 .escena--salto .faro, .escena--salto .cola-luz { transition: none !important; }
 
+/* ---------- Clima ---------- */
+.nube { background: var(--nube-color, rgba(255, 255, 255, 0.92)); filter: brightness(calc(1 - var(--cobertura, 0) * 0.35)); }
+.escena__nubes { opacity: calc(1 - var(--noche) * (0.88 - var(--cobertura, 0) * 0.6)); }
+.nube--x { opacity: 0; transition: opacity 3s; }
+.nube--x.activa { opacity: 1; }
+.escena__estrellas { opacity: calc(var(--noche) * (1 - var(--cobertura, 0) * 0.85)); }
+.astro--sol { opacity: calc(1 - var(--cobertura, 0) * 0.75); }
+.astro--luna { opacity: calc(var(--luna-op, 0) * (1 - var(--cobertura, 0) * 0.7)); }
+.escena__cielo::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--velo-color, #8d98a6); opacity: var(--velo, 0); transition: opacity 3s;
+}
+
+/* Lluvia */
+.lluvia { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: var(--lluvia, 0); transition: opacity 2s; }
+.gota {
+  position: absolute; top: -8%; width: 1px; height: 12px;
+  background: linear-gradient(transparent, rgba(215, 230, 255, 0.85));
+  transform: rotate(12deg); animation: caer 0.6s linear infinite;
+}
+@keyframes caer { to { top: 105%; } }
+.escena[data-clima="lluvia"] .escena__camino {
+  background: #10151c; border-top-color: #33465e; box-shadow: inset 0 2px 6px rgba(160, 190, 230, 0.35);
+}
+
+/* Niebla */
+.niebla {
+  position: absolute; left: -10%; right: -10%; bottom: 0; height: 62%; z-index: 3; pointer-events: none;
+  background: var(--niebla-color, #e1e6ec);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 45%, transparent);
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5) 45%, transparent);
+  opacity: var(--niebla, 0); transition: opacity 3s;
+  animation: niebla-mover 28s ease-in-out infinite alternate;
+}
+@keyframes niebla-mover { from { transform: translateX(-4%); } to { transform: translateX(4%); } }
