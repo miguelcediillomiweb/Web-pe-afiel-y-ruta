@@ -1,48 +1,31 @@
-/* ============================================================
-   ESCENA — el camión avanza por el día sobre el reloj.
-   - Amanece a las 6:00 y atardece a las 19:00 (cámbialo abajo).
-   - Avance del camión (de izquierda a derecha): a las 6:00 sale; a las 18:00
-     va a la mitad; a las 5:59 está casi llegando para empezar un nuevo día.
-   - El sol o la luna van arriba del camión y el cielo cambia de color.
-   ============================================================ */
+/* ESCENA — camión que avanza por el día, con sol, luna, aves, estrellas y faros */
 (function () {
-  var AMANECER = 6, ATARDECER = 19;
+  var AMANECER = 6, ATARDECER = 19, LUNA_SALE = 16, LUNA_DURA = 14;
 
-  /* Colores del cielo por hora: [hora, arriba, abajo] */
   var CIELO = [
-    [0,    "#070b1f", "#14234a"],
-    [4.5,  "#0d1530", "#223566"],
-    [5.7,  "#2c2f66", "#c0607a"],
-    [6.5,  "#5a6fb0", "#f59a52"],
-    [8,    "#5b9bd5", "#f7d3a0"],
-    [10.5, "#3d8be0", "#a9d6f5"],
-    [15.5, "#3e8fdc", "#b4dcf7"],
-    [17.8, "#4a7cc4", "#f7c27a"],
-    [18.9, "#6a4a8a", "#ee7a45"],
-    [19.8, "#2a2a5c", "#6a3f72"],
-    [21,   "#0a1030", "#1b2a5a"],
-    [24,   "#070b1f", "#14234a"]
+    [0, "#070b1f", "#14234a"], [4.5, "#0d1530", "#223566"], [5.7, "#2c2f66", "#c0607a"],
+    [6.5, "#5a6fb0", "#f59a52"], [8, "#5b9bd5", "#f7d3a0"], [10.5, "#3d8be0", "#a9d6f5"],
+    [15.5, "#3e8fdc", "#b4dcf7"], [17.8, "#4a7cc4", "#f7c27a"], [18.9, "#6a4a8a", "#ee7a45"],
+    [19.8, "#2a2a5c", "#6a3f72"], [21, "#0a1030", "#1b2a5a"], [24, "#070b1f", "#14234a"]
   ];
-
-  var LOMA_DIA   = { atras: "#6f9a5c", frente: "#3f7a4f" };
+  var LOMA_DIA = { atras: "#6f9a5c", frente: "#3f7a4f" };
   var LOMA_NOCHE = { atras: "#16294a", frente: "#0b1830" };
+  var PAJARO = '<svg viewBox="0 0 24 10" aria-hidden="true"><path d="M1 8 Q6 0 12 6 Q18 0 23 8" ' +
+    'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>';
 
-  function rgb(hex) {
-    var n = parseInt(hex.slice(1), 16);
-    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
-  }
+  function rgb(hex) { var n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255]; }
   function mezclar(a, b, t) {
     var x = rgb(a), y = rgb(b);
-    return "rgb(" + Math.round(x[0] + (y[0] - x[0]) * t) + "," +
-      Math.round(x[1] + (y[1] - x[1]) * t) + "," + Math.round(x[2] + (y[2] - x[2]) * t) + ")";
+    return "rgb(" + Math.round(x[0] + (y[0] - x[0]) * t) + "," + Math.round(x[1] + (y[1] - x[1]) * t) + "," +
+      Math.round(x[2] + (y[2] - x[2]) * t) + ")";
   }
-  function tramo(h, a, b) { return Math.min(1, Math.max(0, (h - a) / (b - a))); }
+  function limitar(x, a, b) { return Math.min(b, Math.max(a, x)); }
+  function tramo(h, a, b) { return limitar((h - a) / (b - a), 0, 1); }
 
   function cielo(h) {
     for (var i = 1; i < CIELO.length; i++) {
       if (h <= CIELO[i][0]) {
-        var a = CIELO[i - 1], b = CIELO[i];
-        var t = (h - a[0]) / (b[0] - a[0]);
+        var a = CIELO[i - 1], b = CIELO[i], t = (h - a[0]) / (b[0] - a[0]);
         return { arriba: mezclar(a[1], b[1], t), abajo: mezclar(a[2], b[2], t) };
       }
     }
@@ -51,24 +34,16 @@
 
   function calcular(ahora) {
     var h = ahora.getHours() + ahora.getMinutes() / 60 + ahora.getSeconds() / 3600;
-    var esDia = h >= AMANECER && h < ATARDECER;
-    var elev, cuerpo, cx;
-    if (esDia) {
-      cx = (h - AMANECER) / (ATARDECER - AMANECER);
-      elev = Math.sin(Math.PI * cx);
-      cuerpo = "sol";
-    } else {
-      var noche = 24 - ATARDECER + AMANECER;
-      var t = h >= ATARDECER ? h - ATARDECER : h + (24 - ATARDECER);
-      cx = t / noche;
-      elev = Math.sin(Math.PI * cx);
-      cuerpo = "luna";
-    }
+    var ts = (h - AMANECER) / (ATARDECER - AMANECER);
+    var sol = { cx: limitar(ts, 0, 1), elev: ts >= 0 && ts <= 1 ? Math.sin(Math.PI * ts) : -0.25 };
+    var tl = ((h - LUNA_SALE + 24) % 24) / LUNA_DURA;
+    var luna = { cx: limitar(tl, 0, 1), elev: tl <= 1 ? Math.sin(Math.PI * tl) : -0.25 };
     var oscuridad = h < 12 ? 1 - tramo(h, 5, 6.8) : tramo(h, 18, 20.5);
-    var fase = h >= 6 && h < 12 ? "manana" : (h >= 12 && h < 19 ? "tarde" : "noche");
+    var borde = tramo(h, 5, 6) * tramo(-h, -20, -19);
     return {
-      h: h, elev: Math.max(0, elev), cuerpo: cuerpo, oscuridad: oscuridad, fase: fase,
-      cx: cx, rubor: cuerpo === "sol" ? Math.max(0, 1 - elev / 0.4) : 0,
+      h: h, sol: sol, luna: luna, oscuridad: oscuridad,
+      rubor: Math.max(0, 1 - Math.max(0, sol.elev) / 0.4) * borde,
+      fase: h >= 6 && h < 12 ? "manana" : (h >= 12 && h < 19 ? "tarde" : "noche"),
       avance: (((h - AMANECER) % 24) + 24) % 24 / 24
     };
   }
@@ -76,12 +51,12 @@
   function estrellas(contenedor) {
     var semilla = 7;
     function azar() { semilla = (semilla * 9301 + 49297) % 233280; return semilla / 233280; }
-    for (var i = 0; i < 26; i++) {
+    for (var i = 0; i < 55; i++) {
       var e = document.createElement("i");
       e.className = "estrella";
       e.style.left = (azar() * 98 + 1) + "%";
-      e.style.top = (azar() * 52 + 4) + "%";
-      e.style.setProperty("--tam", (1 + Math.round(azar() * 1.5)) + "px");
+      e.style.top = (azar() * 60 + 3) + "%";
+      e.style.setProperty("--tam", (1 + Math.round(azar() * 1.6)) + "px");
       e.style.setProperty("--retraso", (azar() * 3).toFixed(2) + "s");
       e.style.setProperty("--ciclo", (2 + azar() * 2.5).toFixed(2) + "s");
       contenedor.appendChild(e);
@@ -91,57 +66,99 @@
   function iniciar() {
     var escena = document.getElementById("escena");
     if (!escena) return;
+    var cielo_ = escena.querySelector(".escena__cielo");
     var etiquetas = escena.querySelectorAll(".etiqueta");
-    var anterior = -1, cuerpoAnt = "";
+    var viejo = escena.querySelector(".escena__cuerpo");
+    if (viejo) viejo.remove();
+
+    function capa(clase) {
+      var e = document.createElement("div");
+      e.className = clase;
+      cielo_.appendChild(e);
+      return e;
+    }
+    capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz");
+    estrellas(document.getElementById("escena-estrellas"));
+
     var prueba = parseFloat((location.search.match(/[?&]hora=([\d.]+)/) || [])[1]);
     function ahora() {
       var f = new Date();
-      if (!isNaN(prueba) && prueba >= 0 && prueba < 24) {
-        f.setHours(Math.floor(prueba), Math.round((prueba % 1) * 60), 0, 0);
-      }
+      if (!isNaN(prueba) && prueba >= 0 && prueba < 24) f.setHours(Math.floor(prueba), Math.round((prueba % 1) * 60), 0, 0);
       return f;
     }
 
-    estrellas(document.getElementById("escena-estrellas"));
+    var prev = null, estado = calcular(ahora());
 
     function pintar() {
-      var d = calcular(ahora());
-      var c = cielo(d.h);
-      var estilo = escena.style;
+      var d = estado = calcular(ahora());
+      var c = cielo(d.h), s = escena.style;
 
-      /* Al empezar un nuevo día el camión vuelve al inicio sin animarse */
-      if ((anterior >= 0 && d.avance < anterior - 0.5) || (cuerpoAnt && cuerpoAnt !== d.cuerpo)) {
+      if (prev && (Math.abs(d.avance - prev.avance) > 0.5 || Math.abs(d.sol.cx - prev.sol.cx) > 0.5 ||
+          Math.abs(d.luna.cx - prev.luna.cx) > 0.5)) {
         escena.classList.add("escena--salto");
         setTimeout(function () { escena.classList.remove("escena--salto"); }, 60);
       }
-      anterior = d.avance;
-      cuerpoAnt = d.cuerpo;
+      prev = d;
 
-      estilo.setProperty("--avance", d.avance.toFixed(5));
-      estilo.setProperty("--elev", d.elev.toFixed(4));
-      estilo.setProperty("--noche", d.oscuridad.toFixed(3));
-      estilo.setProperty("--cx", d.cx.toFixed(4));
-      estilo.setProperty("--rubor", d.rubor.toFixed(3));
-      estilo.setProperty("--cielo-arriba", c.arriba);
-      estilo.setProperty("--cielo-abajo", c.abajo);
-      estilo.setProperty("--loma-atras", mezclar(LOMA_DIA.atras, LOMA_NOCHE.atras, d.oscuridad));
-      estilo.setProperty("--loma-frente", mezclar(LOMA_DIA.frente, LOMA_NOCHE.frente, d.oscuridad));
+      s.setProperty("--avance", d.avance.toFixed(5));
+      s.setProperty("--noche", d.oscuridad.toFixed(3));
+      s.setProperty("--sx", d.sol.cx.toFixed(4));
+      s.setProperty("--se", d.sol.elev.toFixed(4));
+      s.setProperty("--lx", d.luna.cx.toFixed(4));
+      s.setProperty("--le", d.luna.elev.toFixed(4));
+      s.setProperty("--luna-op", limitar(0.3 + 0.7 * d.oscuridad, 0, 1).toFixed(3));
+      s.setProperty("--faros", limitar((d.oscuridad - 0.25) * 2, 0, 1).toFixed(3));
+      s.setProperty("--cx", d.sol.cx.toFixed(4));
+      s.setProperty("--rubor", d.rubor.toFixed(3));
+      s.setProperty("--cielo-arriba", c.arriba);
+      s.setProperty("--cielo-abajo", c.abajo);
+      s.setProperty("--loma-atras", mezclar(LOMA_DIA.atras, LOMA_NOCHE.atras, d.oscuridad));
+      s.setProperty("--loma-frente", mezclar(LOMA_DIA.frente, LOMA_NOCHE.frente, d.oscuridad));
+      var calor = limitar(d.sol.elev * 2.2, 0, 1);
+      s.setProperty("--cuerpo-nucleo", mezclar("#ff6a2a", "#ffe066", calor));
+      s.setProperty("--cuerpo-brillo", mezclar("#ff7a30", "#ffd24a", calor));
 
-      /* El sol se pone naranja cerca del horizonte y amarillo cuando sube */
-      var calor = Math.min(1, d.elev * 2.2);
-      estilo.setProperty("--cuerpo-nucleo", mezclar("#ff6a2a", "#ffe066", calor));
-      estilo.setProperty("--cuerpo-brillo", mezclar("#ff7a30", "#ffd24a", calor));
-      escena.dataset.cuerpo = d.cuerpo;
+      etiquetas.forEach(function (e) { e.classList.toggle("etiqueta--activa", e.dataset.fase === d.fase); });
+    }
 
-      etiquetas.forEach(function (e) {
-        e.classList.toggle("etiqueta--activa", e.dataset.fase === d.fase);
-      });
+    function lanzarAve() {
+      var a = document.createElement("div");
+      a.className = "ave";
+      a.style.top = (10 + Math.random() * 32).toFixed(0) + "%";
+      a.style.animationDuration = (16 + Math.random() * 8).toFixed(1) + "s";
+      var n = 2 + Math.floor(Math.random() * 3);
+      for (var i = 0; i < n; i++) {
+        var b = document.createElement("span");
+        b.className = "ave__pajaro";
+        b.style.setProperty("--dx", (i * 1.2).toFixed(1) + "rem");
+        b.style.setProperty("--dy", ((i % 2) * 0.8 - 0.3).toFixed(1) + "rem");
+        b.style.animationDelay = (-Math.random() * 0.5).toFixed(2) + "s";
+        b.innerHTML = PAJARO;
+        a.appendChild(b);
+      }
+      a.addEventListener("animationend", function () { a.remove(); });
+      cielo_.appendChild(a);
+    }
+
+    function lanzarFugaz() {
+      var f = document.createElement("i");
+      f.className = "fugaz";
+      f.style.left = (8 + Math.random() * 55).toFixed(0) + "%";
+      f.style.top = (4 + Math.random() * 28).toFixed(0) + "%";
+      f.addEventListener("animationend", function () { f.remove(); });
+      cielo_.appendChild(f);
     }
 
     pintar();
-    /* Se activan las animaciones después del primer dibujo para que no "viaje" al cargar */
     setTimeout(function () { escena.classList.add("escena--lista"); }, 80);
     setInterval(pintar, 1000);
+
+    /* Cada segundo hay una pequeña probabilidad de que cruce un ave o una estrella fugaz */
+    setInterval(function () {
+      if (document.hidden) return;
+      if (estado.oscuridad < 0.35 && Math.random() < 0.07 && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
+      if (estado.oscuridad > 0.85 && Math.random() < 0.1 && !cielo_.querySelector(".fugaz")) lanzarFugaz();
+    }, 1000);
   }
 
   window.Escena = { iniciar: iniciar, calcular: calcular };
