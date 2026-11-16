@@ -6,8 +6,8 @@
 (function (raiz) {
   /* Textos que se quitan del inicio del nombre para quedarnos con el sabor */
   var PREFIJOS = ["ORANGE CRUSH", "CRUSH", "DR PEPPER", "SCHWEPPES", "PEÑAFIEL", "PENAFIEL",
-                  "SNAPPLE", "CLAMATO", "AGUAFIEL", "RC COLA"];
-  var SUBMARCAS = ["ADAS", "TWIST"];
+                  "SNAPPLE", "CLAMATO", "AGUAFIEL", "RC COLA", "VENOM", "RB"];
+  var SUBMARCAS = ["ADAS", "TWIST", "SOFT SELTZER", "MOCKTAILS"];
   var SIGLAS = ["RB", "S&C", "PET", "VR", "VNR"];
 
   function limpiar(t) { return String(t == null ? "" : t).replace(/\s+/g, " ").trim(); }
@@ -90,20 +90,44 @@
     return { sabor: t, ml: ml, retornable: retornable, nota: nota };
   }
 
+  /* A qué línea de la marca pertenece un producto (según config.lineas) */
+  function lineaDe(lineas, producto) {
+    var t = limpiar(producto).toUpperCase(), resto = -1;
+    for (var i = 0; i < lineas.length; i++) {
+      var l = lineas[i], e = l.empieza || [], c = l.contiene || [];
+      if (!e.length && !c.length) { resto = i; continue; }
+      for (var a = 0; a < e.length; a++) {
+        var p = e[a].toUpperCase();
+        if (t === p || t.indexOf(p + " ") === 0) return i;
+      }
+      for (var b = 0; b < c.length; b++) {
+        if (t.indexOf(c[b].toUpperCase()) !== -1) return i;
+      }
+    }
+    return resto;
+  }
+
   /* marcas y productos: arreglos de objetos con los encabezados de la hoja */
   function armar(filasMarcas, filasProductos, opc) {
     opc = opc || {};
     var carpetaLogos = opc.carpetaLogos || "";
     var carpetaCarga = opc.carpetaCarga || "";
     var carpetaProductos = opc.carpetaProductos || "";
+    var defLineas = opc.lineas || {};
     var original = opc.nombreOriginal || "Original";
     var marcas = [], porSlug = {};
 
     function marca(nombre) {
       var s = slug(nombre);
       if (!porSlug[s]) {
-        porSlug[s] = { nombre: limpiar(nombre), slug: s, logo: "", video: "", eslogan: "",
-                       cartel: "", sabores: [], _sabores: {} };
+        porSlug[s] = {
+          nombre: limpiar(nombre), slug: s, logo: "", video: "", eslogan: "",
+          cartel: "", sabores: [], _sabores: {},
+          lineas: (defLineas[s] || []).map(function (l) {
+            return { nombre: l.nombre, slug: slug(l.nombre),
+                     logo: l.logo ? carpetaLogos + l.logo : "", sabores: [], _sabores: {} };
+          })
+        };
         marcas.push(porSlug[s]);
       }
       return porSlug[s];
@@ -124,14 +148,21 @@
       var a = analizar(f.Producto);
       var nombreSabor = a.sabor ? titulo(a.sabor) : original;
       var clave = slug(nombreSabor);
-      if (!m._sabores[clave]) {
-        m._sabores[clave] = { id: m.slug + "-" + clave, nombre: nombreSabor, filas: [] };
-        m.sabores.push(m._sabores[clave]);
+
+      /* Si la marca tiene líneas, el producto va a la suya; si no, a la marca */
+      var defs = defLineas[m.slug];
+      var idx = defs ? lineaDe(defs, f.Producto) : -1;
+      var dest = idx >= 0 ? m.lineas[idx] : m;
+      var base = m.slug + (idx >= 0 ? "-" + dest.slug : "");
+
+      if (!dest._sabores[clave]) {
+        dest._sabores[clave] = { id: base + "-" + clave, nombre: nombreSabor, filas: [] };
+        dest.sabores.push(dest._sabores[clave]);
       }
       var presentacion = textoPresentacion(f.Presentacion, a.retornable);
       var precioCaja = dinero(f.Precio_Caja), precioPublico = dinero(f.Precio_Publico);
-      m._sabores[clave].filas.push({
-        id: m.slug + "-" + clave + "-" + (a.ml || "x") + "-" + slug(presentacion) + (a.nota ? "-" + slug(a.nota) : ""),
+      dest._sabores[clave].filas.push({
+        id: base + "-" + clave + "-" + (a.ml || "x") + "-" + slug(presentacion) + (a.nota ? "-" + slug(a.nota) : ""),
         producto: limpiar(f.Producto),
         imagen: f.Imagen ? carpetaProductos + encodeURIComponent(limpiar(f.Imagen)) : "",
         ml: a.ml,
@@ -146,12 +177,15 @@
     });
 
     marcas.forEach(function (m) {
-      delete m._sabores;
-      m.sabores.forEach(function (s) {
-        s.filas.sort(function (x, y) {
-          return (x.ml || 0) - (y.ml || 0) || x.presentacion.localeCompare(y.presentacion);
+      m.lineas.concat([m]).forEach(function (g) {
+        delete g._sabores;
+        g.sabores.forEach(function (s) {
+          s.filas.sort(function (x, y) {
+            return (x.ml || 0) - (y.ml || 0) || x.presentacion.localeCompare(y.presentacion);
+          });
         });
       });
+      m.lineas = m.lineas.filter(function (l) { return l.sabores.length; });
     });
     return marcas;
   }
