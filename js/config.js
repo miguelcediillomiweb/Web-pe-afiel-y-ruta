@@ -16,6 +16,17 @@ window.CONFIG = {
   carpetaLogos: "img/logos/",
   carpetaCarga: "img/carga/",
   carpetaProductos: "img/productos/",
+
+  /* ---------- Líneas de productos ---------- 
+     La línea sin empieza ni contiene recibe todo lo que no entró a las demás. */
+  lineas: {
+    "schweppes": [
+      { nombre: "Schweppes", logo: "schweppes.png" },
+      { nombre: "Mineral", logo: "schweppes-mineral.png", contiene: ["AGUA MINERAL"] },
+      { nombre: "Ginger Ale", logo: "ginger-ale.png", contiene: ["GINGER ALE"] },
+      { nombre: "Mocktails", logo: "mocktails.png", contiene: ["MOCKTAILS"] }
+    ]
+  },
   videoBanner: "video/banner.mp4",
   imagenPlaca: "img/placa-productos.png",
 
