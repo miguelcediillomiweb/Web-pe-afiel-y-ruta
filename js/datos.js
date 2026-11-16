@@ -55,6 +55,7 @@
       carpetaLogos: C.carpetaLogos,
       carpetaCarga: C.carpetaCarga,
       carpetaProductos: C.carpetaProductos,
+      lineas: C.lineas,
       nombreOriginal: C.nombreOriginal
     });
   }
