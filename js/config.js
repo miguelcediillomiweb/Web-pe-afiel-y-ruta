@@ -20,12 +20,36 @@ window.CONFIG = {
   /* ---------- Líneas de productos ---------- 
      La línea sin empieza ni contiene recibe todo lo que no entró a las demás. */
   lineas: {
+    "orange-crush": [
+      { nombre: "Crush", logo: "crush.png", empieza: ["CRUSH"] },
+      { nombre: "Orange", logo: "orange-crush.png" }
+    ],
+    "energetizante": [
+      { nombre: "Venom", logo: "energetizante2.png", empieza: ["VENOM"] },
+      { nombre: "Red Bull", logo: "energetizante.png", empieza: ["RB"] }
+    ],
     "schweppes": [
       { nombre: "Schweppes", logo: "schweppes.png" },
       { nombre: "Mineral", logo: "schweppes-mineral.png", contiene: ["AGUA MINERAL"] },
       { nombre: "Ginger Ale", logo: "ginger-ale.png", contiene: ["GINGER ALE"] },
       { nombre: "Mocktails", logo: "mocktails.png", contiene: ["MOCKTAILS"] }
-    ]
+    ],
+    "penafiel-adas": [
+      { nombre: "Adas", logo: "penafiel-adas.png" },
+      { nombre: "Adas sin azúcar", logo: "adas sin.png", contiene: ["LIGHT"] }
+    ],
+    "penafiel-sabores": [
+      { nombre: "Sabores", logo: "penafiel-sabores.png" },
+      { nombre: "Sabores sin azúcar", logo: "sabor sin.png", contiene: ["LIGHT"] }
+    ],
+    "penafiel-twist": [
+      { nombre: "Twist", logo: "penafiel-twist.png" },
+      { nombre: "Coco", logo: "coco.png", contiene: ["COCO"] }
+    ],
+    "agua-mineral": [
+      { nombre: "Soft Seltzer", logo: "soft.png", contiene: ["SOFT SELTZER"] },
+      { nombre: "Mineral", logo: "agua-mineral.png" }
+    ],
   },
   videoBanner: "video/banner.mp4",
   imagenPlaca: "img/placa-productos.png",
