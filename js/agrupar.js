@@ -187,7 +187,8 @@
       });
       m.lineas = m.lineas.filter(function (l) { return l.sabores.length; });
     });
-    return marcas;
+    /* Se ignoran las marcas sin productos (filas de la hoja que solo traen un logo) */
+    return marcas.filter(function (m) { return m.sabores.length || m.lineas.length; });
   }
 
   var api = { armar: armar, analizar: analizar, slug: slug };
