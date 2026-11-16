@@ -103,7 +103,7 @@ body.en-marca .marcas { display: none; }
 .pres {
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas: "info boton" "precios boton";
+  grid-template-areas: "info foto" "precios foto" "boton boton";
   gap: 0.45rem 0.8rem;
   align-items: center;
   padding: 0.85rem 0;
@@ -111,7 +111,8 @@ body.en-marca .marcas { display: none; }
 }
 .pres__info { grid-area: info; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; }
 .pres__precios { grid-area: precios; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; }
-.pres__agregar { grid-area: boton; }
+.pres__agregar { grid-area: boton; justify-self: stretch; justify-content: center; margin-top: 0.3rem; }
+.pres__foto { grid-area: foto; }
 
 .pres__tamano { font-family: var(--fuente-titulo); font-weight: 800; font-size: 1.2rem; }
 .pres__chip {
