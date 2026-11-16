@@ -5,6 +5,9 @@
 (function () {
   /* Ordena según CONFIG.ordenMarcas; las que no estén en la lista van al final */
   function ordenar(marcas, orden) {
+    marcas = marcas.filter(function (m) {
+      return (m.sabores && m.sabores.length) || (m.lineas && m.lineas.length);
+    });
     var pos = {};
     orden.forEach(function (s, i) { pos[s] = i; });
     function lugar(m) { return pos.hasOwnProperty(m.slug) ? pos[m.slug] : 999; }
