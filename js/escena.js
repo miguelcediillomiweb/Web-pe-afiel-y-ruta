@@ -63,6 +63,37 @@
     }
   }
 
+  /* ---------- Clima ---------- */
+  var clima = { tipo: "despejado", cobertura: 0.1, lluvia: 0, niebla: 0 };
+
+  function interpretar(codigo, nubes, precip) {
+    var c = { tipo: "despejado", cobertura: nubes * 0.5, lluvia: 0, niebla: 0 };
+    if (codigo === 45 || codigo === 48) {
+      c.tipo = "niebla"; c.niebla = 0.9; c.cobertura = Math.max(nubes, 0.5);
+    } else if ((codigo >= 51 && codigo <= 67) || (codigo >= 80 && codigo <= 82) || codigo >= 95 || precip > 0.1) {
+      c.tipo = "lluvia"; c.cobertura = 0.9;
+      c.lluvia = (codigo >= 95 || codigo === 65 || codigo === 82) ? 1 : (codigo >= 51 && codigo <= 57 ? 0.45 : 0.75);
+    } else if (codigo >= 2 || nubes >= 0.5) {
+      c.tipo = "nublado";
+      c.cobertura = Math.max(nubes, codigo === 3 ? 0.85 : (codigo === 2 ? 0.45 : 0));
+    }
+    return c;
+  }
+
+  function pedirClima(alTener) {
+    var K = (window.CONFIG && window.CONFIG.clima) || {};
+    var forzado = (location.search.match(/[?&]clima=(\\w+)/) || [])[1];
+    var prueba = { despejado: [0, 0.1, 0], nublado: [3, 0.9, 0], niebla: [45, 0.6, 0], lluvia: [63, 0.9, 1] }[forzado];
+    if (prueba) { alTener(interpretar(prueba[0], prueba[1], prueba[2])); return; }
+    if (!K.latitud) return;
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=" + K.latitud + "&longitude=" + K.longitud +
+      "&current=weather_code,cloud_cover,precipitation&timezone=auto";
+    fetch(url).then(function (r) { return r.json(); }).then(function (j) {
+      var a = j.current;
+      if (a) alTener(interpretar(a.weather_code, (a.cloud_cover || 0) / 100, a.precipitation || 0));
+    }).catch(function () { /* sin internet: la escena sigue solo con la hora */ });
+  }
+
   function iniciar() {
     var escena = document.getElementById("escena");
     if (!escena) return;
@@ -78,6 +109,26 @@
       return e;
     }
     capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz");
+    var lluviaEl = capa("lluvia"), gotas = [];
+    for (var g = 0; g < 70; g++) {
+      var go = document.createElement("i");
+      go.className = "gota";
+      go.style.left = (Math.random() * 100).toFixed(1) + "%";
+      go.style.animationDuration = (0.45 + Math.random() * 0.4).toFixed(2) + "s";
+      go.style.animationDelay = (-Math.random()).toFixed(2) + "s";
+      lluviaEl.appendChild(go); gotas.push(go);
+    }
+    capa("niebla");
+    var contNubes = escena.querySelector(".escena__nubes"), extra = [];
+    for (var n = 0; n < 8; n++) {
+      var nb = document.createElement("div");
+      nb.className = "nube nube--x";
+      nb.style.top = (6 + Math.random() * 40).toFixed(0) + "%";
+      nb.style.animationDuration = (55 + Math.random() * 60).toFixed(0) + "s";
+      nb.style.animationDelay = (-Math.random() * 100).toFixed(0) + "s";
+      if (contNubes) contNubes.appendChild(nb);
+      extra.push(nb);
+    }
     estrellas(document.getElementById("escena-estrellas"));
 
     var prueba = parseFloat((location.search.match(/[?&]hora=([\d.]+)/) || [])[1]);
@@ -118,6 +169,21 @@
       s.setProperty("--cuerpo-nucleo", mezclar("#ff6a2a", "#ffe066", calor));
       s.setProperty("--cuerpo-brillo", mezclar("#ff7a30", "#ffd24a", calor));
 
+      var k = clima, base = limitar((d.oscuridad - 0.25) * 2, 0, 1);
+      escena.dataset.clima = k.tipo;
+      s.setProperty("--cobertura", k.cobertura.toFixed(3));
+      s.setProperty("--velo", (k.cobertura * 0.5 + k.niebla * 0.2).toFixed(3));
+      s.setProperty("--velo-color", mezclar("#8d98a6", "#202636", d.oscuridad));
+      s.setProperty("--nube-color", mezclar("#f2f6fb", "#4a5671", d.oscuridad));
+      s.setProperty("--niebla-color", mezclar("#e1e6ec", "#3a4560", d.oscuridad));
+      s.setProperty("--niebla", k.niebla.toFixed(3));
+      s.setProperty("--lluvia", k.lluvia ? "1" : "0");
+      s.setProperty("--faros", Math.max(base, k.lluvia * 0.9, k.niebla * 0.85).toFixed(3));
+      var visibles = Math.round(k.lluvia * gotas.length);
+      gotas.forEach(function (x, i) { x.hidden = i >= visibles; });
+      var activas = Math.round(k.cobertura * extra.length);
+      extra.forEach(function (x, i) { x.classList.toggle("activa", i < activas); });
+
       etiquetas.forEach(function (e) { e.classList.toggle("etiqueta--activa", e.dataset.fase === d.fase); });
     }
 
@@ -156,9 +222,16 @@
     /* Cada segundo hay una pequeña probabilidad de que cruce un ave o una estrella fugaz */
     setInterval(function () {
       if (document.hidden) return;
-      if (estado.oscuridad < 0.35 && Math.random() < 0.07 && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
-      if (estado.oscuridad > 0.85 && Math.random() < 0.1 && !cielo_.querySelector(".fugaz")) lanzarFugaz();
+      var libre = 1 - clima.cobertura;
+      if (estado.oscuridad < 0.35 && clima.lluvia === 0 && clima.niebla < 0.5 &&
+          Math.random() < 0.02 + 0.09 * libre && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
+      if (estado.oscuridad > 0.85 && clima.lluvia === 0 && clima.cobertura < 0.7 &&
+          Math.random() < 0.03 + 0.12 * libre && !cielo_.querySelector(".fugaz")) lanzarFugaz();
     }, 1000);
+
+    function ponerClima() { pedirClima(function (c) { clima = c; pintar(); }); }
+    ponerClima();
+    setInterval(ponerClima, ((window.CONFIG.clima || {}).cadaMinutos || 15) * 60000);
   }
 
   window.Escena = { iniciar: iniciar, calcular: calcular };
