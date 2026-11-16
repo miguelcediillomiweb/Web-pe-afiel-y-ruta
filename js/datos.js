@@ -54,6 +54,7 @@
     return window.Agrupar.armar(marcas, productos, {
       carpetaLogos: C.carpetaLogos,
       carpetaCarga: C.carpetaCarga,
+      carpetaProductos: C.carpetaProductos,
       nombreOriginal: C.nombreOriginal
     });
   }
