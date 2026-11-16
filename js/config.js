@@ -70,7 +70,7 @@ window.CONFIG = {
      escriben sus nombres (si subes menos o más, ajusta la lista).
      Cada vez que aparece muestra la siguiente imagen. */
   carpetaAnuncios: "img/tendencia/",
-  anuncios: ["tendencia-1.jpg", "tendencia-2.jpg", "tendencia-3.jpg", "tendencia-4.jpg", "tendencia-5.jpg"],
+  anuncios: ["tendencia 1.jpg", "tendencia 2.jpg", "tendencia 3.jpg", "tendencia 4.jpg", "tendencia 5.jpg"],
   textoAnuncio: "Prueba los nuevos productos tendencia en Peñafiel",
   anuncioSegundos: 5,          /* cuánto dura abierto (con cuenta de 5 a 1) */
   anuncioRetraso: 1.2,         /* segundos que espera después de abrir la web */
