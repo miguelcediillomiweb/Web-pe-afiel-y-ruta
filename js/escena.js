@@ -32,16 +32,24 @@
     return { arriba: CIELO[0][1], abajo: CIELO[0][2] };
   }
 
+  /* Fase real de la luna: 0 = nueva, 0.5 = llena */
+  function faseLuna(fecha) {
+    var dias = (fecha.getTime() - Date.UTC(2000, 0, 6, 18, 14)) / 86400000;
+    return (((dias % 29.530588853) + 29.530588853) % 29.530588853) / 29.530588853;
+  }
+
   function calcular(ahora) {
     var h = ahora.getHours() + ahora.getMinutes() / 60 + ahora.getSeconds() / 3600;
     var ts = (h - AMANECER) / (ATARDECER - AMANECER);
     var sol = { cx: limitar(ts, 0, 1), elev: ts >= 0 && ts <= 1 ? Math.sin(Math.PI * ts) : -0.25 };
-    var tl = ((h - LUNA_SALE + 24) % 24) / LUNA_DURA;
+    var fl = window.__faseLuna != null ? window.__faseLuna : faseLuna(ahora);
+    var sale = (ATARDECER + (fl - 0.5) * 24 + 48) % 24;
+    var tl = ((h - sale + 24) % 24) / 12.5;
     var luna = { cx: limitar(tl, 0, 1), elev: tl <= 1 ? Math.sin(Math.PI * tl) : -0.25 };
     var oscuridad = h < 12 ? 1 - tramo(h, 5, 6.8) : tramo(h, 18, 20.5);
     var borde = tramo(h, 5, 6) * tramo(-h, -20, -19);
     return {
-      h: h, sol: sol, luna: luna, oscuridad: oscuridad,
+      h: h, sol: sol, luna: luna, fl: fl, oscuridad: oscuridad,
       rubor: Math.max(0, 1 - Math.max(0, sol.elev) / 0.4) * borde,
       fase: h >= 6 && h < 12 ? "manana" : (h >= 12 && h < 19 ? "tarde" : "noche"),
       avance: (((h - AMANECER) % 24) + 24) % 24 / 24
@@ -51,12 +59,13 @@
   function estrellas(contenedor) {
     var semilla = 7;
     function azar() { semilla = (semilla * 9301 + 49297) % 233280; return semilla / 233280; }
-    for (var i = 0; i < 55; i++) {
+    for (var i = 0; i < 95; i++) {
       var e = document.createElement("i");
-      e.className = "estrella";
+      var grande = azar() > 0.82;
+      e.className = "estrella" + (grande ? " estrella--brillo" : "");
       e.style.left = (azar() * 98 + 1) + "%";
-      e.style.top = (azar() * 60 + 3) + "%";
-      e.style.setProperty("--tam", (1 + Math.round(azar() * 1.6)) + "px");
+      e.style.top = (azar() * 62 + 3) + "%";
+      e.style.setProperty("--tam", (grande ? 3 : 1.5 + azar()).toFixed(1) + "px");
       e.style.setProperty("--retraso", (azar() * 3).toFixed(2) + "s");
       e.style.setProperty("--ciclo", (2 + azar() * 2.5).toFixed(2) + "s");
       contenedor.appendChild(e);
@@ -138,7 +147,28 @@
       return f;
     }
 
+    var qL = (location.search.match(/[?&]luna=([\d.]+)/) || [])[1];
+    if (qL != null) window.__faseLuna = parseFloat(qL) % 1;
     var prev = null, estado = calcular(ahora());
+    var lunaEl = cielo_.querySelector(".astro--luna");
+    function dibujarLuna(fl) {
+      var c = Math.cos(2 * Math.PI * fl), rx = (Math.abs(c) * 50).toFixed(2), d;
+      if (fl < 0.5) d = "M50 0A50 50 0 0 1 50 100A" + rx + " 50 0 0 " + (c > 0 ? 0 : 1) + " 50 0Z";
+      else          d = "M50 0A50 50 0 0 0 50 100A" + rx + " 50 0 0 " + (c > 0 ? 1 : 0) + " 50 0Z";
+      lunaEl.innerHTML =
+        '<svg viewBox="0 0 100 100" aria-hidden="true"><defs>' +
+        '<clipPath id="luna-recorte"><path d="' + d + '"/></clipPath>' +
+        '<radialGradient id="luna-brillo" cx="35%" cy="35%"><stop offset="0" stop-color="#fffef2"/>' +
+        '<stop offset="0.65" stop-color="#e9e6d2"/><stop offset="1" stop-color="#bfbba4"/></radialGradient></defs>' +
+        '<circle cx="50" cy="50" r="50" fill="#1c2340" opacity="0.55"/>' +
+        '<g clip-path="url(#luna-recorte)"><circle cx="50" cy="50" r="50" fill="url(#luna-brillo)"/>' +
+        '<circle cx="62" cy="62" r="9" fill="#5a5a6e" opacity="0.25"/><circle cx="36" cy="40" r="12" fill="#5a5a6e" opacity="0.2"/>' +
+        '<circle cx="66" cy="28" r="6" fill="#5a5a6e" opacity="0.18"/></g></svg>';
+      lunaEl.style.setProperty("--luna-ilum", ((1 - c) / 2).toFixed(3));
+    }
+    dibujarLuna(estado.fl);
+    setInterval(function () { dibujarLuna(estado.fl); }, 600000);
+
 
     function pintar() {
       var d = estado = calcular(ahora());
