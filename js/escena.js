@@ -117,7 +117,7 @@
       cielo_.appendChild(e);
       return e;
     }
-    capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz");
+    capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz"); capa("sombra");
     var lluviaEl = capa("lluvia"), gotas = [];
     for (var g = 0; g < 70; g++) {
       var go = document.createElement("i");
@@ -245,6 +245,24 @@
       cielo_.appendChild(f);
     }
 
+    function lanzarAvion() {
+      var noche = estado.oscuridad > 0.6;
+      var izq = Math.random() < 0.5;
+      var a = document.createElement("div");
+      a.className = "avion" + (noche ? " avion--noche" : "") + (izq ? " avion--izq" : "");
+      a.style.top = (8 + Math.random() * 20).toFixed(0) + "%";
+      a.style.animationName = izq ? "avion-izq" : "avion-der";
+      a.style.animationDuration = (28 + Math.random() * 14).toFixed(0) + "s";
+      a.innerHTML = noche
+        ? '<span class="avion__cuerpo"><i class="avion__luz avion__luz--roja"></i><i class="avion__luz avion__luz--blanca"></i></span>'
+        : '<span class="avion__cuerpo"><i class="avion__estela"></i>' +
+          '<svg viewBox="0 0 30 12" aria-hidden="true"><path d="M1 6 L5 5 L22 5 Q28 5 29 6 Q28 7 22 7 L5 7 Z" fill="currentColor"/>' +
+          '<path d="M12 5 L17 5 L12 0.5 L10.5 0.5 Z" fill="currentColor"/><path d="M12 7 L17 7 L12 11.5 L10.5 11.5 Z" fill="currentColor"/>' +
+          '<path d="M3 5 L5.5 5 L3.5 1.5 L2 1.5 Z" fill="currentColor"/></svg></span>';
+      a.addEventListener("animationend", function () { a.remove(); });
+      cielo_.appendChild(a);
+    }
+
     pintar();
     setTimeout(function () { escena.classList.add("escena--lista"); }, 80);
     setInterval(pintar, 1000);
@@ -257,10 +275,15 @@
           Math.random() < 0.02 + 0.09 * libre && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
       if (estado.oscuridad > 0.85 && clima.lluvia === 0 && clima.cobertura < 0.7 &&
           Math.random() < 0.03 + 0.12 * libre && !cielo_.querySelector(".fugaz")) lanzarFugaz();
+      if (estado.oscuridad < 0.5 && clima.lluvia === 0 && clima.niebla < 0.6 && clima.cobertura < 0.8 &&
+          Math.random() < 0.012 && !cielo_.querySelector(".avion")) lanzarAvion();
+      if (estado.oscuridad > 0.85 && clima.cobertura < 0.9 && Math.random() < 0.01 &&
+          !cielo_.querySelector(".avion")) lanzarAvion();
     }, 1000);
 
     function ponerClima() { pedirClima(function (c) { clima = c; pintar(); }); }
     ponerClima();
+    if (/[?&]efectos=1/.test(location.search)) setTimeout(function () { lanzarAve(); lanzarAvion(); }, 1500);
     setInterval(ponerClima, ((window.CONFIG.clima || {}).cadaMinutos || 15) * 60000);
   }
 
