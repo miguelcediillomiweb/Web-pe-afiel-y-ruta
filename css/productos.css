@@ -211,3 +211,23 @@ body.en-marca .marcas { display: none; }
   text-transform: uppercase;
   color: var(--tapa);
 }
+
+/* ---------- Foto de producto: zoom y nitidez ---------- */
+.pres__foto {
+  cursor: zoom-in;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none; user-select: none;
+  box-shadow: 0 2px 8px rgba(0, 30, 80, 0.12);
+}
+.pres__foto img {
+  image-rendering: -webkit-optimize-contrast;
+  filter: contrast(1.06) saturate(1.08) drop-shadow(0 3px 4px rgba(0, 20, 60, 0.28));
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+/* Computadora: al pasar el cursor. Teléfono: al mantener el dedo sobre la foto. */
+@media (hover: hover) {
+  .pres__foto:hover img { transform: scale(1.4); }
+}
+.pres__foto:active img { transform: scale(1.4); }
