@@ -32,9 +32,9 @@ window.CONFIG = {
     ],
     "schweppes": [
       { nombre: "Schweppes", logo: "schweppes.png" },
-      { nombre: "Mineral", logo: "schweppes-mineral.png", contiene: ["AGUA MINERAL"] },
+      { nombre: "Mineral", logo: "schmin.png", contiene: ["AGUA MINERAL"] },
       { nombre: "Ginger Ale", logo: "ginger-ale.png", contiene: ["GINGER ALE"] },
-      { nombre: "Mocktails", logo: "mocktails.png", contiene: ["MOCKTAILS"] }
+      { nombre: "Mocktails", logo: "schsin.png", contiene: ["MOCKTAILS"] }
     ],
     "penafiel-adas": [
       { nombre: "Adas", logo: "penafiel-adas.png" },
