@@ -1,0 +1,22 @@
+/* Fondo azul celeste */
+html body {
+  background-color: #5cc3f2;
+  background-image: linear-gradient(180deg, #8fdcff 0%, #5cc3f2 50%, #35a5e0 100%);
+  background-attachment: fixed;
+}
+
+/* Burbujas que suben desde abajo de la página y se pierden arriba, sobre el video */
+#burbujas { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+#burbujas i {
+  position: absolute; bottom: -40px; border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.18) 45%, rgba(255, 255, 255, 0.05) 72%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  opacity: var(--op, 0.5);
+  animation: subir-burbujas linear infinite;
+  will-change: transform;
+}
+@keyframes subir-burbujas {
+  0%   { transform: translate(0, 0); }
+  50%  { transform: translate(var(--vaiven, 20px), -55vh); }
+  100% { transform: translate(0, -115vh); }
+}
