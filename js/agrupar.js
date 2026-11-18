@@ -115,6 +115,13 @@
     var carpetaProductos = opc.carpetaProductos || "";
     var defLineas = opc.lineas || {};
     var original = opc.nombreOriginal || "Original";
+    var carpetaSabores = opc.carpetaSabores || "";
+    var fondos = {};
+    (opc.sabores || []).forEach(function (f) {
+      if (limpiar(f.Marca) && limpiar(f.Sabor) && limpiar(f.Fondo)) {
+        fondos[slug(f.Marca) + "|" + slug(f.Sabor)] = carpetaSabores + encodeURIComponent(limpiar(f.Fondo));
+      }
+    });
     var marcas = [], porSlug = {};
 
     function marca(nombre) {
@@ -156,7 +163,8 @@
       var base = m.slug + (idx >= 0 ? "-" + dest.slug : "");
 
       if (!dest._sabores[clave]) {
-        dest._sabores[clave] = { id: base + "-" + clave, nombre: nombreSabor, filas: [] };
+        dest._sabores[clave] = { id: base + "-" + clave, nombre: nombreSabor,
+                                 fondo: fondos[m.slug + "|" + clave] || "", filas: [] };
         dest.sabores.push(dest._sabores[clave]);
       }
       var presentacion = textoPresentacion(f.Presentacion, a.retornable);
