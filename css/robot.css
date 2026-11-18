@@ -1,0 +1,73 @@
+/* ---------- Robot flotante ---------- */
+.robot {
+  position: fixed; right: 0.6rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 40;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem;
+  transform: translateX(130%); pointer-events: none;
+  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+}
+.robot--visible { transform: none; pointer-events: auto; }
+body:has(.barra-pedido:not([hidden])) .robot { bottom: calc(5.4rem + env(safe-area-inset-bottom, 0px)); }
+
+.robot__boton {
+  position: relative; border: 0; background: none; padding: 0; cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.robot__boton img {
+  display: block; width: clamp(4.4rem, 20vw, 5.6rem); height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 30, 80, 0.4));
+  animation: robot-flota 3s ease-in-out infinite;
+}
+
+/* Nubecita de texto */
+.robot__nube, .contacto__nube {
+  position: absolute; white-space: nowrap;
+  background: #fff; color: #0b3a6b; font-weight: 700; font-size: 0.85rem;
+  padding: 0.45rem 0.8rem; box-shadow: 0 4px 14px rgba(0, 30, 80, 0.3);
+  opacity: 0; transform: scale(0.7); transition: opacity 0.3s, transform 0.3s;
+}
+.robot__nube { right: 72%; bottom: 62%; border-radius: 1rem 1rem 0.2rem 1rem; transform-origin: bottom right; }
+.robot--nube .robot__nube { opacity: 1; transform: none; }
+.robot--panel .robot__nube { opacity: 0; }
+
+/* Recuadro con el botón de WhatsApp */
+.robot__panel {
+  position: relative; width: min(18rem, calc(100vw - 1.4rem));
+  background: #fff; color: #0b2a4a; border-radius: 1.1rem; padding: 1rem 1rem 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 30, 80, 0.35);
+}
+.robot__panel[hidden] { display: none; }
+.robot__titulo { margin: 0 1.6rem 0.3rem 0; font-weight: 800; font-size: 1.05rem; }
+.robot__texto { margin: 0 0 0.8rem; font-size: 0.92rem; line-height: 1.35; }
+.robot__cerrar {
+  position: absolute; top: 0.35rem; right: 0.55rem; border: 0; background: none;
+  font-size: 1.6rem; line-height: 1; color: #506a85; cursor: pointer;
+}
+
+/* Botón verde de WhatsApp (recuadro y final de la página) */
+.robot__wa, .contacto__boton {
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.8rem 1.1rem; border-radius: 999px; text-decoration: none;
+  background: #25d366; color: #fff; font-weight: 800; text-align: center;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
+}
+
+/* ---------- Robot y botón al final de la página ---------- */
+.contacto { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 2rem 1rem 1.6rem; }
+.contacto__robot { position: relative; }
+.contacto__robot img {
+  display: block; width: 6rem; height: auto;
+  filter: drop-shadow(0 4px 8px rgba(0, 30, 80, 0.35));
+  animation: robot-flota 3s ease-in-out infinite;
+}
+.contacto__nube { left: 80%; bottom: 66%; border-radius: 1rem 1rem 1rem 0.2rem; transform-origin: bottom left; }
+.contacto__nube--ver { opacity: 1; transform: none; }
+.contacto__boton { width: min(100%, 22rem); font-size: 1.02rem; animation: contacto-pulso 2.4s ease-out infinite; }
+
+@keyframes robot-flota { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes contacto-pulso {
+  0% { box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5); }
+  70%, 100% { box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45), 0 0 0 0.9rem rgba(37, 211, 102, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .robot__boton img, .contacto__robot img, .contacto__boton { animation: none; }
+}
