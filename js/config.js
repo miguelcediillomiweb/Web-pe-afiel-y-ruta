@@ -9,9 +9,13 @@ window.CONFIG = {
   hojaProductos: "Productos",
   hojaSabores: "Sabores",
 
+  /* ---------- Notificaciones (OneSignal): pega aquí tu App ID ---------- */
+  onesignalAppId: "",
+  onesignalSegundos: 25,
+
   /* WhatsApp: lada del país + número, sin espacios ni signos (52 = México) */
   whatsapp: "525665470369",
-  mensajeInicio: "Hola, visité tu web y me interesan los siguientes productos, ¿puedes darme más informes?",
+  mensajeInicio: "¡Hola! 👋😊 Visité tu web de Grupo Peñafiel 🥤✨ y me interesan estos productos. ¿Me das más informes, por favor? 🚚",
 
   /* Carpetas y archivos de imágenes y video */
   carpetaLogos: "img/logos/",
