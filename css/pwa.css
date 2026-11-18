@@ -1,0 +1,40 @@
+/* ============================================================
+   PWA — aviso animado "Agrega a tu inicio" (arriba de la pantalla)
+   ============================================================ */
+.instalar {
+  position: fixed; left: 0.6rem; right: 0.6rem; z-index: 60;
+  top: calc(0.6rem + env(safe-area-inset-top, 0px));
+  max-width: 26rem; margin: 0 auto;
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.65rem 2.2rem 0.65rem 0.65rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.97); color: #0b2a4a;
+  box-shadow: 0 8px 28px rgba(0, 30, 80, 0.35);
+  transform: translateY(-140%); opacity: 0;
+  transition: transform 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.25), opacity 0.4s;
+}
+.instalar--visible { transform: none; opacity: 1; }
+.instalar__icono {
+  flex: 0 0 auto; width: 2.9rem; height: 2.9rem; border-radius: 0.7rem;
+  animation: instalar-salto 1.8s ease-in-out infinite;
+}
+.instalar__texto { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.instalar__texto strong { font-size: 0.95rem; }
+.instalar__texto span { font-size: 0.8rem; color: #3d5873; }
+.instalar__boton {
+  flex: 0 0 auto; border: 0; cursor: pointer;
+  padding: 0.55rem 1rem; border-radius: 999px;
+  background: #25a5e8; color: #fff; font-weight: 800; font-size: 0.85rem;
+  box-shadow: 0 3px 10px rgba(37, 165, 232, 0.5);
+  animation: instalar-pulso 2.2s ease-out infinite;
+}
+.instalar__cerrar {
+  position: absolute; top: 0.2rem; right: 0.45rem; border: 0; background: none;
+  font-size: 1.5rem; line-height: 1; color: #6a8196; cursor: pointer;
+}
+@keyframes instalar-salto { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } 60% { transform: translateY(0); } }
+@keyframes instalar-pulso {
+  0% { box-shadow: 0 3px 10px rgba(37, 165, 232, 0.5), 0 0 0 0 rgba(37, 165, 232, 0.5); }
+  70%, 100% { box-shadow: 0 3px 10px rgba(37, 165, 232, 0.5), 0 0 0 0.7rem rgba(37, 165, 232, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .instalar__icono, .instalar__boton { animation: none; } }
