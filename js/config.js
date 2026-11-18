@@ -7,6 +7,7 @@ window.CONFIG = {
   sheetId: "1Sx-vyhqTJKcNEs6nHqrlLoQ59Dle3zF6jKgg-KJnSXk",
   hojaMarcas: "Marcas",
   hojaProductos: "Productos",
+  hojaSabores: "Sabores",
 
   /* WhatsApp: lada del país + número, sin espacios ni signos (52 = México) */
   whatsapp: "525665470369",
@@ -16,6 +17,7 @@ window.CONFIG = {
   carpetaLogos: "img/logos/",
   carpetaCarga: "img/carga/",
   carpetaProductos: "img/productos/",
+  carpetaSabores: "img/sabores/",
 
   /* ---------- Líneas de productos ---------- 
      La línea sin empieza ni contiene recibe todo lo que no entró a las demás. */
