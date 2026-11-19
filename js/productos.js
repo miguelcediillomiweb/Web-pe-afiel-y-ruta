@@ -69,7 +69,12 @@
   }
 
   function crearTarjeta(marca, sabor) {
-    var t = el("article", "sabor");
+    var t = el("article", "sabor sabor--tema");
+    var tema = sabor.tema || { base: "#285B87", texto: "#FFFFFF", acento: "#173B5A", superficie: "#EFF5FA" };
+    t.style.setProperty("--sabor-base", tema.base);
+    t.style.setProperty("--sabor-texto", tema.texto);
+    t.style.setProperty("--sabor-acento", tema.acento);
+    t.style.setProperty("--sabor-superficie", tema.superficie);
     if (sabor.fondo) {
       t.classList.add("sabor--fondo");
       t.style.setProperty("--fondo-sabor", 'url("' + sabor.fondo + '")');
