@@ -120,7 +120,7 @@
     (opc.sabores || []).forEach(function (f) {
       if (limpiar(f.Marca) && limpiar(f.Sabor) && limpiar(f.Fondo)) {
         var archivo = limpiar(f.Fondo), ruta;
-        if (/^(https?:)?\\/\\//i.test(archivo)) {
+        if (archivo.indexOf("http://") === 0 || archivo.indexOf("https://") === 0 || archivo.indexOf("//") === 0) {
           ruta = archivo;
         } else if (archivo.indexOf("/") !== -1) {
           ruta = archivo.split("/").map(encodeURIComponent).join("/");
