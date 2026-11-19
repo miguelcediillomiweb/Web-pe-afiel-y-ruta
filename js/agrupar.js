@@ -116,7 +116,32 @@
     var defLineas = opc.lineas || {};
     var original = opc.nombreOriginal || "Original";
     var carpetaSabores = opc.carpetaSabores || "";
-    var fondos = {};
+    var fondos = {}, temas = {};
+    function colorValido(v) { return /^#[0-9a-f]{6}$/i.test(limpiar(v)) ? limpiar(v) : ""; }
+    function temaAutomatico(marca, sabor) {
+      var m = slug(marca), s = slug(sabor);
+      var reglas = [
+        [/vainilla|cream|crema/, ["#D8B77A", "#382512", "#A97932", "#FFF5DF"]],
+        [/cereza|cherry|rojo|frutos-rojos/, ["#8F172D", "#FFFFFF", "#D33B52", "#FFF0F2"]],
+        [/naranja|orange|mandarina/, ["#F47A16", "#FFFFFF", "#B94B08", "#FFF3E7"]],
+        [/limon|lima|lime/, ["#83A92B", "#20310B", "#54751A", "#F5F9E9"]],
+        [/pina|piña|pineapple/, ["#E7B72F", "#392B08", "#A77B12", "#FFF9E5"]],
+        [/uva|grape/, ["#623A91", "#FFFFFF", "#402264", "#F4EDFC"]],
+        [/manzana|apple/, ["#4D963E", "#FFFFFF", "#2F6725", "#EFF8EC"]],
+        [/toronja|pink-grapefruit/, ["#E77B91", "#4A1421", "#B9435E", "#FFF0F3"]],
+        [/fresa|strawberry/, ["#D93459", "#FFFFFF", "#A91F3E", "#FFF0F3"]],
+        [/mango/, ["#F0A52B", "#39220A", "#B66A0C", "#FFF5E5"]],
+        [/original/, [m === "dr-pepper" ? "#641C2B" : "#263B65", "#FFFFFF", "#35101A", "#F8EEF0"]]
+      ];
+      for (var i = 0; i < reglas.length; i++) if (reglas[i][0].test(s)) {
+        return { base: reglas[i][1][0], texto: reglas[i][1][1], acento: reglas[i][1][2], superficie: reglas[i][1][3] };
+      }
+      if (m === "dr-pepper") return { base: "#641C2B", texto: "#FFFFFF", acento: "#35101A", superficie: "#F8EEF0" };
+      if (m === "orange-crush") return { base: "#F47A16", texto: "#FFFFFF", acento: "#B94B08", superficie: "#FFF3E7" };
+      if (m === "snapple") return { base: "#28734A", texto: "#FFFFFF", acento: "#174A30", superficie: "#EDF7F0" };
+      if (m === "clamato") return { base: "#A92832", texto: "#FFFFFF", acento: "#701B22", superficie: "#FFF0F0" };
+      return { base: "#285B87", texto: "#FFFFFF", acento: "#173B5A", superficie: "#EFF5FA" };
+    }
     (opc.sabores || []).forEach(function (f) {
       if (limpiar(f.Marca) && limpiar(f.Sabor) && limpiar(f.Fondo)) {
         var archivo = limpiar(f.Fondo), ruta;
@@ -127,7 +152,17 @@
         } else {
           ruta = carpetaSabores + encodeURIComponent(archivo);
         }
-        fondos[slug(f.Marca) + "|" + slug(f.Sabor)] = ruta;
+        var claveSabor = slug(f.Marca) + "|" + slug(f.Sabor);
+        fondos[claveSabor] = ruta;
+      }
+      if (limpiar(f.Marca) && limpiar(f.Sabor)) {
+        var auto = temaAutomatico(f.Marca, f.Sabor);
+        temas[slug(f.Marca) + "|" + slug(f.Sabor)] = {
+          base: colorValido(f.Color) || auto.base,
+          texto: colorValido(f.ColorTexto) || auto.texto,
+          acento: colorValido(f.ColorAcento) || auto.acento,
+          superficie: colorValido(f.ColorSuperficie) || auto.superficie
+        };
       }
     });
     var marcas = [], porSlug = {};
@@ -171,8 +206,11 @@
       var base = m.slug + (idx >= 0 ? "-" + dest.slug : "");
 
       if (!dest._sabores[clave]) {
+        var llaveVisual = m.slug + "|" + clave;
         dest._sabores[clave] = { id: base + "-" + clave, nombre: nombreSabor,
-                                 fondo: fondos[m.slug + "|" + clave] || "", filas: [] };
+                                 fondo: fondos[llaveVisual] || "",
+                                 tema: temas[llaveVisual] || temaAutomatico(m.nombre, nombreSabor),
+                                 filas: [] };
         dest.sabores.push(dest._sabores[clave]);
       }
       var presentacion = textoPresentacion(f.Presentacion, a.retornable);
