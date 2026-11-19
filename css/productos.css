@@ -259,3 +259,42 @@ body.en-marca .marcas { display: none; }
 /* En las vistas de marcas, el contacto y la salida quedan reservados al inicio. */
 body.en-marca .contacto,
 body.en-marca .robot { display: none !important; }
+
+
+/* Identidad visual individual por sabor: fondo publicitario + paleta propia */
+.sabor--tema {
+  border-color: var(--sabor-acento);
+  border-left-color: var(--sabor-base);
+  background: var(--sabor-superficie);
+}
+.sabor--tema .sabor__nombre {
+  color: var(--sabor-texto);
+  background: linear-gradient(120deg, var(--sabor-base), var(--sabor-acento));
+  text-shadow: 0 1px 2px rgba(0,0,0,.22);
+}
+.sabor--tema .pres {
+  border-color: color-mix(in srgb, var(--sabor-base) 28%, transparent);
+}
+.sabor--tema .pres__chip {
+  background: var(--sabor-base);
+  color: var(--sabor-texto);
+}
+.sabor--tema .pres__agregar {
+  border-color: var(--sabor-base);
+  color: var(--sabor-acento);
+}
+.sabor--tema .pres__agregar .pres__tapa {
+  background: var(--sabor-base);
+  color: var(--sabor-texto);
+}
+.sabor--fondo.sabor--tema {
+  background-color: var(--sabor-base);
+  background-image: linear-gradient(180deg, rgba(0,0,0,.12), rgba(0,0,0,.28)), var(--fondo-sabor);
+}
+.sabor--fondo.sabor--tema .sabor__nombre {
+  background: linear-gradient(rgba(0,0,0,.48), rgba(0,0,0,.05));
+  color: #fff;
+}
+.sabor--fondo.sabor--tema .pres {
+  background: color-mix(in srgb, var(--sabor-superficie) 91%, white);
+}
