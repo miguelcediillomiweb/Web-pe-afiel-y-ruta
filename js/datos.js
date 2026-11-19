@@ -1,5 +1,5 @@
 /* ============================================================
-   DATOS — lee las dos pestañas de Google Sheets en vivo.
+   DATOS — lee las pestañas Marcas y Productos de Google Sheets en vivo.
    Si cambias un precio en la hoja, la web lo muestra al recargar.
    ============================================================ */
 (function () {
@@ -50,13 +50,11 @@
 
   var RESPALDO = "datos-hoja-v1";
 
-  function armar(marcas, productos, sabores) {
+  function armar(marcas, productos) {
     return window.Agrupar.armar(marcas, productos, {
       carpetaLogos: C.carpetaLogos,
       carpetaCarga: C.carpetaCarga,
       carpetaProductos: C.carpetaProductos,
-      carpetaSabores: C.carpetaSabores,
-      sabores: sabores || [],
       lineas: C.lineas,
       nombreOriginal: C.nombreOriginal
     });
@@ -66,15 +64,14 @@
   function cargarDatos() {
     return Promise.all([
       leerHoja(C.hojaMarcas),
-      leerHoja(C.hojaProductos),
-      leerHoja(C.hojaSabores || "Sabores").catch(function () { return []; })
+      leerHoja(C.hojaProductos)
     ]).then(function (r) {
-      try { localStorage.setItem(RESPALDO, JSON.stringify({ m: r[0], p: r[1], s: r[2] })); } catch (e) { /* sin almacenamiento */ }
-      return armar(r[0], r[1], r[2]);
+      try { localStorage.setItem(RESPALDO, JSON.stringify({ m: r[0], p: r[1] })); } catch (e) { /* sin almacenamiento */ }
+      return armar(r[0], r[1]);
     }).catch(function (error) {
       var copia = null;
       try { copia = JSON.parse(localStorage.getItem(RESPALDO) || "null"); } catch (e) { copia = null; }
-      if (copia && copia.m && copia.p) return armar(copia.m, copia.p, copia.s);
+      if (copia && copia.m && copia.p) return armar(copia.m, copia.p);
       throw error;
     });
   }
