@@ -116,8 +116,6 @@
     var defLineas = opc.lineas || {};
     var original = opc.nombreOriginal || "Original";
     var carpetaSabores = opc.carpetaSabores || "";
-    var fondos = {}, temas = {};
-    function colorValido(v) { return /^#[0-9a-f]{6}$/i.test(limpiar(v)) ? limpiar(v) : ""; }
     function temaAutomatico(marca, sabor) {
       var m = slug(marca), s = slug(sabor);
       var reglas = [
@@ -132,7 +130,7 @@
         [/pina|piña|pineapple/, ["#E7B72F", "#392B08", "#A77B12", "#FFF9E5"]],
         [/uva|grape/, ["#623A91", "#FFFFFF", "#402264", "#F4EDFC"]],
         [/manzana|apple/, ["#4D963E", "#FFFFFF", "#2F6725", "#EFF8EC"]],
-        [/toronja|pink-grapefruit/, ["#E77B91", "#4A1421", "#B9435E", "#FFF0F3"]],
+        [/toronja|grapefruit|pink-grapefruit/, ["#399447", "#FFFFFF", "#246B32", "#EFF8EC"]],
         [/fresa|strawberry/, ["#D93459", "#FFFFFF", "#A91F3E", "#FFF0F3"]],
         [/mango/, ["#F0A52B", "#39220A", "#B66A0C", "#FFF5E5"]],
         [/original/, [m === "dr-pepper" ? "#641C2B" : "#263B65", "#FFFFFF", "#35101A", "#F8EEF0"]]
@@ -146,29 +144,6 @@
       if (m === "clamato") return { base: "#A92832", texto: "#FFFFFF", acento: "#701B22", superficie: "#FFF0F0" };
       return { base: "#285B87", texto: "#FFFFFF", acento: "#173B5A", superficie: "#EFF5FA" };
     }
-    (opc.sabores || []).forEach(function (f) {
-      if (limpiar(f.Marca) && limpiar(f.Sabor) && limpiar(f.Fondo)) {
-        var archivo = limpiar(f.Fondo), ruta;
-        if (archivo.indexOf("http://") === 0 || archivo.indexOf("https://") === 0 || archivo.indexOf("//") === 0) {
-          ruta = archivo;
-        } else if (archivo.indexOf("/") !== -1) {
-          ruta = archivo.split("/").map(encodeURIComponent).join("/");
-        } else {
-          ruta = carpetaSabores + encodeURIComponent(archivo);
-        }
-        var claveSabor = slug(f.Marca) + "|" + slug(f.Sabor);
-        fondos[claveSabor] = ruta;
-      }
-      if (limpiar(f.Marca) && limpiar(f.Sabor)) {
-        var auto = temaAutomatico(f.Marca, f.Sabor);
-        temas[slug(f.Marca) + "|" + slug(f.Sabor)] = {
-          base: colorValido(f.Color) || auto.base,
-          texto: colorValido(f.ColorTexto) || auto.texto,
-          acento: colorValido(f.ColorAcento) || auto.acento,
-          superficie: colorValido(f.ColorSuperficie) || auto.superficie
-        };
-      }
-    });
     var marcas = [], porSlug = {};
 
     function marca(nombre) {
@@ -212,8 +187,8 @@
       if (!dest._sabores[clave]) {
         var llaveVisual = m.slug + "|" + clave;
         dest._sabores[clave] = { id: base + "-" + clave, nombre: nombreSabor,
-                                 fondo: fondos[llaveVisual] || "",
-                                 tema: temas[llaveVisual] || temaAutomatico(m.nombre, nombreSabor),
+                                 fondo: "",
+                                 tema: temaAutomatico(m.nombre, nombreSabor),
                                  filas: [] };
         dest.sabores.push(dest._sabores[clave]);
       }
