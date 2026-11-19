@@ -71,3 +71,11 @@ body:has(.barra-pedido:not([hidden])) .robot { bottom: calc(5.4rem + env(safe-ar
 @media (prefers-reduced-motion: reduce) {
   .robot__boton img, .contacto__robot img, .contacto__boton { animation: none; }
 }
+
+
+/* ---------- Robot al lado del botón de WhatsApp, y botón de salida ---------- */
+.contacto__fila { display: flex; align-items: center; justify-content: center; gap: 0.7rem; width: min(100%, 28rem); margin-top: 1.8rem; }
+.contacto__fila .contacto__robot img { width: 4.6rem; }
+.contacto__fila .contacto__nube { left: 0; bottom: 100%; margin-bottom: 0.25rem; border-radius: 1rem 1rem 1rem 0.2rem; transform-origin: bottom left; }
+.contacto .contacto__fila .contacto__boton { flex: 1 1 auto; width: auto; min-width: 0; line-height: 1.2; }
+.contacto .contacto__salir { width: min(100%, 22rem); }
