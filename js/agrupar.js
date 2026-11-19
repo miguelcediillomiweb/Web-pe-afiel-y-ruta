@@ -119,7 +119,15 @@
     var fondos = {};
     (opc.sabores || []).forEach(function (f) {
       if (limpiar(f.Marca) && limpiar(f.Sabor) && limpiar(f.Fondo)) {
-        fondos[slug(f.Marca) + "|" + slug(f.Sabor)] = carpetaSabores + encodeURIComponent(limpiar(f.Fondo));
+        var archivo = limpiar(f.Fondo), ruta;
+        if (/^(https?:)?\\/\\//i.test(archivo)) {
+          ruta = archivo;
+        } else if (archivo.indexOf("/") !== -1) {
+          ruta = archivo.split("/").map(encodeURIComponent).join("/");
+        } else {
+          ruta = carpetaSabores + encodeURIComponent(archivo);
+        }
+        fondos[slug(f.Marca) + "|" + slug(f.Sabor)] = ruta;
       }
     });
     var marcas = [], porSlug = {};
