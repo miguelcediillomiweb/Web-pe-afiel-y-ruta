@@ -265,7 +265,7 @@ body.en-marca .robot { display: none !important; }
 .sabor--tema {
   border-color: var(--sabor-acento);
   border-left-color: var(--sabor-base);
-  background: var(--sabor-superficie);
+  background: linear-gradient(135deg, var(--sabor-superficie) 0%, color-mix(in srgb, var(--sabor-base) 13%, white) 100%);
 }
 .sabor--tema .sabor__nombre {
   color: var(--sabor-texto);
