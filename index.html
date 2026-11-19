@@ -30,6 +30,8 @@
   <link rel="stylesheet" href="css/fondo.css?v=10">
   <link rel="stylesheet" href="css/robot.css?v=1">
   <link rel="stylesheet" href="css/pwa.css?v=1">
+  <link rel="stylesheet" href="css/botones.css?v=1">
+  <link rel="stylesheet" href="css/salida.css?v=1">
 </head>
 <body>
 
@@ -148,11 +150,14 @@
 
   <!-- PIE -->
   <section class="contacto" id="contacto" aria-label="Contacto de ventas">
-    <div class="contacto__robot">
-      <span class="contacto__nube" id="contacto-nube">¡Ven, contáctame! 👋</span>
-      <img src="img/robot%20red%20bull.webp" alt="Robot de Grupo Peñafiel">
+    <div class="contacto__fila">
+      <div class="contacto__robot">
+        <span class="contacto__nube" id="contacto-nube">¡Ven, contáctame! 👋</span>
+        <img src="img/robot%20red%20bull.webp" alt="Robot de Grupo Peñafiel">
+      </div>
+      <a class="contacto__boton" id="contacto-boton" target="_blank" rel="noopener">💬 Contacta a tu asesor de ventas</a>
     </div>
-    <a class="contacto__boton" id="contacto-boton" target="_blank" rel="noopener">💬 Contacta a tu asesor de ventas</a>
+    <button class="contacto__salir" id="contacto-salir" type="button">🚪 Salir de la web</button>
   </section>
 
   <footer class="pie">
@@ -222,5 +227,7 @@
   <script src="js/recorte.js?v=1" defer></script>
   <script src="js/robot.js?v=1" defer></script>
   <script src="js/pwa.js?v=1" defer></script>
+  <script src="js/botones.js?v=2" defer></script>
+  <script src="js/salida.js?v=1" defer></script>
 </body>
 </html>
