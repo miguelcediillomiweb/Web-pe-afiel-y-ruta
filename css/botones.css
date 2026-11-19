@@ -1,0 +1,89 @@
+/* ============================================================
+   BOTONES ESPACIALES — estilo Uiverse (StealthWorm) adaptado a la web.
+   Borde con degradado, estrellas al tocar o pasar el cursor y brillo suave.
+   ============================================================ */
+.btn-esp {
+  --bf: #212121;
+  --bb: linear-gradient(137.48deg, #ffdb3b 10%, #fe53bb 45%, #8f51ea 67%, #0044ff 87%);
+  --g1: rgba(254, 83, 186, 0.6);
+  --g2: rgba(142, 81, 234, 0.65);
+}
+.btn-esp--wa {
+  --bf: #0b2e1c;
+  --bb: linear-gradient(137.48deg, #b6ff6a 10%, #25d366 45%, #12a150 67%, #0c7a3d 87%);
+  --g1: rgba(37, 211, 102, 0.6);
+  --g2: rgba(18, 161, 80, 0.65);
+}
+.btn-esp[aria-pressed="true"] {
+  --bf: #0b2e1c;
+  --bb: linear-gradient(137.48deg, #b6ff6a 10%, #25d366 45%, #12a150 67%, #0c7a3d 87%);
+  --g1: rgba(37, 211, 102, 0.6);
+  --g2: rgba(18, 161, 80, 0.65);
+}
+
+.btn-esp.btn-esp {
+  position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box;
+  display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem;
+  min-height: 3rem; padding: 0.4rem 1.3rem;
+  border-radius: 5rem;
+  color: #fff; font-weight: 800; font-size: 0.8rem; text-align: center; text-decoration: none;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.55);
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  border: 3px solid transparent !important;
+  background: var(--bb) border-box;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+.btn-esp--siempre.btn-esp { animation-play-state: running !important; }
+
+/* Capas de efectos (las agrega botones.js) */
+.btn-esp__fx { position: absolute; inset: 0; z-index: -1; border-radius: inherit; overflow: hidden; pointer-events: none; }
+.btn-esp__brillo {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 90% at 28% 50%, var(--g1), transparent 70%),
+    radial-gradient(ellipse 60% 90% at 72% 50%, var(--g2), transparent 70%);
+  opacity: 0.7;
+}
+.btn-esp--siempre .btn-esp__brillo { animation: btn-brillo 4s ease-in-out infinite; }
+.btn-esp__estrellas { position: absolute; inset: 0; overflow: hidden; background: var(--bf); opacity: 0; transition: opacity 0.5s; }
+.btn-esp__estrellas::before, .btn-esp__estrellas::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: calc(100% + 42px);
+  background-image: radial-gradient(#fff 1px, transparent 1.6px);
+  animation-timing-function: linear; animation-iteration-count: infinite; animation-play-state: paused;
+}
+.btn-esp__estrellas::before { background-size: 21px 21px; opacity: 0.45; animation-name: btn-estrellas-a; animation-duration: 3.5s; }
+.btn-esp__estrellas::after { background-size: 42px 42px; background-position: 11px 7px; opacity: 0.95; animation-name: btn-estrellas-b; animation-duration: 7s; }
+
+.btn-esp:active .btn-esp__estrellas,
+.btn-esp:focus-visible .btn-esp__estrellas { opacity: 1; }
+.btn-esp:active .btn-esp__estrellas::before, .btn-esp:active .btn-esp__estrellas::after,
+.btn-esp:focus-visible .btn-esp__estrellas::before, .btn-esp:focus-visible .btn-esp__estrellas::after { animation-play-state: running; }
+.btn-esp.btn-esp:active, .btn-esp.btn-esp:focus-visible { animation-play-state: running !important; }
+.btn-esp:active { --bb: linear-gradient(#fe53bb, #fe53bb); }
+.btn-esp--wa:active, .btn-esp[aria-pressed="true"]:active { --bb: linear-gradient(#25d366, #25d366); }
+
+@media (hover: hover) {
+  .btn-esp:hover { transform: scale(1.06); }
+  .btn-esp:hover .btn-esp__estrellas { opacity: 1; }
+  .btn-esp:hover .btn-esp__estrellas::before, .btn-esp:hover .btn-esp__estrellas::after { animation-play-state: running; }
+  .btn-esp.btn-esp:hover { animation-play-state: running !important; }
+}
+.btn-esp:active { transform: scale(0.97); }
+
+/* Ajustes por botón */
+.btn-esp.pres__agregar { width: 100%; justify-self: stretch; margin-top: 0.3rem; }
+.btn-esp.pres__agregar .pres__tapa { flex: 0 0 auto; }
+.btn-esp.vista__volver { background-color: transparent !important; }
+.btn-esp.contacto__boton { width: min(100%, 22rem); font-size: 0.74rem; letter-spacing: 0.05em; }
+.btn-esp.robot__wa { font-size: 0.72rem; letter-spacing: 0.05em; }
+.btn-esp.instalar__boton { min-height: 2.6rem; padding: 0.3rem 1rem; font-size: 0.75rem; }
+
+@keyframes btn-brillo { 0%, 100% { opacity: 0.45; } 50% { opacity: 0.95; } }
+@keyframes btn-estrellas-a { from { transform: translateY(0); } to { transform: translateY(-21px); } }
+@keyframes btn-estrellas-b { from { transform: translateY(0); } to { transform: translateY(-42px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-esp.btn-esp { animation: none !important; }
+  .btn-esp__estrellas::before, .btn-esp__estrellas::after, .btn-esp--siempre .btn-esp__brillo { animation: none; }
+}
