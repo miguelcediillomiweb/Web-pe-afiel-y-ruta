@@ -254,3 +254,8 @@ body.en-marca .marcas { display: none; }
   -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
   box-shadow: 0 2px 10px rgba(0, 30, 80, 0.14);
 }
+
+
+/* En las vistas de marcas, el contacto y la salida quedan reservados al inicio. */
+body.en-marca .contacto,
+body.en-marca .robot { display: none !important; }
