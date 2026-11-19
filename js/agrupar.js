@@ -121,6 +121,10 @@
     function temaAutomatico(marca, sabor) {
       var m = slug(marca), s = slug(sabor);
       var reglas = [
+        /* Sabores compuestos y variantes específicas primero para evitar colores equivocados */
+        [/manzanada|manzana[- ]?canela|apple[- ]?cinnamon/, ["#80502D", "#FFFFFF", "#4A2B18", "#F7EDE3"]],
+        [/pepino.*limon|limon.*pepino|cucumber.*lime/, ["#258B78", "#FFFFFF", "#176B82", "#E8F7F5"]],
+        [/pepino/, ["#39A879", "#123B32", "#176B62", "#EAF8F1"]],
         [/vainilla|cream|crema/, ["#D8B77A", "#382512", "#A97932", "#FFF5DF"]],
         [/cereza|cherry|rojo|frutos-rojos/, ["#8F172D", "#FFFFFF", "#D33B52", "#FFF0F2"]],
         [/naranja|orange|mandarina/, ["#F47A16", "#FFFFFF", "#B94B08", "#FFF3E7"]],
