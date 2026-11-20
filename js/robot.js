@@ -41,7 +41,9 @@
   var reloj=null, abierto=false, conversacion=[];
   function programar(ms){clearTimeout(reloj);reloj=setTimeout(ciclo,ms);}
   function elegirLado(){
-    flota.classList.toggle("robot--izquierda",Math.random()<0.5);
+    var izquierda = Math.random() < 0.5;
+    flota.classList.toggle("robot--izquierda", izquierda);
+    flota.dataset.lado = izquierda ? "izquierda" : "derecha";
   }
   function ocultar(){
     flota.classList.remove("robot--visible","robot--nube");
