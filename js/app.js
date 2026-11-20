@@ -23,6 +23,7 @@
   function iniciarVideoPrincipal() {
     if (video.dataset.cargado === "1") return;
     video.dataset.cargado = "1";
+    video.dataset.inicioPendiente = "0";
     video.src = C.videoBanner;
     var intento = video.play();
     if (intento && intento.catch) intento.catch(function () {});
