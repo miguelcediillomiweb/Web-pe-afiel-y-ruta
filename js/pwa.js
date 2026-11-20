@@ -50,7 +50,11 @@
 
   function ocupado() {
     var carga = document.getElementById("pantalla-carga");
-    return document.hidden || document.body.classList.contains("sin-scroll") || (carga && !carga.hidden);
+    var bienvenida = document.getElementById("bienvenida-inicial");
+    return document.hidden ||
+      document.body.classList.contains("sin-scroll") ||
+      (carga && !carga.hidden) ||
+      (bienvenida && !bienvenida.classList.contains("bienvenida-inicial--salir"));
   }
 
   function mostrar() {
