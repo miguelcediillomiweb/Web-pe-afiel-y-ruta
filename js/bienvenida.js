@@ -37,7 +37,6 @@
         '<label for="nombre-negocio">¿Cuál es el nombre de tu negocio? 🏪</label>' +
         '<input id="nombre-negocio" name="nombre" type="text" maxlength="40" autocomplete="organization" placeholder="Escribe aquí el nombre" required>' +
         '<button class="telefono__enviar" type="submit">Enviar ✨</button>' +
-        '<small class="telefono__nota">Tu nombre se guarda solo en este dispositivo para saludarte en tus próximas visitas. 💙</small>' +
       '</form>';
     var form = document.getElementById("registro-negocio");
     var input = document.getElementById("nombre-negocio");
