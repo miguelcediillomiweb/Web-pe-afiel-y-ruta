@@ -313,7 +313,7 @@
 .campo__fauna {fill:#0b1410;}
 .escena[data-clima="niebla"] .escena__campo {opacity:.35;filter:blur(1.2px);}
 .escena[data-clima="lluvia"] .escena__campo {opacity:.58;}
-.casa-pasa {position:absolute;z-index:2;right:-8rem;width:clamp(2.7rem,11vw,5rem);color:#101a16;opacity:calc(.6 + var(--noche) * .3);animation:casa-cruza linear forwards;pointer-events:none;}
+.casa-pasa {position:absolute;z-index:2.8;right:-8rem;width:clamp(2.7rem,11vw,5rem);color:#101a16;opacity:calc(.6 + var(--noche) * .3);animation:casa-cruza linear forwards;pointer-events:none;}
 .casa-pasa svg {display:block;width:100%;height:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));}
 .casa__ventana {fill:#ffe7a3;opacity:calc(var(--noche) * .95);}
 .casa__puerta {fill:#26362a;}
