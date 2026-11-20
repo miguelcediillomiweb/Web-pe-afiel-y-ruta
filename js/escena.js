@@ -118,6 +118,19 @@
       return e;
     }
     capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz"); capa("sombra");
+    /* Siluetas de campo: magueyes, nopales y fauna rural */
+    var campo = capa("escena__campo");
+    campo.innerHTML =
+      '<svg viewBox="0 0 900 180" preserveAspectRatio="none" aria-hidden="true">' +
+      '<g class="campo__planta">' +
+      '<path d="M28 180 L28 120 Q8 100 15 76 Q28 82 34 110 Q43 76 60 72 Q62 105 40 125 L42 180 Z"/>' +
+      '<path d="M96 180 L100 122 L80 96 Q72 76 80 60 Q94 70 106 96 L115 70 Q126 56 136 58 Q133 84 116 112 L118 180 Z"/>' +
+      '<path d="M176 180 L174 120 Q145 106 150 78 Q164 86 180 110 Q187 78 206 72 Q204 104 188 124 L192 180 Z"/>' +
+      '<path d="M258 180 L258 114 Q236 90 242 62 Q257 75 266 100 Q274 70 291 66 Q290 94 274 120 L278 180 Z"/>' +
+      '</g><g class="campo__fauna">' +
+      '<path d="M530 154 Q534 130 554 132 L572 132 Q584 132 590 145 L603 148 L600 159 L587 159 L583 174 L575 174 L574 158 L548 158 L544 175 L535 175 L536 158 Z"/>' +
+      '<path d="M640 154 Q644 132 665 134 L683 134 Q695 134 702 146 L716 150 L713 160 L701 160 L697 174 L689 174 L688 159 L660 159 L656 175 L648 175 L649 158 Z"/>' +
+      '</g></svg>';
     var lluviaEl = capa("lluvia"), gotas = [];
     for (var g = 0; g < 70; g++) {
       var go = document.createElement("i");
@@ -236,6 +249,18 @@
       cielo_.appendChild(a);
     }
 
+    function lanzarCasa() {
+      var casa = document.createElement("div");
+      casa.className = "casa-pasa";
+      casa.innerHTML = '<svg viewBox="0 0 110 58" aria-hidden="true">' +
+        '<path d="M4 28 L55 3 L106 28 Z" fill="currentColor"/><rect x="14" y="27" width="82" height="29" fill="currentColor"/>' +
+        '<rect x="28" y="35" width="12" height="12" class="casa__ventana"/><rect x="66" y="32" width="17" height="24" class="casa__puerta"/></svg>';
+      casa.style.bottom = (1.15 + Math.random() * 1.5).toFixed(2) + "rem";
+      casa.style.animationDuration = (28 + Math.random() * 14).toFixed(0) + "s";
+      casa.addEventListener("animationend", function () { casa.remove(); });
+      cielo_.appendChild(casa);
+    }
+
     function lanzarFugaz() {
       var f = document.createElement("i");
       f.className = "fugaz";
@@ -274,12 +299,21 @@
       if (estado.oscuridad < 0.35 && clima.lluvia === 0 && clima.niebla < 0.5 &&
           Math.random() < 0.02 + 0.09 * libre && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
       if (estado.oscuridad > 0.85 && clima.lluvia === 0 && clima.cobertura < 0.7 &&
-          Math.random() < 0.03 + 0.12 * libre && !cielo_.querySelector(".fugaz")) lanzarFugaz();
+          Math.random() < 0.07 + 0.24 * libre && !cielo_.querySelector(".fugaz")) lanzarFugaz();
       if (estado.oscuridad < 0.5 && clima.lluvia === 0 && clima.niebla < 0.6 && clima.cobertura < 0.8 &&
           Math.random() < 0.012 && !cielo_.querySelector(".avion")) lanzarAvion();
-      if (estado.oscuridad > 0.85 && clima.cobertura < 0.9 && Math.random() < 0.01 &&
+      if (estado.oscuridad > 0.85 && clima.cobertura < 0.9 && Math.random() < 0.025 &&
           !cielo_.querySelector(".avion")) lanzarAvion();
     }, 1000);
+
+    /* Casa distante cruzando el paisaje de vez en cuando */
+    (function casasIntermitentes() {
+      var espera = 45000 + Math.random() * 50000;
+      setTimeout(function () {
+        if (!document.hidden && clima.niebla < 0.85 && !cielo_.querySelector(".casa-pasa")) lanzarCasa();
+        casasIntermitentes();
+      }, espera);
+    })();
 
     function ponerClima() { pedirClima(function (c) { clima = c; pintar(); }); }
     ponerClima();
