@@ -27,8 +27,9 @@
   <link rel="stylesheet" href="css/pedido.css?v=31">
   <link rel="stylesheet" href="css/anuncio.css?v=31">
   <link rel="stylesheet" href="css/lista.css?v=31">
-  <link rel="stylesheet" href="css/fondo.css?v=33">\n  <link rel="stylesheet" href="css/bienvenida.css?v=3">
-  <link rel="stylesheet" href="css/pwa.css?v=33">
+  <link rel="stylesheet" href="css/fondo.css?v=34">
+  <link rel="stylesheet" href="css/bienvenida.css?v=4">
+  <link rel="stylesheet" href="css/pwa.css?v=34">
   <link rel="stylesheet" href="css/robot.css?v=31">
   <link rel="stylesheet" href="css/botones.css?v=31">
   <link rel="stylesheet" href="css/salida.css?v=31">
@@ -36,7 +37,7 @@
 </head>
 <body>\n\n  <!-- Bienvenida inicial en teléfono: video del banner y registro local del negocio -->
   <section class="bienvenida-inicial" id="bienvenida-inicial" aria-label="Bienvenida a Grupo Peñafiel">
-    <video class="bienvenida-inicial__video" id="bienvenida-video" muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+    <video class="bienvenida-inicial__video" id="bienvenida-video" muted autoplay playsinline preload="metadata" aria-hidden="true"></video>
     <div class="bienvenida-inicial__velo"></div>
     <div class="bienvenida-inicial__contenido">
       <div class="telefono">
@@ -161,6 +162,11 @@
           <span>Última actualización: <strong data-config="ultimaActualizacion"></strong></span>
         </span>
       </p>
+      <button class="instalar-app instalar-app--superior" id="instalar-app-superior" type="button" hidden aria-label="Agregar Ruta 1371 a la pantalla principal">
+        <span class="instalar-app__icono" aria-hidden="true">📲</span>
+        <span class="instalar-app__texto"><strong>Tu catálogo, siempre a tu alcance.</strong><small>Toca aquí y agrégalo a tu pantalla principal.</small></span>
+        <span class="instalar-app__flecha" aria-hidden="true">›</span>
+      </button>
     </section>
 
     <!-- BANNER 3: marcas -->
@@ -265,8 +271,8 @@
 
   <!-- Extras de la web principal -->
   <script src="js/recorte.js?v=31" defer></script>
-  <script src="js/burbujas.js?v=33" defer></script>\n  <script src="js/bienvenida.js?v=2" defer></script>
-  <script src="js/pwa.js?v=36" defer></script>
+  <script src="js/burbujas.js?v=34" defer></script>\n  <script src="js/bienvenida.js?v=3" defer></script>
+  <script src="js/pwa.js?v=37" defer></script>
   <script src="js/robot.js?v=31" defer></script>
   <script src="js/botones.js?v=31" defer></script>
   <script src="js/salida.js?v=31" defer></script>
