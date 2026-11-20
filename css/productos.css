@@ -298,3 +298,78 @@ body.en-marca .robot { display: none !important; }
 .sabor--fondo.sabor--tema .pres {
   background: color-mix(in srgb, var(--sabor-superficie) 91%, white);
 }
+
+/* ---------- Botón "Quiero conocer más": efecto Glitch Uiverse ---------- */
+.pres__agregar.pres__glitch {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  box-sizing: border-box;
+  min-height: 3.15rem;
+  padding: 0.85rem 1rem;
+  border: 0;
+  border-radius: 0.35rem;
+  background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
+  color: #fff;
+  box-shadow: 6px 0 0 #00e6f6;
+  font-size: clamp(0.85rem, 2.6vw, 1.05rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  text-shadow: none;
+  outline: transparent;
+  transition: transform .15s ease;
+}
+.pres__agregar.pres__glitch .pres__tapa { display: none; }
+.pres__agregar.pres__glitch .pres__texto { position: relative; z-index: 1; }
+.pres__agregar.pres__glitch::after {
+  --slice-0: inset(50% 50% 50% 50%);
+  --slice-1: inset(80% -6px 0 0);
+  --slice-2: inset(50% -6px 30% 0);
+  --slice-3: inset(10% -6px 85% 0);
+  --slice-4: inset(40% -6px 43% 0);
+  --slice-5: inset(80% -6px 5% 0);
+  content: attr(data-glitch);
+  display: block;
+  position: absolute;
+  inset: 0;
+  padding: inherit;
+  border-radius: inherit;
+  background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #ff013c 5%);
+  color: #fff;
+  text-shadow: -3px -3px 0 #f8f005, 3px 3px 0 #00e6f6;
+  clip-path: var(--slice-0);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+@media (hover: hover) {
+  .pres__agregar.pres__glitch:hover::after {
+    animation: pres-glitch 1s steps(2, end);
+  }
+  .pres__agregar.pres__glitch:hover { transform: translateY(-1px); }
+}
+.pres__agregar.pres__glitch:active { transform: scale(.97); }
+.pres__agregar.pres__glitch[aria-pressed="true"] {
+  background: linear-gradient(45deg, transparent 5%, #167a43 5%);
+  color: #fff;
+}
+.pres__agregar.pres__glitch[aria-pressed="true"]::after {
+  background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #167a43 5%);
+}
+@keyframes pres-glitch {
+  0% { clip-path: var(--slice-1); transform: translate(-20px,-10px); }
+  10% { clip-path: var(--slice-3); transform: translate(10px,10px); }
+  20% { clip-path: var(--slice-1); transform: translate(-10px,10px); }
+  30% { clip-path: var(--slice-3); transform: translate(0,5px); }
+  40% { clip-path: var(--slice-2); transform: translate(-5px,0); }
+  50% { clip-path: var(--slice-3); transform: translate(5px,0); }
+  60% { clip-path: var(--slice-4); transform: translate(5px,10px); }
+  70% { clip-path: var(--slice-2); transform: translate(-10px,10px); }
+  80% { clip-path: var(--slice-5); transform: translate(20px,-10px); }
+  90% { clip-path: var(--slice-1); transform: translate(-10px,0); }
+  100% { clip-path: var(--slice-1); transform: translate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pres__agregar.pres__glitch:hover::after { animation: none; }
+}
