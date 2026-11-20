@@ -10,7 +10,7 @@ try {
   importScripts("https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.sw.js");
 } catch (e) { /* sin internet al instalar: se sigue sin OneSignal hasta la próxima actualización */ }
 
-var VERSION = "penafiel-v1";
+var VERSION = "penafiel-v2";
 var BASE = ["./", "index.html", "manifest.json", "img/icon-192.png", "img/icon-512.png"];
 
 self.addEventListener("install", function (e) {
