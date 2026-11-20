@@ -2,6 +2,8 @@
 .robot{position:fixed;right:.65rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;transform:translateX(135%);pointer-events:none;transition:transform .55s cubic-bezier(.2,.9,.3,1.2)}
 .robot--visible{transform:none;pointer-events:auto}
 .robot.robot--izquierda{left:.65rem;right:auto;align-items:flex-start;transform:translateX(-135%)}
+.robot:not(.robot--izquierda){left:auto;right:.65rem;align-items:flex-end}
+.robot.robot--izquierda.robot--visible{left:.65rem;right:auto}
 .robot.robot--izquierda.robot--visible{transform:none}
 body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-inset-bottom,0px))}
 .robot__boton{position:relative;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
