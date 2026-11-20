@@ -37,7 +37,17 @@
 
   /* ---------- 3. Aviso de instalación ---------- */
   var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-  var instalada = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
+  var CLAVE_INSTALADA = "ruta1371_pwa_instalada_v1";
+  function estaInstalada() {
+    var modoApp = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+      (window.matchMedia && window.matchMedia("(display-mode: fullscreen)").matches) || navigator.standalone === true;
+    if (modoApp) {
+      try { localStorage.setItem(CLAVE_INSTALADA, "1"); } catch (e) {}
+      return true;
+    }
+    try { return localStorage.getItem(CLAVE_INSTALADA) === "1"; } catch (e) { return false; }
+  }
+  var instalada = estaInstalada();
   var evento = null, aviso = null, mostrado = false;
 
   function cerrar() {
@@ -58,7 +68,7 @@
   }
 
   function mostrar() {
-    if (mostrado || instalada) return;
+    if (mostrado || instalada || estaInstalada()) return;
     if (ocupado()) { setTimeout(mostrar, 2500); return; }
     mostrado = true;
 
@@ -79,6 +89,7 @@
         '<span>' + ayuda + '</span>' +
       '</div>' +
       (evento && !esIOS ? '<button class="instalar__boton" type="button">Instalar</button>' : '') +
+      (esIOS ? '<button class="instalar__confirmar" type="button">Ya la agregué</button>' : '') +
       '<button class="instalar__cerrar" type="button" aria-label="Cerrar">×</button>';
 
     document.body.appendChild(aviso);
@@ -98,17 +109,26 @@
       });
     });
 
+    var confirmar = aviso.querySelector(".instalar__confirmar");
+    if (confirmar) confirmar.addEventListener("click", function () {
+      try { localStorage.setItem(CLAVE_INSTALADA, "1"); } catch (e) {}
+      instalada = true;
+      cerrar();
+    });
+
     aviso.querySelector(".instalar__cerrar").addEventListener("click", cerrar);
   }
 
   window.addEventListener("beforeinstallprompt", function (e) {
     e.preventDefault();
+    if (estaInstalada()) return;
     evento = e;
     if (!mostrado) setTimeout(mostrar, 12000);
   });
 
   window.addEventListener("appinstalled", function () {
     instalada = true;
+    try { localStorage.setItem(CLAVE_INSTALADA, "1"); } catch (e) {}
     evento = null;
     cerrar();
   });
