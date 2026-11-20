@@ -15,6 +15,7 @@
   /* Si entran directamente a una marca, no interrumpimos la navegación. */
   if (location.hash && location.hash.length > 1) {
     overlay.remove();
+    document.dispatchEvent(new Event("bienvenida:cerrada"));
     return;
   }
 
