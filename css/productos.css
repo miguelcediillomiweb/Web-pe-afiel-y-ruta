@@ -408,3 +408,9 @@ body.en-marca .robot { display: none !important; }
 .vista__volcan{display:block;width:clamp(3.4rem,13vw,5.2rem);height:auto;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(20,45,70,.22));transform-origin:50% 65%;animation:volcan-tintinea 2.8s ease-in-out infinite}
 @keyframes volcan-tintinea{0%,100%{transform:rotate(-4deg) translateY(0) scale(1)}18%{transform:rotate(5deg) translateY(-3px) scale(1.035)}32%{transform:rotate(-3deg) translateY(0) scale(1)}48%{filter:drop-shadow(0 0 7px rgba(255,191,46,.8)) drop-shadow(0 3px 5px rgba(20,45,70,.22))}}
 @media(prefers-reduced-motion:reduce){.vista__volcan{animation:none}}
+
+
+/* El halo LED de cada presentación toma el color del sabor, no solo el de la marca. */
+.sabor--tema .pres::before {
+  background: var(--sabor-base, var(--marca-efecto, #d9291c));
+}
