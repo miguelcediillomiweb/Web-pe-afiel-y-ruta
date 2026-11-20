@@ -59,7 +59,7 @@ window.CONFIG = {
   imagenPlaca: "img/placa-productos.png",
 
   /* Pantalla de carga al abrir una marca (segundos) — siguiente paso */
-  cargaSegundos: 3.5,
+  cargaSegundos: 0.8,
 
   /* Nombre de la tarjeta cuando el producto no trae sabor (ej. "DR PEPPER 600 ml") */
   nombreOriginal: "Original",
@@ -77,8 +77,8 @@ window.CONFIG = {
   anuncios: ["tendencia 1.jpg", "tendencia 2.jpg", "tendencia 3.jpg", "tendencia 4.jpg", "tendencia 5.jpg"],
   textoAnuncio: "Estos productos están causando tendencia en Peñafiel.",
   anuncioSegundos: 4,          /* cuánto dura abierto (cuenta de 4 a 1) */
-  anuncioRetraso: 20,         /* segundos que espera después de abrir la web */
-  anuncioCadaSegundos: 30,    /* vuelve a mostrarse 30 segundos después de cerrarse */
+  anuncioRetraso: 60,         /* segundos que espera después de abrir la web */
+  anuncioCadaSegundos: 60,    /* vuelve a mostrarse 30 segundos después de cerrarse */
   /* ---------- Clima de la escena (Open-Meteo, gratis y sin clave) ---------- */
   clima: { latitud: 19.71, longitud: -98.97, cadaMinutos: 15 },
 
