@@ -1,8 +1,8 @@
 /* ============================================================
-   CARGA — pantalla de 3-4 segundos al elegir una marca.
+   CARGA — transición breve al elegir una marca.
    Usa de la hoja (pestaña Marcas): el logo, el Eslogan (la frase)
    y el Cartel (nombre del archivo del póster, en img/carga/).
-   La duración está en config.js (cargaSegundos).
+   La duración está en config.js (cargaSegundos); se evita una espera artificial larga.
    ============================================================ */
 (function () {
   var cierre = null;
