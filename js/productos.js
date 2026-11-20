@@ -75,13 +75,6 @@
     t.style.setProperty("--sabor-texto", tema.texto);
     t.style.setProperty("--sabor-acento", tema.acento);
     t.style.setProperty("--sabor-superficie", tema.superficie);
-    if (sabor.fondo) {
-      t.classList.add("sabor--fondo");
-      t.style.setProperty("--fondo-sabor", 'url("' + sabor.fondo + '")');
-      var prueba = new Image();
-      prueba.onerror = function () { t.classList.remove("sabor--fondo"); };
-      prueba.src = sabor.fondo;
-    }
     t.appendChild(el("h3", "sabor__nombre", sabor.nombre));
     var lista = el("ul", "presentaciones");
     sabor.filas.forEach(function (f) { lista.appendChild(crearFila(marca, sabor, f)); });
