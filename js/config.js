@@ -76,9 +76,9 @@ window.CONFIG = {
   carpetaAnuncios: "img/tendencia/",
   anuncios: ["tendencia 1.jpg", "tendencia 2.jpg", "tendencia 3.jpg", "tendencia 4.jpg", "tendencia 5.jpg"],
   textoAnuncio: "Estos productos están causando tendencia en Peñafiel.",
-  anuncioSegundos: 4,          /* cuánto dura abierto (con cuenta de 5 a 1) */
+  anuncioSegundos: 4,          /* cuánto dura abierto (cuenta de 4 a 1) */
   anuncioRetraso: 20,         /* segundos que espera después de abrir la web */
-  anuncioCadaSegundos: 30,    /* se vuelve a mostrar cada 2 minutos de navegar */
+  anuncioCadaSegundos: 30,    /* vuelve a mostrarse 30 segundos después de cerrarse */
   /* ---------- Clima de la escena (Open-Meteo, gratis y sin clave) ---------- */
   clima: { latitud: 19.71, longitud: -98.97, cadaMinutos: 15 },
 
