@@ -122,3 +122,98 @@
   text-transform: uppercase;
   color: var(--ambar);
 }
+
+
+/* Bienvenida principal: alto contraste sobre cualquier video */
+.hero__bienvenida { width: min(100%, 48rem); }
+.bienvenida__texto {
+  display: block;
+  text-transform: uppercase;
+  font-size: clamp(2.15rem, 7.5vw, 4.15rem);
+  font-weight: 800;
+  letter-spacing: .025em;
+  color: #fff;
+  -webkit-text-stroke: 1px rgba(5, 24, 49, .55);
+  text-shadow: 0 3px 0 #07345f, 0 6px 18px rgba(0,0,0,.9), 0 0 24px rgba(0,0,0,.75);
+}
+.bienvenida__cliente {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: .55rem;
+  width: fit-content;
+  max-width: 100%;
+  margin: .65rem auto .25rem;
+  padding: .35rem .9rem;
+  border: 2px solid #ffd34e;
+  border-radius: 999px;
+  background: linear-gradient(110deg, rgba(3,34,73,.96), rgba(0,91,151,.94));
+  color: #fff;
+  font: 800 clamp(1.15rem, 4.2vw, 2rem)/1.15 "Bricolage Grotesque", system-ui, sans-serif;
+  text-shadow: 0 2px 5px #00152c;
+  box-shadow: 0 5px 18px rgba(0,0,0,.55), 0 0 18px rgba(255,205,61,.25);
+}
+.bienvenida__cliente[hidden] { display: none !important; }
+.bienvenida__mano { display: inline-block; font-size: 1.05em; transform-origin: 70% 75%; animation: bienvenida-saludar 1.25s ease-in-out infinite; }
+.bienvenida__mano:last-child { animation-delay: .18s; }
+@keyframes bienvenida-saludar { 0%,100% { transform: rotate(0); } 25% { transform: rotate(22deg); } 50% { transform: rotate(-12deg); } 75% { transform: rotate(18deg); } }
+.bienvenida__fila {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(.45rem, 2vw, 1.2rem);
+  width: min(94vw, 43rem);
+  margin: .9rem auto 0;
+  padding: .55rem clamp(.5rem, 2vw, 1rem);
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 1.1rem;
+  background: linear-gradient(110deg, rgba(3,24,53,.92), rgba(0,75,130,.88));
+  box-shadow: 0 8px 24px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.bienvenida__logo {
+  width: 50%;
+  max-width: 19rem;
+  max-height: clamp(3.2rem, 10vw, 6.3rem);
+  object-fit: contain;
+  filter: drop-shadow(0 3px 5px rgba(0,0,0,.55));
+}
+.saludo {
+  border: 2px solid rgba(255,211,78,.9);
+  background: linear-gradient(145deg, rgba(3,24,53,.94), rgba(0,72,119,.91));
+  box-shadow: 0 9px 28px rgba(0,0,0,.48), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.saludo__gracias {
+  color: #fff3b0;
+  font-family: var(--fuente-texto);
+  font-style: normal;
+  font-weight: 800;
+  text-shadow: 0 2px 5px #00152c;
+}
+.saludo__hora {
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.9);
+}
+.saludo__dia {
+  display: inline-block;
+  margin-top: .7rem;
+  padding: .28rem .8rem;
+  border-radius: 999px;
+  color: #08264a;
+  background: #ffe17a;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-shadow: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,.3);
+}
+@media (max-width: 600px) {
+  .hero { min-height: max(40rem, 94svh); }
+  .hero__contenido { padding: 2rem .85rem 5rem; gap: .65rem; }
+  .bienvenida__texto { font-size: clamp(1.95rem, 9vw, 2.8rem); line-height: 1.02; }
+  .bienvenida__fila { width: 96%; gap: .35rem; padding: .45rem .35rem; }
+  .bienvenida__logo { max-height: 4rem; }
+  .saludo { width: 100%; padding: .85rem .65rem 1rem; }
+}
+@media (min-width: 700px) {
+  .hero__contenido { max-width: 54rem; }
+}
