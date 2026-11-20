@@ -4,7 +4,7 @@
    ============================================================ */
 (function () {
   var C = window.CONFIG || {};
-  var LEMA = "Atrévete a conocer otras marcas de Peñafiel";
+  var LEMA = "Conoce más del Grupo Peñafiel y ofrece nuevas alternativas a tus clientes.";
   var abierta = false;
 
   function mezclar(a) {
