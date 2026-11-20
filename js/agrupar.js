@@ -170,6 +170,7 @@
       if (m === "orange-crush") return { base: "#F47A16", texto: "#FFFFFF", acento: "#B94B08", superficie: "#FFF3E7" };
       if (m === "snapple") return { base: "#28734A", texto: "#FFFFFF", acento: "#174A30", superficie: "#EDF7F0" };
       if (m === "clamato") return { base: "#A92832", texto: "#FFFFFF", acento: "#701B22", superficie: "#FFF0F0" };
+      if (m === "rc-cola") return { base: "#C8102E", texto: "#FFFFFF", acento: "#123D8A", superficie: "#EEF3FC" };
       return { base: "#285B87", texto: "#FFFFFF", acento: "#173B5A", superficie: "#EFF5FA" };
     }
     var marcas = [], porSlug = {};
