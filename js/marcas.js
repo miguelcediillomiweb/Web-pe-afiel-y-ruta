@@ -39,6 +39,21 @@
     logo.className = "marca__logo";
     logo.appendChild(crearLogo(m));
 
+    /* Adornos dentro del recuadro blanco del logo, sin salir de la tarjeta */
+    var esquinero = document.createElement("img");
+    esquinero.className = "marca__decoracion marca__decoracion--esquinero";
+    esquinero.src = "img/esquineros.jpg";
+    esquinero.alt = "";
+    esquinero.setAttribute("aria-hidden", "true");
+
+    var volcan = document.createElement("img");
+    volcan.className = "marca__decoracion marca__decoracion--volcan";
+    volcan.src = "img/volcan.png";
+    volcan.alt = "";
+    volcan.setAttribute("aria-hidden", "true");
+
+    logo.append(esquinero, volcan);
+
     var nombre = document.createElement("h3");
     nombre.className = "marca__nombre";
     nombre.textContent = m.nombre;
