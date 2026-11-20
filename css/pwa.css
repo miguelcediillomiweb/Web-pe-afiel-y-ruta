@@ -64,3 +64,15 @@
 @media (prefers-reduced-motion: reduce) {
   .instalar-app { transition: none; }
 }
+
+/* Acceso superior bajo la fecha de actualización: compacto y visible. */
+.instalar-app--superior {
+  width: min(100% - 2rem, 32rem);
+  margin: .45rem auto 1rem;
+  padding: .68rem .85rem;
+  border-radius: .9rem;
+  box-shadow: 0 5px 16px rgba(0, 25, 60, .2);
+}
+.instalar-app--superior .instalar-app__icono { flex-basis: 2.35rem; width: 2.35rem; height: 2.35rem; }
+.instalar-app--superior .instalar-app__texto strong { font-size: .88rem; }
+.instalar-app--superior .instalar-app__texto small { font-size: .7rem; }
