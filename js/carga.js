@@ -13,18 +13,6 @@
     return e;
   }
 
-  function burbujas(contenedor) {
-    for (var i = 0; i < 18; i++) {
-      var b = el("i", "carga__burbuja");
-      var tam = 0.5 + Math.random() * 1.6;
-      b.style.width = b.style.height = tam + "rem";
-      b.style.left = Math.random() * 100 + "%";
-      b.style.animationDuration = (5 + Math.random() * 6) + "s";
-      b.style.animationDelay = (-Math.random() * 8) + "s";
-      contenedor.appendChild(b);
-    }
-  }
-
   /* Devuelve una promesa que se cumple cuando termina la carga */
   function mostrar(marca, ms) {
     var raiz = document.getElementById("pantalla-carga");
@@ -41,9 +29,6 @@
       img.src = marca.cartel;
     }
 
-    var bur = el("div", "carga__burbujas");
-    burbujas(bur);
-
     var centro = el("div", "carga__centro");
     var chapa = el("div", "carga__logo");
     chapa.appendChild(window.Marcas.crearLogo(marca));
@@ -55,13 +40,24 @@
       centro.appendChild(lema);
     }
 
-    var barra = el("div", "carga__barra");
-    var relleno = el("span");
-    relleno.style.animationDuration = ms + "ms";
-    barra.appendChild(relleno);
-    centro.appendChild(barra);
+    var loader = el("div", "loader");
+    var texto = el("div", "loading-text");
+    texto.appendChild(document.createTextNode("Cargando"));
+    for (var d = 0; d < 3; d++) {
+      var punto = el("span", "dot");
+      punto.textContent = ".";
+      texto.appendChild(punto);
+    }
+    var pista = el("div", "loading-bar-background");
+    var progreso = el("div", "loading-bar");
+    var rayas = el("div", "white-bars-container");
+    for (var n = 0; n < 10; n++) rayas.appendChild(el("div", "white-bar"));
+    progreso.appendChild(rayas);
+    pista.appendChild(progreso);
+    loader.append(texto, pista);
+    centro.appendChild(loader);
 
-    raiz.append(fondo, bur, centro);
+    raiz.append(fondo, centro);
     raiz.hidden = false;
     void raiz.offsetWidth;                       /* para que arranque la animación */
     raiz.classList.add("carga--visible");
