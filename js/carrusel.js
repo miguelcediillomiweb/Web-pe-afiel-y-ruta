@@ -29,7 +29,7 @@
     function posicionar(){
       var n=tarjetas.length;
       tarjetas.forEach(function(t,i){
-        t.classList.remove("es-centro","es-izquierda","es-derecha");
+        t.classList.remove("es-centro","es-izquierda","es-derecha","fuera");
         var delta=(i-indice+n)%n;
         if(delta===0) t.classList.add("es-centro");
         else if(delta===1 || (n>2 && delta===n-1)) t.classList.add(delta===1?"es-derecha":"es-izquierda");
