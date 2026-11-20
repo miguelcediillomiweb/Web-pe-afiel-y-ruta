@@ -42,10 +42,3 @@ html body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
 }
 
-
-/* Adornos de esquina: el blanco del JPG se integra con el fondo mediante mezcla */
-.esquinero{position:fixed;z-index:3;width:clamp(5.8rem,19vw,11.5rem);height:auto;pointer-events:none;user-select:none;mix-blend-mode:multiply;opacity:.9}
-.esquinero--superior{top:-.8rem;right:-.8rem;transform:rotate(90deg);transform-origin:center}
-.esquinero--inferior{right:-.8rem;bottom:-.8rem;transform:rotate(180deg);transform-origin:center}
-@media(max-width:600px){.esquinero{width:clamp(5rem,22vw,7.5rem);opacity:.78}}
-@media(prefers-reduced-motion:reduce){.esquinero{transition:none}}
