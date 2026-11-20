@@ -28,6 +28,7 @@
 
   function salir() {
     overlay.classList.add("bienvenida-inicial--salir");
+    video.pause();
     document.dispatchEvent(new Event("bienvenida:cerrada"));
     if (heroVideo && heroVideo.dataset.inicioPendiente === "1") {
       heroVideo.dataset.inicioPendiente = "0";
