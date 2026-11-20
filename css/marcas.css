@@ -181,3 +181,46 @@
   .marca.revelar.visto:hover { transform: translateY(-5px); }
 }
 .marca.revelar.visto:active { transform: scale(0.97); }
+
+
+/* Adornos decorativos contenidos exclusivamente en el recuadro blanco de cada marca */
+.marca__logo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.marca__logo .marca__decoracion {
+  position: absolute;
+  z-index: 2;
+  bottom: .12rem;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+.marca__logo .marca__decoracion--esquinero {
+  left: .12rem;
+  width: 3.2rem;
+  height: 2.35rem;
+  object-fit: contain;
+  object-position: left bottom;
+  mix-blend-mode: multiply;
+  opacity: .92;
+}
+.marca__logo .marca__decoracion--volcan {
+  right: .12rem;
+  width: 2.45rem;
+  height: 2.45rem;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 3px rgba(15, 35, 55, .2));
+}
+.marca__logo .logo {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 1.15rem;
+  box-sizing: border-box;
+}
+@media (max-width: 380px) {
+  .marca__logo .marca__decoracion--esquinero { width: 2.75rem; height: 2rem; }
+  .marca__logo .marca__decoracion--volcan { width: 2.1rem; height: 2.1rem; }
+}
