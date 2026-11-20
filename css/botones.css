@@ -1,6 +1,8 @@
 /* ============================================================
-   BOTONES ESPACIALES — estilo Uiverse (StealthWorm) adaptado a la web.
-   Borde con degradado, estrellas al tocar o pasar el cursor y brillo suave.
+   BOTONES ESPACIALES — estilo Uiverse (StealthWorm) adaptado a toda la web.
+   Borde con degradado que se mueve, estrellas que suben y brillo que pulsa, siempre animados.
+   js/botones.js les agrega las capas de estrellas y brillo; aquí solo está el diseño.
+   Para cambiar colores, edita las variables de .btn-esp (--bf fondo, --bb borde, --g1 y --g2 brillo).
    ============================================================ */
 .btn-esp {
   --bf: #212121;
@@ -14,27 +16,28 @@
   --g1: rgba(37, 211, 102, 0.6);
   --g2: rgba(18, 161, 80, 0.65);
 }
-.btn-esp[aria-pressed="true"] {
-  --bf: #0b2e1c;
-  --bb: linear-gradient(137.48deg, #b6ff6a 10%, #25d366 45%, #12a150 67%, #0c7a3d 87%);
-  --g1: rgba(37, 211, 102, 0.6);
-  --g2: rgba(18, 161, 80, 0.65);
-}
 
 .btn-esp.btn-esp {
   position: relative; isolation: isolate; overflow: hidden; box-sizing: border-box;
   display: inline-flex; justify-content: center; align-items: center; gap: 0.5rem;
   min-height: 3rem; padding: 0.4rem 1.3rem;
   border-radius: 5rem;
-  color: #fff; font-weight: 800; font-size: 0.8rem; text-align: center; text-decoration: none;
+  color: #fff; font-weight: 800; font-size: 0.8rem; line-height: 1.2; text-align: center; text-decoration: none;
   letter-spacing: 0.08em; text-transform: uppercase;
   text-shadow: 0 0 4px rgba(255, 255, 255, 0.55);
   cursor: pointer; -webkit-tap-highlight-color: transparent;
   border: 3px solid transparent !important;
-  background: var(--bb) border-box;
-  transition: transform 0.2s ease, filter 0.2s ease;
+  background-color: transparent !important;
+  background-image: linear-gradient(var(--bf), var(--bf)), var(--bb) !important;
+  background-origin: border-box !important;
+  background-clip: padding-box, border-box !important;
+  background-size: 300% 300% !important;
+  box-shadow: none !important;
+  animation: btn-gradiente 5s ease infinite !important;
+  transition: transform 0.4s;
 }
-.btn-esp--siempre.btn-esp { animation-play-state: running !important; }
+.btn-esp.btn-esp::after { content: none !important; }
+.btn-esp.btn-esp::before { content: none !important; }
 
 /* Capas de efectos (las agrega botones.js) */
 .btn-esp__fx { position: absolute; inset: 0; z-index: -1; border-radius: inherit; overflow: hidden; pointer-events: none; }
@@ -43,47 +46,35 @@
   background:
     radial-gradient(ellipse 60% 90% at 28% 50%, var(--g1), transparent 70%),
     radial-gradient(ellipse 60% 90% at 72% 50%, var(--g2), transparent 70%);
-  opacity: 0.7;
+  animation: btn-brillo 4s ease-in-out infinite;
 }
-.btn-esp--siempre .btn-esp__brillo { animation: btn-brillo 4s ease-in-out infinite; }
-.btn-esp__estrellas { position: absolute; inset: 0; overflow: hidden; background: var(--bf); opacity: 0; transition: opacity 0.5s; }
+.btn-esp__estrellas { position: absolute; inset: 0; overflow: hidden; }
 .btn-esp__estrellas::before, .btn-esp__estrellas::after {
   content: ""; position: absolute; left: 0; right: 0; top: 0; height: calc(100% + 42px);
   background-image: radial-gradient(#fff 1px, transparent 1.6px);
-  animation-timing-function: linear; animation-iteration-count: infinite; animation-play-state: paused;
+  animation-timing-function: linear; animation-iteration-count: infinite;
 }
 .btn-esp__estrellas::before { background-size: 21px 21px; opacity: 0.45; animation-name: btn-estrellas-a; animation-duration: 3.5s; }
-.btn-esp__estrellas::after { background-size: 42px 42px; background-position: 11px 7px; opacity: 0.95; animation-name: btn-estrellas-b; animation-duration: 7s; }
+.btn-esp__estrellas::after  { background-size: 42px 42px; background-position: 11px 7px; opacity: 0.95; animation-name: btn-estrellas-b; animation-duration: 7s; }
 
-.btn-esp:active .btn-esp__estrellas,
-.btn-esp:focus-visible .btn-esp__estrellas { opacity: 1; }
-.btn-esp:active .btn-esp__estrellas::before, .btn-esp:active .btn-esp__estrellas::after,
-.btn-esp:focus-visible .btn-esp__estrellas::before, .btn-esp:focus-visible .btn-esp__estrellas::after { animation-play-state: running; }
-.btn-esp.btn-esp:active, .btn-esp.btn-esp:focus-visible { animation-play-state: running !important; }
-.btn-esp:active { --bb: linear-gradient(#fe53bb, #fe53bb); }
-.btn-esp--wa:active, .btn-esp[aria-pressed="true"]:active { --bb: linear-gradient(#25d366, #25d366); }
-
-@media (hover: hover) {
-  .btn-esp:hover { transform: scale(1.06); }
-  .btn-esp:hover .btn-esp__estrellas { opacity: 1; }
-  .btn-esp:hover .btn-esp__estrellas::before, .btn-esp:hover .btn-esp__estrellas::after { animation-play-state: running; }
-  .btn-esp.btn-esp:hover { animation-play-state: running !important; }
-}
-.btn-esp:active { transform: scale(0.97); }
+.btn-esp:active { --bb: linear-gradient(#fe53bb, #fe53bb); transform: scale(0.97); }
+.btn-esp--wa:active { --bb: linear-gradient(#25d366, #25d366); }
+@media (hover: hover) { .btn-esp:hover { transform: scale(1.05); } }
 
 /* Ajustes por botón */
-.btn-esp.pres__agregar { width: 100%; justify-self: stretch; margin-top: 0.3rem; }
-.btn-esp.pres__agregar .pres__tapa { flex: 0 0 auto; }
-.btn-esp.vista__volver { background-color: transparent !important; }
-.btn-esp.contacto__boton { width: min(100%, 22rem); font-size: 0.74rem; letter-spacing: 0.05em; }
+.btn-esp.vista__volver { padding: 0.4rem 1.3rem; }
+.btn-esp.vista__volver--abajo { display: flex; width: min(100%, 22rem); margin: 1.8rem auto 0; }
+.btn-esp.contacto__boton { font-size: 0.74rem; letter-spacing: 0.05em; }
 .btn-esp.robot__wa { font-size: 0.72rem; letter-spacing: 0.05em; }
 .btn-esp.instalar__boton { min-height: 2.6rem; padding: 0.3rem 1rem; font-size: 0.75rem; }
+.btn-esp.contacto__salir { width: min(100%, 22rem); }
 
-@keyframes btn-brillo { 0%, 100% { opacity: 0.45; } 50% { opacity: 0.95; } }
+@keyframes btn-gradiente { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes btn-brillo { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
 @keyframes btn-estrellas-a { from { transform: translateY(0); } to { transform: translateY(-21px); } }
 @keyframes btn-estrellas-b { from { transform: translateY(0); } to { transform: translateY(-42px); } }
 
 @media (prefers-reduced-motion: reduce) {
   .btn-esp.btn-esp { animation: none !important; }
-  .btn-esp__estrellas::before, .btn-esp__estrellas::after, .btn-esp--siempre .btn-esp__brillo { animation: none; }
+  .btn-esp__estrellas::before, .btn-esp__estrellas::after, .btn-esp__brillo { animation: none; }
 }

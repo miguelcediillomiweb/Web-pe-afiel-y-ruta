@@ -1,0 +1,35 @@
+/* ============================================================
+   AJUSTES — tono del fondo igual al del video, marco para los logos de la bienvenida
+   y color por producto en cada tarjeta de sabor.
+   ============================================================ */
+
+/* Fondo: empieza con el mismo azul que el borde de abajo del video y se va haciendo un poco más profundo */
+html body {
+  background-color: var(--tono-a, #b8e3f8);
+  background-image: linear-gradient(180deg, var(--tono-a, #b8e3f8) 0, var(--tono-a, #b8e3f8) 110vh, var(--tono-b, #6bbbe8) 300vh);
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+}
+
+/* Marco blanco para los logos de la bienvenida: ya no se pierden con el fondo */
+.bienvenida__fila {
+  width: auto; max-width: 100%; align-self: center;
+  padding: 0.55rem 0.9rem;
+  border-radius: 1.1rem;
+  background: rgba(255, 255, 255, 0.94);
+  border: 2px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 4px 16px rgba(0, 40, 100, 0.3);
+}
+.bienvenida__fila .bienvenida__logo { filter: none; }
+.bienvenida__fila .bienvenida__y { color: #d9291c; text-shadow: none; }
+
+/* Tarjeta de sabor con el color de su producto (lo pone js/colores.js) */
+.sabor--color {
+  border-top-color: var(--sabor-medio);
+  border-right-color: var(--sabor-medio);
+  border-bottom-color: var(--sabor-medio);
+  background-color: var(--superficie, #fff);
+  background-image: linear-gradient(180deg, var(--sabor-medio) 0, var(--sabor-claro) 45%, transparent 100%);
+}
+.sabor--color .sabor__nombre { color: var(--sabor-oscuro); }
+.sabor--color .pres { border-top-color: var(--sabor-medio); }
