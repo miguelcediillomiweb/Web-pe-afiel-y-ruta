@@ -6,6 +6,7 @@
 
   var KEY = "ruta1371_nombre_negocio_v1";
   var video = document.getElementById("bienvenida-video");
+  var heroVideo = document.getElementById("hero-video");
   var pantalla = document.getElementById("bienvenida-pantalla");
   var omitir = document.getElementById("bienvenida-omitir");
   var nombre = "";
@@ -20,11 +21,18 @@
   var C = window.CONFIG || {};
   video.src = C.videoBanner || "video/banner.mp4";
   video.muted = true;
+  video.load();
   var play = video.play();
   if (play && play.catch) play.catch(function () {});
 
   function salir() {
     overlay.classList.add("bienvenida-inicial--salir");
+    document.dispatchEvent(new Event("bienvenida:cerrada"));
+    if (heroVideo && heroVideo.dataset.inicioPendiente === "1") {
+      heroVideo.dataset.inicioPendiente = "0";
+      var reproduccion = heroVideo.play();
+      if (reproduccion && reproduccion.catch) reproduccion.catch(function () {});
+    }
     document.body.classList.remove("bienvenida-activa");
     setTimeout(function () { overlay.remove(); }, 600);
   }
