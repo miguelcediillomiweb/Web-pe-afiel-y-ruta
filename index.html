@@ -27,14 +27,40 @@
   <link rel="stylesheet" href="css/pedido.css?v=31">
   <link rel="stylesheet" href="css/anuncio.css?v=31">
   <link rel="stylesheet" href="css/lista.css?v=31">
-  <link rel="stylesheet" href="css/fondo.css?v=32">
+  <link rel="stylesheet" href="css/fondo.css?v=32">\n  <link rel="stylesheet" href="css/bienvenida.css?v=1">
   <link rel="stylesheet" href="css/pwa.css?v=31">
   <link rel="stylesheet" href="css/robot.css?v=31">
   <link rel="stylesheet" href="css/botones.css?v=31">
   <link rel="stylesheet" href="css/salida.css?v=31">
   <link rel="stylesheet" href="css/ajustes.css?v=32">
 </head>
-<body>
+<body>\n\n  <!-- Bienvenida inicial en teléfono: video del banner y registro local del negocio -->
+  <section class="bienvenida-inicial" id="bienvenida-inicial" aria-label="Bienvenida a Grupo Peñafiel">
+    <video class="bienvenida-inicial__video" id="bienvenida-video" muted autoplay playsinline preload="auto" aria-hidden="true"></video>
+    <div class="bienvenida-inicial__velo"></div>
+    <div class="bienvenida-inicial__contenido">
+      <div class="telefono">
+        <span class="telefono__boton telefono__boton--arriba" aria-hidden="true"></span>
+        <span class="telefono__boton telefono__boton--abajo" aria-hidden="true"></span>
+        <div class="telefono__pantalla">
+          <div class="telefono__notch"><span></span></div>
+          <div class="telefono__marca">🥤 GRUPO PEÑAFIEL</div>
+          <div class="telefono__ruta">RUTA 1371</div>
+          <div class="telefono__contenido" id="bienvenida-pantalla">
+            <div class="telefono__icono">✨</div>
+            <h2>¡Qué gusto tenerte aquí!</h2>
+            <p>Gracias por visitar nuestra web. Estamos listos para atenderte.</p>
+            <div class="telefono__progreso" id="bienvenida-progreso"><span></span></div>
+            <small class="telefono__cargando">Preparando tu experiencia...</small>
+          </div>
+          <button class="telefono__omitir" id="bienvenida-omitir" type="button">Omitir intro</button>
+        </div>
+      </div>
+      <p class="bienvenida-inicial__pie">Tu catálogo de bebidas, siempre cerca. 💧</p>
+    </div>
+  </section>
+
+
 
   <!-- BANNER 1: inicio (video de fondo, placa, bienvenida, saludo y reloj) -->
   <header class="hero" id="inicio">
@@ -228,7 +254,7 @@
 
   <!-- Extras de la web principal -->
   <script src="js/recorte.js?v=31" defer></script>
-  <script src="js/burbujas.js?v=31" defer></script>
+  <script src="js/burbujas.js?v=31" defer></script>\n  <script src="js/bienvenida.js?v=1" defer></script>
   <script src="js/pwa.js?v=32" defer></script>
   <script src="js/robot.js?v=31" defer></script>
   <script src="js/botones.js?v=31" defer></script>
