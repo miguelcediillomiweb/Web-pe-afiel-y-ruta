@@ -33,7 +33,7 @@
 
 .escena__nubes { position: absolute; inset: 0; opacity: calc(1 - var(--noche) * 0.88); }
 .nube {
-  position: absolute; left: -6rem;
+  position: absolute; right: -6rem; left: auto;
   width: 3.6rem; height: 0.95rem;
   border-radius: 1rem;
   background: rgba(255, 255, 255, 0.92);
@@ -124,8 +124,8 @@
 @keyframes rayas   { to { background-position-x: -1.8rem; } }
 @keyframes rodar   { to { transform: rotate(360deg); } }
 @keyframes baches  { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
-@keyframes nube    { to { transform: translateX(110vw); } }
-@keyframes titilar { 0%, 100% { opacity: 0.25; } 50% { opacity: 1; } }
+@keyframes nube    { to { transform: translateX(-110vw); } }
+@keyframes titilar { 0%, 100% { opacity: 0.18; transform: scale(.78); } 50% { opacity: 1; transform: scale(1.45); } }
 
 /* Se ocultan las etiquetas Mañana · Tarde · Noche (el saludo de arriba ya lo dice) */
 .escena__etiquetas { display: none; }
@@ -305,3 +305,22 @@
   animation: sombra-pasa 55s linear infinite;
 }
 @keyframes sombra-pasa { to { left: 105%; } }
+
+/* Campo y fauna: siluetas de profundidad */
+.escena__campo { position:absolute; inset:auto 0 0; height:40%; z-index:2.6; pointer-events:none; overflow:hidden; color:#17251b; opacity:calc(.72 + var(--noche) * .24); }
+.escena__campo svg {display:block;width:100%;height:100%;}
+.campo__planta {fill:#17251b;}
+.campo__fauna {fill:#0b1410;}
+.escena[data-clima="niebla"] .escena__campo {opacity:.35;filter:blur(1.2px);}
+.escena[data-clima="lluvia"] .escena__campo {opacity:.58;}
+.casa-pasa {position:absolute;z-index:2;right:-8rem;width:clamp(2.7rem,11vw,5rem);color:#101a16;opacity:calc(.6 + var(--noche) * .3);animation:casa-cruza linear forwards;pointer-events:none;}
+.casa-pasa svg {display:block;width:100%;height:auto;filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));}
+.casa__ventana {fill:#ffe7a3;opacity:calc(var(--noche) * .95);}
+.casa__puerta {fill:#26362a;}
+@keyframes casa-cruza {from {right:-8rem;} to {right:110%;}}
+.estrella--brillo {box-shadow:0 0 5px 1.5px rgba(255,255,255,.95),0 0 12px rgba(183,211,255,.55);}
+.fugaz {width:clamp(3rem,8vw,5rem);height:2px;background:linear-gradient(90deg,transparent,#fff 60%,#d8ecff);box-shadow:0 0 8px 2px rgba(255,255,255,.95),0 0 18px rgba(178,213,255,.65);}
+@keyframes fugaz {0% {opacity:0;transform:rotate(25deg) translateX(0) scale(.7);}12% {opacity:1;}100% {opacity:0;transform:rotate(25deg) translateX(12rem) scale(1);}}
+.avion--noche .avion__cuerpo {color:#e9f5ff;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));}
+.avion--noche .avion__luz--roja {width:5px;height:5px;box-shadow:0 0 9px 3px rgba(255,45,35,.95),0 0 16px rgba(255,45,35,.65);}
+.avion--noche .avion__luz--blanca {width:5px;height:5px;box-shadow:0 0 10px 3px rgba(255,255,255,.98),0 0 18px rgba(255,255,255,.7);}
