@@ -373,3 +373,21 @@ body.en-marca .robot { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .pres__agregar.pres__glitch:hover::after { animation: none; }
 }
+
+/* ---------- Contraste de textos dentro de las tarjetas ---------- */
+.sabor--tema .pres__tamano,
+.sabor--tema .precio__valor {
+  color: #241b16;
+}
+.sabor--tema .pres__piezas,
+.sabor--tema .precio__etq,
+.sabor--tema .precio__consulta {
+  color: #514238;
+}
+.sabor--tema .pres__chip {
+  background: color-mix(in srgb, var(--sabor-base) 22%, white);
+  color: #292019;
+}
+.sabor--tema .precio--publico .precio__valor {
+  color: #241b16;
+}
