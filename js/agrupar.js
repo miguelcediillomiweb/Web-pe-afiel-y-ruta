@@ -136,12 +136,12 @@
         [m === "schweppes" && /mojito/.test(s), ["#35A86B", "#FFFFFF", "#176B43", "#ECFAF1"]],
         [m === "schweppes" && /paloma/.test(s), ["#287BC5", "#FFFFFF", "#164A82", "#EDF6FF"]],
         [m === "orange-crush" && /manzana/.test(s), ["#C9252D", "#FFFFFF", "#79151D", "#FFF0F0"]],
-        [/^light[- ]?manzanita$|^manzanita$/, ["#EBC52F", "#3A2B00", "#B28A0D", "#FFFBE4"]],
-        [/arandano|cranberry/, ["#8C263F", "#FFFFFF", "#501326", "#F9EEF1"]],
-        [/sangria/, ["#7027A8", "#FFFFFF", "#42116C", "#F5EDFC"]],
-        [/manzana[- ]?roja|red[- ]?apple/, ["#D32932", "#FFFFFF", "#821820", "#FFF0F1"]],
-        [/toronjada/, ["#E783AE", "#4A2033", "#B94F7B", "#FFF0F5"]],
-        [/mangada/, ["#F0C21C", "#3E2D00", "#B18A00", "#FFFBE0"]]
+        [/^light[- ]?manzanita$|^manzanita$/.test(s), ["#EBC52F", "#3A2B00", "#B28A0D", "#FFFBE4"]],
+        [/arandano|cranberry/.test(s), ["#8C263F", "#FFFFFF", "#501326", "#F9EEF1"]],
+        [/sangria/.test(s), ["#7027A8", "#FFFFFF", "#42116C", "#F5EDFC"]],
+        [/manzana[- ]?roja|red[- ]?apple/.test(s), ["#D32932", "#FFFFFF", "#821820", "#FFF0F1"]],
+        [/toronjada/.test(s), ["#E783AE", "#4A2033", "#B94F7B", "#FFF0F5"]],
+        [/mangada/.test(s), ["#F0C21C", "#3E2D00", "#B18A00", "#FFFBE0"]]
       ];
       for (var e = 0; e < especiales.length; e++) {
         if (especiales[e][0]) return { base: especiales[e][1][0], texto: especiales[e][1][1], acento: especiales[e][1][2], superficie: especiales[e][1][3] };
