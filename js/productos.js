@@ -22,6 +22,7 @@
     b.setAttribute("aria-pressed", agregado ? "true" : "false");
     b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "💬";
     b.querySelector(".pres__texto").textContent = agregado ? "Anotado" : "Quiero conocer más";
+    b.dataset.glitch = agregado ? "ANOTADO" : "QUIERO CONOCER MÁS";
   }
 
   function crearFila(marca, sabor, f) {
