@@ -78,7 +78,7 @@ window.CONFIG = {
   textoAnuncio: "Estos productos están causando tendencia en Peñafiel.",
   anuncioSegundos: 4,          /* cuánto dura abierto (cuenta de 4 a 1) */
   anuncioRetraso: 60,         /* segundos que espera después de abrir la web */
-  anuncioCadaSegundos: 60,    /* vuelve a mostrarse 30 segundos después de cerrarse */
+  anuncioCadaSegundos: 90,    /* vuelve a mostrarse 90 segundos después de cerrarse */
   /* ---------- Clima de la escena (Open-Meteo, gratis y sin clave) ---------- */
   clima: { latitud: 19.71, longitud: -98.97, cadaMinutos: 15 },
 
