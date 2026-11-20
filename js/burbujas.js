@@ -16,4 +16,13 @@
     capa.appendChild(b);
   }
   document.body.appendChild(capa);
+
+  /* Una segunda capa dentro de la bienvenida deja ver burbujas sobre el video,
+     pero siempre detrás del teléfono y sus textos. */
+  var bienvenida = document.getElementById("bienvenida-inicial");
+  if (bienvenida) {
+    var capaBienvenida = capa.cloneNode(true);
+    capaBienvenida.id = "burbujas-bienvenida";
+    bienvenida.appendChild(capaBienvenida);
+  }
 })();
