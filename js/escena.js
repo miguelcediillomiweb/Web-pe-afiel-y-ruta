@@ -281,7 +281,7 @@
       a.style.animationName = izq ? "avion-izq" : "avion-der";
       a.style.animationDuration = (28 + Math.random() * 14).toFixed(0) + "s";
       a.innerHTML = noche
-        ? '<span class="avion__cuerpo"><i class="avion__luz avion__luz--roja"></i><i class="avion__luz avion__luz--blanca"></i></span>'
+        ? '<span class="avion__cuerpo"><i class="avion__luz avion__luz--roja"></i><i class="avion__luz avion__luz--blanca"></i>' + '<svg viewBox="0 0 30 12" aria-hidden="true"><path d="M1 6 L5 5 L22 5 Q28 5 29 6 Q28 7 22 7 L5 7 Z M12 5 L17 5 L12 .5 L10.5 .5 Z M12 7 L17 7 L12 11.5 L10.5 11.5 Z" fill="currentColor"/></svg></span>'
         : '<span class="avion__cuerpo"><i class="avion__estela"></i>' +
           '<svg viewBox="0 0 30 12" aria-hidden="true"><path d="M1 6 L5 5 L22 5 Q28 5 29 6 Q28 7 22 7 L5 7 Z" fill="currentColor"/>' +
           '<path d="M12 5 L17 5 L12 0.5 L10.5 0.5 Z" fill="currentColor"/><path d="M12 7 L17 7 L12 11.5 L10.5 11.5 Z" fill="currentColor"/>' +
@@ -310,7 +310,7 @@
 
     /* Casa distante cruzando el paisaje de vez en cuando */
     (function casasIntermitentes() {
-      var espera = 45000 + Math.random() * 50000;
+      var espera = 18000 + Math.random() * 14000;
       setTimeout(function () {
         if (!document.hidden && clima.niebla < 0.85 && !cielo_.querySelector(".casa-pasa")) lanzarCasa();
         casasIntermitentes();
