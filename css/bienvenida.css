@@ -33,13 +33,15 @@
 }
 .telefono {
   position: relative;
-  width: min(72vw, 282px);
-  height: min(70svh, 540px);
-  min-height: 400px;
-  padding: 10px;
+  width: min(62vw, 248px);
+  height: min(64svh, 500px);
+  min-height: 0;
+  padding: 8px;
   border: 5px solid #080d13;
   border-radius: 2.5rem;
-  background: linear-gradient(145deg,#f8fcff,#dce8ed);
+  background: linear-gradient(145deg,rgba(226,244,252,.34),rgba(196,222,235,.20));
+  -webkit-backdrop-filter: blur(2px) saturate(1.2);
+  backdrop-filter: blur(2px) saturate(1.2);
   box-shadow: 8px 12px 0 rgba(0,0,0,.38), 0 0 0 2px rgba(255,255,255,.45),
     0 22px 65px rgba(0,0,0,.48), 0 0 32px rgba(102,213,255,.22);
 }
@@ -54,10 +56,10 @@
   padding: 2.25rem 1rem 1rem;
   border-radius: 1.8rem;
   color: #fff;
-  background: linear-gradient(155deg, rgba(3, 17, 30, .62), rgba(5, 35, 54, .48));
+  background: linear-gradient(155deg, rgba(3, 17, 30, .30), rgba(5, 35, 54, .20));
   border: 1px solid rgba(190, 235, 255, .42);
-  -webkit-backdrop-filter: blur(7px) saturate(1.25);
-  backdrop-filter: blur(7px) saturate(1.25);
+  -webkit-backdrop-filter: blur(2px) saturate(1.12);
+  backdrop-filter: blur(2px) saturate(1.12);
 }
 .telefono__notch {
   position: absolute; top: 0; left: 50%; transform: translateX(-50%);
@@ -112,7 +114,7 @@
 @keyframes bienvenida-carga { to { transform:scaleX(1); } }
 @keyframes telefono-aparecer { from { opacity:0; transform:translateY(18px) scale(.96); } to { opacity:1; transform:none; } }
 @media (max-height:650px) {
-  .telefono { height: min(76svh,470px); min-height:360px; }
+  .telefono { height: min(70svh,450px); min-height:0; width:min(66vw,238px); }
   .telefono__contenido h2 { font-size:1.35rem; }
   .telefono__icono { font-size:2rem; }
 }
@@ -123,3 +125,11 @@
 
 /* Burbujas visibles sobre el video de entrada, detrás del teléfono. */
 .bienvenida-inicial #burbujas-bienvenida { z-index: 1; }
+
+@media (max-height: 560px) {
+  .telefono { height: 78svh; width: min(58vw, 220px); min-height: 0; }
+  .telefono__pantalla { padding-top: 1.7rem; padding-bottom: .65rem; }
+  .telefono__contenido { padding: .35rem 0; }
+  .telefono__contenido h2 { font-size: 1.2rem; }
+  .telefono__contenido p { font-size: .82rem; }
+}
