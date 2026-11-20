@@ -321,10 +321,10 @@
 .poste__palo,.poste__brazo {fill:#27313b;stroke:#111b25;stroke-width:1.2;}
 .poste__foco {fill:#87909a;stroke:#303a43;stroke-width:1;}
 .poste__haz {fill:url(#haz-lampara);opacity:0;transition:opacity 1s ease;}
-.poste__foco {fill:color-mix(in srgb, #ffe7a0 calc(var(--noche,0) * 100%), #7c8792);filter:drop-shadow(0 0 calc(var(--noche,0) * 7px) #ffe7a0);transition:filter 1s ease;}
+.poste__foco {fill:#ffe7a0;opacity:var(--noche,0);filter:drop-shadow(0 0 5px #ffe7a0);transition:opacity 1s ease;}
 .escena[style*="--noche: 0."] .poste__haz {opacity:0;}
 .escena[style*="--noche: 1."] .poste__haz {opacity:.0;}
-.poste__haz {opacity:calc(var(--noche,0) * .9);}
+.poste__haz {opacity:var(--noche,0);transition:opacity 1s ease;}
 .casa__puerta {fill:#26362a;}
 @keyframes casa-cruza {from {right:-8rem;} to {right:110%;}}
 .estrella--brillo {box-shadow:0 0 5px 1.5px rgba(255,255,255,.95),0 0 12px rgba(183,211,255,.55);}
