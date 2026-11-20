@@ -1,11 +1,15 @@
 /* Asistente flotante y contacto */
 .robot{position:fixed;right:.65rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;transform:translateX(135%);pointer-events:none;transition:transform .55s cubic-bezier(.2,.9,.3,1.2)}
 .robot--visible{transform:none;pointer-events:auto}
+.robot.robot--izquierda{left:.65rem;right:auto;align-items:flex-start;transform:translateX(-135%)}
+.robot.robot--izquierda.robot--visible{transform:none}
 body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-inset-bottom,0px))}
 .robot__boton{position:relative;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .robot__boton img{display:block;width:clamp(4.4rem,20vw,5.6rem);height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.4));animation:robot-flota 3s ease-in-out infinite}
+.robot--izquierda .robot__boton img{animation:robot-flota-izq 3s ease-in-out infinite}
 .robot__nube,.contacto__nube{position:absolute;white-space:nowrap;background:#fff;color:#0b3a6b;font-weight:700;font-size:.85rem;padding:.45rem .8rem;box-shadow:0 4px 14px rgba(0,30,80,.3);opacity:0;transform:scale(.7);transition:opacity .3s,transform .3s}
 .robot__nube{right:72%;bottom:62%;border-radius:1rem 1rem .2rem 1rem;transform-origin:bottom right}
+.robot--izquierda .robot__nube{left:72%;right:auto;border-radius:1rem 1rem 1rem .2rem;transform-origin:bottom left}
 .robot--nube .robot__nube{opacity:1;transform:none}
 .robot--panel .robot__nube{opacity:0}
 .robot__panel{position:relative;display:flex;flex-direction:column;width:min(21rem,calc(100vw - 1.3rem));height:min(27rem,66svh);overflow:hidden;background:#f5f8fc;color:#102c48;border:1px solid rgba(20,80,130,.2);border-radius:1.15rem;box-shadow:0 14px 38px rgba(0,25,60,.35)}
@@ -23,15 +27,18 @@ body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-
 .send-button{border:0;border-radius:.7rem;padding:.72rem .8rem;background:#20a85a;color:#fff;font-weight:800;font-size:.86rem;cursor:pointer}
 .send-button:active{transform:scale(.98)}
 .robot__nota{margin:0;padding:0 .8rem .6rem;background:#fff;color:#65778a;font-size:.7rem;text-align:center}
+
+/* Contacto final: robot integrado y montado sobre el botón a todo lo ancho */
 .contacto{display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1rem 1.6rem}
-.contacto__robot{position:relative}
-.contacto__robot img{display:block;width:6rem;height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.35));animation:robot-flota 3s ease-in-out infinite}
+.contacto__fila{position:relative;display:block;width:100%;max-width:42rem;margin:2.2rem auto 0;padding-top:2.25rem;box-sizing:border-box}
+.contacto__robot{position:absolute;z-index:2;top:0;left:50%;transform:translate(-50%,-28%);pointer-events:none}
+.contacto__robot img{display:block;width:5.3rem;height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.35));animation:robot-flota 3s ease-in-out infinite}
 .contacto__nube{left:80%;bottom:66%;border-radius:1rem 1rem 1rem .2rem;transform-origin:bottom left}
 .contacto__nube--ver{opacity:1;transform:none}
-.contacto__boton{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.1rem;border-radius:999px;text-decoration:none;background:#25d366;color:#fff;font-weight:800;text-align:center;box-shadow:0 4px 14px rgba(37,211,102,.45)}
-.contacto__fila{display:flex;align-items:center;justify-content:center;gap:.7rem;width:min(100%,28rem);margin-top:1.8rem}
-.contacto__fila .contacto__robot img{width:4.6rem}
-.contacto__fila .contacto__nube{left:0;bottom:100%;margin-bottom:.25rem}
-.contacto .contacto__fila .contacto__boton{flex:1 1 auto;width:auto;min-width:0;line-height:1.2}
+.contacto__fila .contacto__nube{left:calc(100% - 1rem);bottom:65%;margin-bottom:.25rem}
+.contacto__boton{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;min-height:3.45rem;box-sizing:border-box;padding:.9rem 1.1rem;border-radius:999px;text-decoration:none;background:#25d366;color:#fff;font-weight:800;text-align:center;line-height:1.2;box-shadow:0 4px 14px rgba(37,211,102,.35)}
+.contacto__boton:active{transform:scale(.99)}
 @keyframes robot-flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes robot-flota-izq{0%,100%{transform:translateY(0) scaleX(-1)}50%{transform:translateY(-5px) scaleX(-1)}}
+@media(max-width:360px){.contacto__fila{max-width:100%}.contacto__robot img{width:4.8rem}.contacto__boton{font-size:.9rem}}
 @media(prefers-reduced-motion:reduce){.robot__boton img,.contacto__robot img{animation:none}}
