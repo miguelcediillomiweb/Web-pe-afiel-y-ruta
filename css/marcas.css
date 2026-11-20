@@ -175,3 +175,9 @@
 @media (prefers-reduced-motion: reduce) {
   .marca, .marca::before, .marca::after { transition: none !important; }
 }
+
+/* Hover y pulsación también después de que termina la animación de entrada */
+@media (hover: hover) {
+  .marca.revelar.visto:hover { transform: translateY(-5px); }
+}
+.marca.revelar.visto:active { transform: scale(0.97); }
