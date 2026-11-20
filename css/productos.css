@@ -279,11 +279,11 @@ body.en-marca .robot { display: none !important; }
   background: var(--sabor-base);
   color: var(--sabor-texto);
 }
-.sabor--tema .sabor--tema .pres__agregar {
+.sabor--tema .pres__agregar {
   border-color: var(--sabor-base);
   color: var(--sabor-acento);
 }
-.sabor--tema .sabor--tema .pres__agregar .pres__tapa {
+.sabor--tema .pres__agregar .pres__tapa {
   background: var(--sabor-base);
   color: var(--sabor-texto);
 }
