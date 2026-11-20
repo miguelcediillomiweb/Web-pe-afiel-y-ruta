@@ -118,6 +118,34 @@
     var carpetaSabores = opc.carpetaSabores || "";
     function temaAutomatico(marca, sabor) {
       var m = slug(marca), s = slug(sabor);
+      /* Colores definidos por sabor y marca: prioridad sobre la paleta automática. */
+      var especiales = [
+        [m === "snapple" && /frambuesa|raspberry/.test(s), ["#D94F78", "#FFFFFF", "#8E294D", "#FFF0F4"]],
+        [m === "snapple" && /durazno|peach/.test(s), ["#F3A06B", "#4A2415", "#C66C3B", "#FFF1E6"]],
+        [m === "clamato" && /vuelve[- ]?a[- ]?la[- ]?vida/.test(s), ["#258447", "#FFFFFF", "#14552D", "#EDF8EF"]],
+        [m === "clamato" && /original/.test(s), ["#1557C0", "#FFFFFF", "#082F78", "#EAF2FF"]],
+        [m === "dr-pepper" && /(^|-)sc($|-)|s.?c/.test(s), ["#E58AA5", "#482333", "#F4C9D5", "#FFF0F3"]],
+        [m === "energetizante" && /black[- ]?mamba/.test(s), ["#D51E2B", "#FFFFFF", "#160B10", "#F9EDEF"]],
+        [m === "energetizante" && /berry/.test(s), ["#4169D8", "#FFFFFF", "#203B91", "#EEF2FF"]],
+        [m === "energetizante" && /tropical/.test(s), ["#F2C52E", "#392900", "#B88708", "#FFF9DF"]],
+        [m === "energetizante" && /sandia/.test(s), ["#D9273F", "#FFFFFF", "#8E1428", "#FFF0F1"]],
+        [m === "energetizante" && /sugar[- ]?free|sin[- ]?azucar/.test(s), ["#76D1F2", "#123B58", "#238DBD", "#EAF9FF"]],
+        [m === "schweppes" && /aguanquina|tonica/.test(s), ["#EAC43A", "#3E3100", "#B38B12", "#FFFBE5"]],
+        [m === "schweppes" && /ginger[- ]?ale/.test(s), ["#359B54", "#FFFFFF", "#176332", "#EDF8EF"]],
+        [m === "schweppes" && /gin[- ]?tonic/.test(s), ["#E88BAF", "#4B2033", "#B94C78", "#FFF0F5"]],
+        [m === "schweppes" && /mojito/.test(s), ["#35A86B", "#FFFFFF", "#176B43", "#ECFAF1"]],
+        [m === "schweppes" && /paloma/.test(s), ["#287BC5", "#FFFFFF", "#164A82", "#EDF6FF"]],
+        [m === "orange-crush" && /manzana/.test(s), ["#C9252D", "#FFFFFF", "#79151D", "#FFF0F0"]],
+        [m === "rc-cola" && /manzanita|light[- ]?manzanita/.test(s), ["#EBC52F", "#3A2B00", "#B28A0D", "#FFFBE4"]],
+        [m === "rc-cola" && /arandano/.test(s), ["#8C263F", "#FFFFFF", "#501326", "#F9EEF1"]],
+        [m === "rc-cola" && /sangria/.test(s), ["#7027A8", "#FFFFFF", "#42116C", "#F5EDFC"]],
+        [m === "rc-cola" && /manzana[- ]?roja/.test(s), ["#D32932", "#FFFFFF", "#821820", "#FFF0F1"]],
+        [m === "rc-cola" && /toronjada/.test(s), ["#E783AE", "#4A2033", "#B94F7B", "#FFF0F5"]],
+        [m === "rc-cola" && /mangada/.test(s), ["#F0C21C", "#3E2D00", "#B18A00", "#FFFBE0"]]
+      ];
+      for (var e = 0; e < especiales.length; e++) {
+        if (especiales[e][0]) return { base: especiales[e][1][0], texto: especiales[e][1][1], acento: especiales[e][1][2], superficie: especiales[e][1][3] };
+      }
       var reglas = [
         /* Sabores compuestos y variantes específicas primero para evitar colores equivocados */
         [/manzanada|manzana[- ]?canela|apple[- ]?cinnamon/, ["#80502D", "#FFFFFF", "#4A2B18", "#F7EDE3"]],
@@ -176,6 +204,8 @@
       var m = marca(f.Marca);
       var a = analizar(f.Producto);
       var nombreSabor = a.sabor ? titulo(a.sabor) : original;
+      if (!a.sabor && m.slug === "aguafiel") nombreSabor = "Agua Natural";
+      if (!a.sabor && m.slug === "orange-crush") nombreSabor = "Orange Crush";
       var clave = slug(nombreSabor);
 
       /* Si la marca tiene líneas, el producto va a la suya; si no, a la marca */
