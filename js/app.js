@@ -15,13 +15,25 @@
   window.Escena.iniciar();
   window.Anuncio.iniciar();
 
-  /* Video de fondo y placa: si el archivo no existe, simplemente no se ven */
+  /* El video principal espera a que termine la bienvenida para no descargar
+     y reproducir dos copias del mismo MP4 al mismo tiempo. */
   var video = document.getElementById("hero-video");
   video.muted = true;
-  video.src = C.videoBanner;
   video.addEventListener("error", function () { video.hidden = true; });
-  var intento = video.play();
-  if (intento && intento.catch) intento.catch(function () {});
+  function iniciarVideoPrincipal() {
+    if (video.dataset.cargado === "1") return;
+    video.dataset.cargado = "1";
+    video.src = C.videoBanner;
+    var intento = video.play();
+    if (intento && intento.catch) intento.catch(function () {});
+  }
+  var bienvenidaActiva = document.getElementById("bienvenida-inicial");
+  if (bienvenidaActiva) {
+    video.dataset.inicioPendiente = "1";
+    document.addEventListener("bienvenida:cerrada", iniciarVideoPrincipal, { once: true });
+  } else {
+    iniciarVideoPrincipal();
+  }
 
   var placa = document.getElementById("hero-placa");
   placa.addEventListener("load", function () { placa.hidden = false; });
