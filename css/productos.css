@@ -299,81 +299,25 @@ body.en-marca .robot { display: none !important; }
   background: color-mix(in srgb, var(--sabor-superficie) 91%, white);
 }
 
-/* ---------- Botón "Quiero conocer más": efecto Glitch Uiverse ---------- */
-.pres__agregar.pres__glitch {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  box-sizing: border-box;
-  min-height: 3.15rem;
-  padding: 0.85rem 1rem;
-  border: 0;
-  border-radius: 0.35rem;
-  background: linear-gradient(45deg, transparent 5%, #ff013c 5%);
-  color: #fff;
-  box-shadow: 6px 0 0 #00e6f6;
-  font-size: clamp(0.85rem, 2.6vw, 1.05rem);
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  line-height: 1;
-  text-transform: uppercase;
-  text-shadow: none;
-  outline: transparent;
-  transition: transform .15s ease;
+/* Botón de interés: horizontal, limpio y con el color del producto */
+.pres__agregar {
+ position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:.65rem;
+ width:100%;min-height:3.25rem;box-sizing:border-box;padding:.72rem 1rem;margin-top:.25rem;
+ border:1px solid color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 75%,#fff);
+ border-radius:.85rem;background:linear-gradient(115deg,var(--sabor-acento,var(--marca-efecto,#2a8fd6)),var(--sabor-base,var(--marca-efecto,#2a8fd6)));
+ color:var(--sabor-texto,#fff);font-size:.9rem;font-weight:800;letter-spacing:.015em;line-height:1.15;text-align:center;text-transform:none;
+ text-shadow:0 1px 2px rgba(0,0,0,.18);box-shadow:0 5px 13px color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 28%,transparent);
+ transform:none!important;rotate:0deg!important;cursor:pointer;transition:filter .2s,box-shadow .2s,background .2s;
 }
-.pres__agregar.pres__glitch .pres__tapa { display: none; }
-.pres__agregar.pres__glitch .pres__texto { position: relative; z-index: 1; }
-.pres__agregar.pres__glitch::after {
-  --slice-0: inset(50% 50% 50% 50%);
-  --slice-1: inset(80% -6px 0 0);
-  --slice-2: inset(50% -6px 30% 0);
-  --slice-3: inset(10% -6px 85% 0);
-  --slice-4: inset(40% -6px 43% 0);
-  --slice-5: inset(80% -6px 5% 0);
-  content: attr(data-glitch);
-  display: block;
-  position: absolute;
-  inset: 0;
-  padding: inherit;
-  border-radius: inherit;
-  background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #ff013c 5%);
-  color: #fff;
-  text-shadow: -3px -3px 0 #f8f005, 3px 3px 0 #00e6f6;
-  clip-path: var(--slice-0);
-  pointer-events: none;
-  box-sizing: border-box;
-}
-@media (hover: hover) {
-  .pres__agregar.pres__glitch:hover::after {
-    animation: pres-glitch 1s steps(2, end);
-  }
-  .pres__agregar.pres__glitch:hover { transform: translateY(-1px); }
-}
-.pres__agregar.pres__glitch:active { transform: scale(.97); }
-.pres__agregar.pres__glitch[aria-pressed="true"] {
-  background: linear-gradient(45deg, transparent 5%, #167a43 5%);
-  color: #fff;
-}
-.pres__agregar.pres__glitch[aria-pressed="true"]::after {
-  background: linear-gradient(45deg, transparent 3%, #00e6f6 3%, #00e6f6 5%, #167a43 5%);
-}
-@keyframes pres-glitch {
-  0% { clip-path: var(--slice-1); transform: translate(-20px,-10px); }
-  10% { clip-path: var(--slice-3); transform: translate(10px,10px); }
-  20% { clip-path: var(--slice-1); transform: translate(-10px,10px); }
-  30% { clip-path: var(--slice-3); transform: translate(0,5px); }
-  40% { clip-path: var(--slice-2); transform: translate(-5px,0); }
-  50% { clip-path: var(--slice-3); transform: translate(5px,0); }
-  60% { clip-path: var(--slice-4); transform: translate(5px,10px); }
-  70% { clip-path: var(--slice-2); transform: translate(-10px,10px); }
-  80% { clip-path: var(--slice-5); transform: translate(20px,-10px); }
-  90% { clip-path: var(--slice-1); transform: translate(-10px,0); }
-  100% { clip-path: var(--slice-1); transform: translate(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .pres__agregar.pres__glitch:hover::after { animation: none; }
-}
-
+.pres__agregar::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 48%,transparent 72%);transform:translateX(-120%);animation:interes-brillo 4.5s ease-in-out infinite}
+.pres__agregar .pres__tapa{display:grid;place-items:center;flex:0 0 1.65rem;width:1.65rem;height:1.65rem;border-radius:50%;background:rgba(255,255,255,.94);color:var(--sabor-acento,var(--marca-efecto,#2a8fd6));font-size:1rem;font-weight:900;clip-path:none;transition:transform .25s}
+.pres__agregar .pres__texto{position:relative;z-index:1}
+.pres__agregar[aria-pressed="true"]{background:linear-gradient(115deg,#176b43,#23985e);border-color:#176b43;color:#fff}
+.pres__agregar[aria-pressed="true"] .pres__tapa{color:#176b43}
+@media(hover:hover){.pres__agregar:hover{filter:brightness(1.07);box-shadow:0 8px 18px color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 38%,transparent)}.pres__agregar:hover .pres__tapa{transform:translateX(3px)}}
+.pres__agregar:active{transform:scale(.985)!important}
+@keyframes interes-brillo{0%,58%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
+@media(prefers-reduced-motion:reduce){.pres__agregar::before{animation:none}}
 /* ---------- Contraste de textos dentro de las tarjetas ---------- */
 .sabor--tema .pres__tamano,
 .sabor--tema .precio__valor {
