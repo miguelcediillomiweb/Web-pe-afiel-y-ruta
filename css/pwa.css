@@ -38,3 +38,9 @@
   70%, 100% { box-shadow: 0 3px 10px rgba(37, 165, 232, 0.5), 0 0 0 0.7rem rgba(37, 165, 232, 0); }
 }
 @media (prefers-reduced-motion: reduce) { .instalar__icono, .instalar__boton { animation: none; } }
+
+.instalar__confirmar {
+  flex: 0 0 auto; border: 1px solid rgba(37, 165, 232, 0.35); cursor: pointer;
+  padding: 0.48rem 0.65rem; border-radius: 999px; background: #e8f6ff;
+  color: #14527a; font-weight: 800; font-size: 0.72rem;
+}
