@@ -68,7 +68,7 @@
     if (!ayuda) return;
     ayuda.innerHTML = esIOS
       ? 'En Safari: toca <b>Compartir</b> ⬆️, elige <b>Agregar a pantalla de inicio</b> y confirma. Después abre Ruta 1371 desde el nuevo icono. 📲'
-      : 'En Chrome: abre el menú <b>⋮</b> y selecciona <b>Instalar aplicación</b> o <b>Añadir a pantalla de inicio</b>. Después abre Ruta 1371 desde el icono. 📲';
+      : 'En Chrome: abre el menú <b>⋮</b> y elige <b>Añadir a pantalla de inicio</b>. Así tendrás un acceso directo para abrir Ruta 1371 cuando quieras. 📲';
     ayuda.hidden = false;
     if (confirmar) confirmar.hidden = false;
   }
