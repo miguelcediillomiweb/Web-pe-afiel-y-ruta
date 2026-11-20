@@ -391,3 +391,66 @@ body.en-marca .robot { display: none !important; }
 .sabor--tema .precio--publico .precio__valor {
   color: #241b16;
 }
+
+
+/* ---------- Tarjetas de presentación: blob Uiverse por color de marca ---------- */
+.sabor--tema .presentaciones {
+  display: grid;
+  gap: 0.7rem;
+  padding: 0.35rem 0.85rem 0.9rem;
+}
+.sabor--tema .pres {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  border: 0;
+  border-radius: 14px;
+  padding: 0.9rem;
+  background: transparent;
+  box-shadow: 5px 5px 16px rgba(20, 35, 55, 0.10);
+}
+.sabor--tema .pres::before {
+  content: "";
+  position: absolute;
+  z-index: -2;
+  top: 50%;
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background: var(--marca-efecto, #d9291c);
+  opacity: 1;
+  filter: blur(12px);
+  pointer-events: none;
+  animation: pres-blob-bounce 5s infinite ease;
+}
+.sabor--tema .pres::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 4px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  -webkit-backdrop-filter: blur(24px);
+  backdrop-filter: blur(24px);
+  outline: 1px solid rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+}
+.sabor--tema .pres > * {
+  position: relative;
+  z-index: 1;
+}
+.sabor--tema .pres__foto {
+  background: rgba(255, 255, 255, 0.72);
+}
+@keyframes pres-blob-bounce {
+  0% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+  25% { transform: translate(-100%, -100%) translate3d(100%, 0, 0); }
+  50% { transform: translate(-100%, -100%) translate3d(100%, 100%, 0); }
+  75% { transform: translate(-100%, -100%) translate3d(0, 100%, 0); }
+  100% { transform: translate(-100%, -100%) translate3d(0, 0, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sabor--tema .pres::before { animation: none; }
+}
