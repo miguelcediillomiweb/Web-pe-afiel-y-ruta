@@ -1,6 +1,7 @@
 /* ============================================================
-   PWA — instalar la web como app, service worker y notificaciones (OneSignal).
-   El App ID de OneSignal se pone en config.js (onesignalAppId).
+   PWA — instalar la web como app, service worker y notificaciones.
+   El aviso de instalación vuelve a mostrarse en cada visita
+   mientras la web no esté instalada.
    ============================================================ */
 (function () {
   var C = window.CONFIG || {};
@@ -28,28 +29,23 @@
         allowLocalhostAsSecureOrigin: true
       }).then(function () {
         setTimeout(function () {
-          try { OneSignal.Slidedown.promptPush(); } catch (e) { /* ya decidió o no es compatible */ }
+          try { OneSignal.Slidedown.promptPush(); } catch (e) {}
         }, (C.onesignalSegundos || 25) * 1000);
       });
     });
   }
 
-  /* ---------- 3. Aviso "Agrega a tu inicio" ---------- */
-  var CLAVE = "pwa-aviso";
+  /* ---------- 3. Aviso de instalación ---------- */
   var esIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
   var instalada = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone;
   var evento = null, aviso = null, mostrado = false;
 
-  function descartado() {
-    try { return Date.now() - (parseInt(localStorage.getItem(CLAVE) || "0", 10) || 0) < 7 * 86400000; } catch (e) { return false; }
-  }
-  function recordar() { try { localStorage.setItem(CLAVE, String(Date.now())); } catch (e) {} }
-
   function cerrar() {
     if (!aviso) return;
     aviso.classList.remove("instalar--visible");
-    var a = aviso; aviso = null;
-    setTimeout(function () { a.remove(); }, 450);
+    var anterior = aviso;
+    aviso = null;
+    setTimeout(function () { anterior.remove(); }, 450);
   }
 
   function ocupado() {
@@ -58,25 +54,29 @@
   }
 
   function mostrar() {
-    if (mostrado || instalada || descartado()) return;
-    if (!evento && !esIOS) return;
-    if (ocupado()) { setTimeout(mostrar, 5000); return; }
+    if (mostrado || instalada) return;
+    if (ocupado()) { setTimeout(mostrar, 2500); return; }
     mostrado = true;
+
+    var ayuda = esIOS
+      ? 'Toca <b>Compartir</b> ⬆️ y después <b>«Agregar a pantalla de inicio»</b>.'
+      : (evento
+        ? 'Instálala para abrir Ruta 1371 como una aplicación.'
+        : 'En Chrome, abre el menú ⋮ y busca <b>«Instalar aplicación»</b> o <b>«Añadir a pantalla de inicio»</b>.');
 
     aviso = document.createElement("div");
     aviso.className = "instalar";
     aviso.setAttribute("role", "dialog");
-    aviso.setAttribute("aria-label", "Agregar a la pantalla de inicio");
+    aviso.setAttribute("aria-label", "Agregar Ruta 1371 a la pantalla de inicio");
     aviso.innerHTML =
       '<img class="instalar__icono" src="img/icon-192.png" alt="">' +
       '<div class="instalar__texto">' +
         '<strong>Agrega Ruta 1371 a tu inicio 📲</strong>' +
-        '<span>' + (esIOS
-          ? 'Toca <b>Compartir</b> ⬆️ y luego <b>«Agregar a pantalla de inicio»</b>'
-          : 'Ábrela como una app, sin buscarla cada vez 😉') + '</span>' +
+        '<span>' + ayuda + '</span>' +
       '</div>' +
-      (esIOS ? '' : '<button class="instalar__boton" type="button">Instalar</button>') +
+      (evento && !esIOS ? '<button class="instalar__boton" type="button">Instalar</button>' : '') +
       '<button class="instalar__cerrar" type="button" aria-label="Cerrar">×</button>';
+
     document.body.appendChild(aviso);
     void aviso.offsetWidth;
     aviso.classList.add("instalar--visible");
@@ -85,18 +85,44 @@
     if (boton) boton.addEventListener("click", function () {
       if (!evento) return;
       evento.prompt();
-      evento.userChoice.then(function () { evento = null; cerrar(); });
+      evento.userChoice.then(function () {
+        evento = null;
+        cerrar();
+      }).catch(function () {
+        evento = null;
+        cerrar();
+      });
     });
-    aviso.querySelector(".instalar__cerrar").addEventListener("click", function () { recordar(); cerrar(); });
-    if (esIOS) setTimeout(function () { recordar(); cerrar(); }, 14000);
+
+    aviso.querySelector(".instalar__cerrar").addEventListener("click", cerrar);
   }
 
   window.addEventListener("beforeinstallprompt", function (e) {
     e.preventDefault();
     evento = e;
-    setTimeout(mostrar, 12000);
+    if (!mostrado) setTimeout(mostrar, 12000);
   });
-  window.addEventListener("appinstalled", function () { evento = null; recordar(); cerrar(); });
-  if (esIOS && !instalada) setTimeout(mostrar, 15000);
-  if (/[?&]instalar=1/.test(location.search)) { evento = evento || { prompt: function () {}, userChoice: Promise.resolve() }; setTimeout(mostrar, 800); }
+
+  window.addEventListener("appinstalled", function () {
+    instalada = true;
+    evento = null;
+    cerrar();
+  });
+
+  /* En iPhone/iPad se muestran instrucciones; en Android hay
+     instrucciones manuales si Chrome no ofrece el evento nativo. */
+  if (!instalada) {
+    if (esIOS) {
+      setTimeout(mostrar, 15000);
+    } else {
+      setTimeout(function () {
+        if (!evento) mostrar();
+      }, 18000);
+    }
+  }
+
+  /* Acceso de prueba: ?instalar=1 */
+  if (/[?&]instalar=1/.test(location.search) && !instalada) {
+    setTimeout(mostrar, 800);
+  }
 })();
