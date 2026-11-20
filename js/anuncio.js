@@ -1,15 +1,15 @@
 /* ============================================================
    ANUNCIO — ventana emergente chica con una imagen de "Tendencia".
    - Cuenta de 4 a 1 y se cierra sola; también tiene botón para cerrar.
-   - Sale al entrar a la web y luego cada 30 segundos mientras navegan.
-   - Si recargan antes de que pasen los 30 segundos, no vuelve a salir.
+   - Sale 60 segundos después de abrir la web y luego cada 90 segundos tras cerrar.
+   - Si recargan, respeta el intervalo de 90 segundos desde el último anuncio.
    - No se abre encima de la pantalla de carga, de la lista ni si la
      pestaña está en segundo plano: espera y vuelve a intentar.
    Todo se cambia en config.js (imágenes, texto, segundos).
    ============================================================ */
 (function () {
   var C = window.CONFIG;
-  var ULTIMO = "anuncio-ultimo", TURNO = "anuncio-turno";
+  var ULTIMO = "anuncio-ultimo-v2", TURNO = "anuncio-turno-v2";
   var cuenta = null, temporizador = null, abierto = false, antesFoco = null;
 
   function leer(clave) {
@@ -39,7 +39,7 @@
       document.body.classList.remove("sin-scroll");
       if (antesFoco && antesFoco.focus) antesFoco.focus();
     }, 350);
-    programar((C.anuncioCadaSegundos || 120) * 1000);
+    programar(Math.max(1, Number(C.anuncioCadaSegundos) || 90) * 1000);
   }
 
   function alTeclear(e) { if (e.key === "Escape") cerrar(); }
@@ -130,10 +130,10 @@
   }
 
   function iniciar() {
-    var cada = (C.anuncioCadaSegundos || 120) * 1000;
-    var retraso = (C.anuncioRetraso || 0) * 1000;
+    var cada = Math.max(1, Number(C.anuncioCadaSegundos) || 90) * 1000;
+    var retraso = Math.max(0, Number(C.anuncioRetraso) || 0) * 1000;
     var ultimo = leer(ULTIMO);
-    /* Si se mostró hace menos de 2 minutos (ej. recargaron), espera lo que falte */
+    /* Si se mostró hace menos del intervalo configurado, espera lo que falte */
     var falta = ultimo ? ultimo + cada - Date.now() : 0;
     programar(Math.max(retraso, falta));
   }
