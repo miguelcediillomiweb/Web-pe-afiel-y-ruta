@@ -21,10 +21,9 @@
   background: linear-gradient(145deg, rgba(2,12,23,.68), rgba(3,35,55,.62)),
     radial-gradient(ellipse at 50% 85%, rgba(33,167,215,.3), transparent 58%);
 }
-body.bienvenida-activa #burbujas { z-index: 1001; }
 .bienvenida-inicial__contenido {
   position: relative;
-  z-index: 1002;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -121,3 +120,6 @@ body.bienvenida-activa #burbujas { z-index: 1001; }
   .bienvenida-inicial__contenido,.telefono__progreso span { animation:none; }
   .telefono__progreso span { transform:scaleX(1); }
 }
+
+/* Burbujas visibles sobre el video de entrada, detrás del teléfono. */
+.bienvenida-inicial #burbujas-bienvenida { z-index: 1; }
