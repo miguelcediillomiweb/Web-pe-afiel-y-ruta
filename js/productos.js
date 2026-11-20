@@ -20,9 +20,9 @@
 
   function estadoBoton(b, agregado) {
     b.setAttribute("aria-pressed", agregado ? "true" : "false");
-    b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "💬";
-    b.querySelector(".pres__texto").textContent = agregado ? "Anotado" : "Quiero conocer más";
-    b.dataset.glitch = agregado ? "ANOTADO" : "QUIERO CONOCER MÁS";
+    b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "↗";
+    b.querySelector(".pres__texto").textContent = agregado ? "En mi lista de interés" : "Me interesa conocerlo";
+    b.dataset.estado = agregado ? "seleccionado" : "disponible";
   }
 
   function crearFila(marca, sabor, f) {
@@ -52,10 +52,10 @@
       if (f.precioPublico != null) precios.appendChild(precio("Público", f.precioPublico, "precio--publico"));
     }
 
-    var b = el("button", "pres__agregar pres__glitch");
+    var b = el("button", "pres__agregar");
     b.type = "button";
     b.dataset.id = f.id;
-    b.append(el("span", "pres__tapa"), el("span", "pres__texto"));
+    b.append(el("span", "pres__tapa", "↗"), el("span", "pres__texto"));
     estadoBoton(b, window.Pedido.tiene(f.id));
     b.addEventListener("click", function () {
       window.Pedido.alternar({
