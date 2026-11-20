@@ -199,16 +199,16 @@
   user-select: none;
 }
 .marca__logo .marca__decoracion--esquinero {
-  left: .12rem;
+  right: .12rem;
   width: 3.2rem;
   height: 2.35rem;
   object-fit: contain;
-  object-position: left bottom;
+  object-position: right bottom;
   mix-blend-mode: multiply;
   opacity: .92;
 }
 .marca__logo .marca__decoracion--volcan {
-  right: .12rem;
+  left: .12rem;
   width: 2.45rem;
   height: 2.45rem;
   object-fit: contain;
