@@ -1,24 +1,65 @@
-/* Fondo azul celeste */
+/* Fondo nocturno mineral: azul profundo con luz fría en la parte inferior */
 html body {
-  background-color: #5cc3f2;
-  background-image: linear-gradient(180deg, #8fdcff 0%, #5cc3f2 50%, #35a5e0 100%);
+  background-color: #061522;
+  background-image:
+    radial-gradient(ellipse at 50% 100%, rgba(17, 105, 151, 0.42) 0%, transparent 52%),
+    radial-gradient(ellipse at 12% 18%, rgba(15, 67, 99, 0.22) 0%, transparent 44%),
+    linear-gradient(180deg, #050d17 0%, #092033 52%, #061522 100%);
   background-attachment: fixed;
 }
 
-/* Burbujas que suben desde abajo de la página y se pierden arriba, sobre el video */
-#burbujas { position: fixed; inset: 0; z-index: 5; pointer-events: none; overflow: hidden; }
+/* Burbujas de agua mineral: cristal, reflejo y contorno luminoso */
+#burbujas {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: hidden;
+}
 #burbujas i {
-  position: absolute; bottom: -40px; border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.18) 45%, rgba(255, 255, 255, 0.05) 72%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  opacity: var(--op, 0.5);
+  position: absolute;
+  bottom: -48px;
+  display: block;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 29% 24%, rgba(255,255,255,.98) 0 3%, rgba(226,249,255,.72) 5%, transparent 19%),
+    radial-gradient(circle at 68% 72%, rgba(91,205,244,.08), rgba(185,239,255,.16) 42%, rgba(255,255,255,.025) 70%);
+  border: 1px solid rgba(190, 237, 255, .62);
+  box-shadow:
+    inset -2px -3px 7px rgba(102, 205, 242, .16),
+    inset 2px 2px 5px rgba(255, 255, 255, .22),
+    0 0 9px rgba(112, 211, 247, .12);
+  opacity: var(--op, .55);
   animation: subir-burbujas linear infinite;
   will-change: transform;
 }
+#burbujas i::before {
+  content: "";
+  position: absolute;
+  width: 27%;
+  height: 13%;
+  top: 19%;
+  left: 22%;
+  border-radius: 50%;
+  background: rgba(255,255,255,.78);
+  filter: blur(.4px);
+  transform: rotate(-35deg);
+}
+#burbujas i::after {
+  content: "";
+  position: absolute;
+  width: 15%;
+  height: 15%;
+  right: 18%;
+  bottom: 20%;
+  border-radius: 50%;
+  background: rgba(159, 229, 255, .32);
+  filter: blur(1px);
+}
 @keyframes subir-burbujas {
-  0%   { transform: translate(0, 0); }
-  50%  { transform: translate(var(--vaiven, 20px), -55vh); }
-  100% { transform: translate(0, -115vh); }
+  0%   { transform: translate3d(0, 0, 0) scale(.82); }
+  48%  { transform: translate3d(var(--vaiven, 20px), -54vh, 0) scale(1); }
+  100% { transform: translate3d(calc(var(--vaiven, 20px) * -.35), -118vh, 0) scale(1.08); }
 }
 
 /* ---------- Bienvenida con imágenes ---------- */
