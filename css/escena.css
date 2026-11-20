@@ -263,7 +263,7 @@
 /* Estrellas más visibles */
 .estrella { background: #fff; }
 .estrella--brillo { box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.8); }
-@keyframes titilar { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+@keyframes titilar { 0%, 100% { opacity: 0.18; transform: scale(.78); } 50% { opacity: 1; transform: scale(1.45); } }
 
 /* Las nubes tapan solo un poco: el cielo nublado de noche ya no apaga todo */
 .escena__estrellas { opacity: calc(var(--noche) * (1 - var(--cobertura, 0) * 0.5)); }
