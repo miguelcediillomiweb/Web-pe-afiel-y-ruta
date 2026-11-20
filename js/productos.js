@@ -52,7 +52,7 @@
       if (f.precioPublico != null) precios.appendChild(precio("Público", f.precioPublico, "precio--publico"));
     }
 
-    var b = el("button", "pres__agregar");
+    var b = el("button", "pres__agregar pres__glitch");
     b.type = "button";
     b.dataset.id = f.id;
     b.append(el("span", "pres__tapa"), el("span", "pres__texto"));
