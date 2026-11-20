@@ -69,8 +69,27 @@
     return li;
   }
 
+  function colorDeMarca(slug) {
+    var colores = {
+      "aguafiel": "#2A8FD6",
+      "snapple": "#28734A",
+      "clamato": "#A92832",
+      "dr-pepper": "#8B1E3F",
+      "energetizante": "#2457A6",
+      "schweppes": "#C69A27",
+      "orange-crush": "#F28C1C",
+      "rc-cola": "#C8102E",
+      "penafiel-sabores": "#D9291C",
+      "penafiel-twist": "#168F9B",
+      "agua-mineral": "#2A8FD6",
+      "penafiel-adas": "#D9291C"
+    };
+    return colores[slug] || "#D9291C";
+  }
+
   function crearTarjeta(marca, sabor) {
     var t = el("article", "sabor sabor--tema");
+    t.style.setProperty("--marca-efecto", colorDeMarca(marca.slug));
     var tema = sabor.tema || { base: "#285B87", texto: "#FFFFFF", acento: "#173B5A", superficie: "#EFF5FA" };
     t.style.setProperty("--sabor-base", tema.base);
     t.style.setProperty("--sabor-texto", tema.texto);
