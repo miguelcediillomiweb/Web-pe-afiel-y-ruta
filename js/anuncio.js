@@ -1,8 +1,8 @@
 /* ============================================================
    ANUNCIO — ventana emergente chica con una imagen de "Tendencia".
-   - Cuenta de 5 a 1 y se cierra sola; también tiene botón para cerrar.
-   - Sale al entrar a la web y luego cada 2 minutos mientras navegan.
-   - Si recargan antes de que pasen los 2 minutos, no vuelve a salir.
+   - Cuenta de 4 a 1 y se cierra sola; también tiene botón para cerrar.
+   - Sale al entrar a la web y luego cada 30 segundos mientras navegan.
+   - Si recargan antes de que pasen los 30 segundos, no vuelve a salir.
    - No se abre encima de la pantalla de carga, de la lista ni si la
      pestaña está en segundo plano: espera y vuelve a intentar.
    Todo se cambia en config.js (imágenes, texto, segundos).
@@ -111,7 +111,7 @@
 
   function intentar() {
     /* Si hay otra cosa en pantalla (carga, lista) o la pestaña no se ve, espera 10 s */
-    if (abierto || document.hidden || document.body.classList.contains("sin-scroll")) {
+    if (abierto || document.hidden || document.body.classList.contains("sin-scroll") || document.querySelector(".robot--panel")) {
       programar(10000);
       return;
     }
