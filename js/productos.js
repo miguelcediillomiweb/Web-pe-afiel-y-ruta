@@ -108,9 +108,19 @@
     b.type = "button";
     var flecha = el("span", "volver__flecha", "←");
     flecha.setAttribute("aria-hidden", "true");
-    b.append(flecha, el("span", "", "Todas las marcas"));
+    b.append(flecha, el("span", "", "Volver al inicio"));
+    var grupo = el("div", "vista__volver-grupo" + (abajo ? " vista__volver-grupo--abajo" : ""));
+    var volcan = document.createElement("img");
+    volcan.className = "vista__volcan";
+    volcan.src = "img/volcan.png";
+    volcan.alt = "";
+    volcan.setAttribute("aria-hidden", "true");
+    grupo.append(b, volcan);
+    grupo.addEventListener("click", function(e) {
+      if (e.target === volcan) alVolver();
+    });
     b.addEventListener("click", alVolver);
-    return b;
+    return grupo;
   }
 
   function mostrar(marca, alVolver) {
