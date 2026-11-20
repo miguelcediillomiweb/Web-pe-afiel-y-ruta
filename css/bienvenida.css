@@ -1,0 +1,121 @@
+/* Bienvenida de entrada: teléfono flotante sobre el video del banner */
+.bienvenida-inicial {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 1rem;
+  color: #fff;
+  background: #061522;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .55s ease, visibility .55s ease;
+}
+.bienvenida-inicial--salir { opacity: 0; visibility: hidden; pointer-events: none; }
+.bienvenida-inicial__video,
+.bienvenida-inicial__velo { position: absolute; inset: 0; width: 100%; height: 100%; }
+.bienvenida-inicial__video { object-fit: cover; filter: saturate(1.08); }
+.bienvenida-inicial__velo {
+  background: linear-gradient(145deg, rgba(2,12,23,.68), rgba(3,35,55,.62)),
+    radial-gradient(ellipse at 50% 85%, rgba(33,167,215,.3), transparent 58%);
+}
+.bienvenida-inicial__contenido {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .9rem;
+  width: 100%;
+  animation: telefono-aparecer .75s cubic-bezier(.2,.8,.2,1) both;
+}
+.telefono {
+  position: relative;
+  width: min(78vw, 310px);
+  height: min(76svh, 590px);
+  min-height: 440px;
+  padding: 10px;
+  border: 5px solid #080d13;
+  border-radius: 2.5rem;
+  background: linear-gradient(145deg,#f8fcff,#dce8ed);
+  box-shadow: 8px 12px 0 rgba(0,0,0,.38), 0 0 0 2px rgba(255,255,255,.45),
+    0 22px 65px rgba(0,0,0,.48), 0 0 32px rgba(102,213,255,.22);
+}
+.telefono__pantalla {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding: 2.25rem 1rem 1rem;
+  border-radius: 1.8rem;
+  color: #102b3c;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,.95), transparent 38%),
+    linear-gradient(160deg,#f7fcff,#e4f5fb 58%,#d5edf6);
+}
+.telefono__notch {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 6rem; height: 1.1rem; border-radius: 0 0 .9rem .9rem;
+  background: #080d13; display: grid; place-items: center;
+}
+.telefono__notch span { width: 1.8rem; height: .18rem; border-radius: 1rem; background: #28333b; }
+.telefono__boton { position:absolute; right:-9px; width:5px; border-radius:0 4px 4px 0; background:#111820; }
+.telefono__boton--arriba { top: 5rem; height: 2rem; }
+.telefono__boton--abajo { top: 9rem; height: 3.2rem; }
+.telefono__marca { margin-top: .2rem; font: 800 .78rem/1.2 system-ui,sans-serif; letter-spacing:.12em; color:#0b4260; }
+.telefono__ruta { margin-top:.25rem; font:700 .62rem/1 system-ui,sans-serif; letter-spacing:.28em; color:#2185ac; }
+.telefono__contenido {
+  display:flex; flex:1; flex-direction:column; align-items:center; justify-content:center;
+  width:100%; text-align:center; padding: .8rem 0;
+}
+.telefono__icono { font-size:2.6rem; filter:drop-shadow(0 5px 5px rgba(24,120,160,.18)); }
+.telefono__contenido h2 {
+  margin:.65rem 0 .45rem; color:#073b58; font:800 clamp(1.4rem,6vw,1.8rem)/1.08 system-ui,sans-serif;
+}
+.telefono__contenido p { margin:0; max-width:15rem; color:#456477; font-size:.94rem; line-height:1.45; }
+.telefono__progreso {
+  width:80%; height:6px; margin:1.35rem 0 .55rem; overflow:hidden;
+  border-radius:99px; background:rgba(16,99,137,.14);
+}
+.telefono__progreso span {
+  display:block; width:100%; height:100%; transform:scaleX(0); transform-origin:left;
+  border-radius:inherit; background:linear-gradient(90deg,#22a7d5,#70dafa);
+  animation: bienvenida-carga 6s linear forwards;
+}
+.telefono__cargando { color:#648393; font-size:.72rem; }
+.telefono__omitir {
+  border:0; border-radius:99px; padding:.45rem .85rem; margin-top:auto;
+  color:#537184; background:rgba(15,91,125,.08); font-size:.76rem; font-weight:700;
+}
+.telefono__formulario { width:100%; display:flex; flex-direction:column; align-items:center; gap:.7rem; }
+.telefono__formulario label { color:#174d68; font-weight:800; font-size:1rem; line-height:1.25; }
+.telefono__formulario input {
+  width:100%; min-height:3rem; padding:.75rem .85rem; border:1.5px solid #a9d4e5;
+  border-radius:.85rem; outline:none; background:#fff; color:#15384b; font:600 .95rem system-ui,sans-serif;
+  text-align:center; box-shadow:0 4px 12px rgba(17,100,140,.08);
+}
+.telefono__formulario input:focus { border-color:#159bc9; box-shadow:0 0 0 3px rgba(21,155,201,.15); }
+.telefono__enviar, .telefono__entrar {
+  width:100%; min-height:2.9rem; border:0; border-radius:.9rem; padding:.7rem 1rem;
+  color:#fff; background:linear-gradient(100deg,#087ca8,#19b4d4);
+  box-shadow:0 7px 16px rgba(9,115,157,.2); font-weight:800; font-size:.9rem;
+}
+.telefono__nota { color:#6c8997; font-size:.67rem; line-height:1.35; }
+.telefono__omitir:hover,.telefono__enviar:hover,.telefono__entrar:hover { filter:brightness(1.06); }
+.bienvenida-inicial__pie { margin:0; color:rgba(255,255,255,.88); text-align:center; font-size:.82rem; text-shadow:0 2px 8px #00121e; }
+@keyframes bienvenida-carga { to { transform:scaleX(1); } }
+@keyframes telefono-aparecer { from { opacity:0; transform:translateY(18px) scale(.96); } to { opacity:1; transform:none; } }
+@media (max-height:650px) {
+  .telefono { height: min(78svh,500px); min-height:390px; }
+  .telefono__contenido h2 { font-size:1.35rem; }
+  .telefono__icono { font-size:2rem; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .bienvenida-inicial__contenido,.telefono__progreso span { animation:none; }
+  .telefono__progreso span { transform:scaleX(1); }
+}
