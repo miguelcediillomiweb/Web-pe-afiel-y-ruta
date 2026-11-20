@@ -115,7 +115,7 @@
     volcan.src = "img/volcan.png";
     volcan.alt = "";
     volcan.setAttribute("aria-hidden", "true");
-    grupo.append(b, volcan);
+    grupo.append(volcan, b);
     grupo.addEventListener("click", function(e) {
       if (e.target === volcan) alVolver();
     });
