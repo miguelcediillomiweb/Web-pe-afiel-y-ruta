@@ -1,10 +1,20 @@
 /* ============================================================
-   WHATSAPP — arma el mensaje con la lista elegida.
+   WHATSAPP — arma el mensaje personalizado con la lista elegida.
    Solo lleva nombre y presentación (sin precios).
-   El número y el saludo están en config.js (mensajeInicio).
    ============================================================ */
 (function () {
-  /* Emoji de cada marca (si no hay uno, usa el vasito) */
+  var KEY_NOMBRE = "ruta1371_nombre_negocio_v1";
+
+  function nombreCliente() {
+    try { return (localStorage.getItem(KEY_NOMBRE) || "").trim(); }
+    catch (e) { return ""; }
+  }
+
+  function saludo() {
+    var nombre = nombreCliente();
+    return nombre ? "¡Hola, " + nombre + "! 👋😊" : "¡Hola! 👋😊";
+  }
+
   function emoji(marca) {
     var m = String(marca || "").toUpperCase();
     if (m.indexOf("AGUA") !== -1) return "💧";
@@ -18,16 +28,21 @@
     return "🥤";
   }
 
-  /* Agrupa por marca y respeta el orden en que se fue eligiendo */
   function mensaje(lista) {
-    var C = window.CONFIG;
     var orden = [], porMarca = {};
     lista.forEach(function (it) {
       if (!porMarca[it.marca]) { porMarca[it.marca] = []; orden.push(it.marca); }
       porMarca[it.marca].push(it);
     });
 
-    var partes = [C.mensajeInicio, "", "🛒 *Mi lista de interés:*", ""];
+    var partes = [
+      saludo(),
+      "",
+      "Vengo del catálogo web de Grupo Peñafiel 🥤. Me interesa conocer más sobre lo siguiente:",
+      "",
+      "🛒 *Mi lista de interés:*",
+      ""
+    ];
     orden.forEach(function (marca) {
       partes.push(emoji(marca) + " *" + marca + "*");
       porMarca[marca].forEach(function (it) {
@@ -36,14 +51,15 @@
       });
       partes.push("");
     });
-    partes.push("📦 Total: " + lista.length + (lista.length === 1 ? " producto" : " productos"));
+    partes.push("¿Me puedes apoyar con información de los productos que acabo de seleccionar? 🙌");
     partes.push("");
-    partes.push("¡Quedo al pendiente! 🙌 ¡Muchas gracias! 😊✨");
+    partes.push("¡Muchas gracias! 😊");
     return partes.join("\n").trim();
   }
 
   function url(lista) {
-    return "https://wa.me/" + window.CONFIG.whatsapp + "?text=" + encodeURIComponent(mensaje(lista));
+    var C = window.CONFIG || {};
+    return "https://wa.me/" + (C.whatsapp || "") + "?text=" + encodeURIComponent(mensaje(lista));
   }
 
   window.Whatsapp = { mensaje: mensaje, url: url };
