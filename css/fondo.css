@@ -1,10 +1,10 @@
 /* Fondo nocturno mineral: azul profundo con luz fría en la parte inferior */
 html body {
-  background-color: #061522;
+  background-color: #02070d;
   background-image:
-    radial-gradient(ellipse at 50% 100%, rgba(17, 105, 151, 0.42) 0%, transparent 52%),
-    radial-gradient(ellipse at 12% 18%, rgba(15, 67, 99, 0.22) 0%, transparent 44%),
-    linear-gradient(180deg, #050d17 0%, #092033 52%, #061522 100%);
+    radial-gradient(ellipse at 50% 100%, rgba(0, 91, 139, 0.34) 0%, transparent 55%),
+    radial-gradient(ellipse at 12% 18%, rgba(12, 42, 64, 0.18) 0%, transparent 44%),
+    linear-gradient(180deg, #010408 0%, #06121d 52%, #02070d 100%);
   background-attachment: fixed;
 }
 
