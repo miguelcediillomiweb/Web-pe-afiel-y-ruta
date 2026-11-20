@@ -129,10 +129,7 @@
       '<path d="M258 180 L258 114 Q236 90 242 62 Q257 75 266 100 Q274 70 291 66 Q290 94 274 120 L278 180 Z"/>' +
       '<path d="M335 180 L348 114 L334 90 L344 60 L355 89 L368 54 L380 89 L365 115 L378 180 Z"/>' +
       '<path d="M420 180 L420 132 Q390 120 395 94 Q411 103 426 125 Q432 93 451 90 Q448 118 435 135 L440 180 Z"/>' +
-      '</g><g class="campo__fauna">' +
-      '<path d="M530 154 Q534 130 554 132 L572 132 Q584 132 590 145 L603 148 L600 159 L587 159 L583 174 L575 174 L574 158 L548 158 L544 175 L535 175 L536 158 Z"/>' +
-      '<path d="M640 151 Q635 139 646 133 Q650 122 663 130 Q671 120 681 132 Q693 128 698 140 Q710 142 707 154 L700 160 L697 174 L689 174 L688 159 L660 159 L656 175 L648 175 L649 158 Z"/>' +
-      '</g></svg>';
+      '</g><g class="campo__fauna" transform="translate(0 34) scale(1 .78)"><path d="M552 151 Q553 139 565 138 L579 139 Q588 141 591 150 L599 151 L597 156 L588 156 L586 169 L581 169 L580 157 L565 157 L562 169 L557 169 L558 156 L551 156 Z"/><path d="M650 151 Q650 140 661 139 L675 139 Q687 141 690 151 L698 152 L696 157 L688 157 L686 169 L681 169 L680 158 L665 158 L662 169 L657 169 L658 157 L650 156 Z"/></g></svg>';
     var lluviaEl = capa("lluvia"), gotas = [];
     for (var g = 0; g < 70; g++) {
       var go = document.createElement("i");
@@ -258,7 +255,7 @@
         '<path d="M4 28 L55 3 L106 28 Z" fill="currentColor"/><rect x="14" y="27" width="82" height="29" fill="currentColor"/>' +
         '<rect x="28" y="35" width="12" height="12" class="casa__ventana"/><rect x="66" y="32" width="17" height="24" class="casa__puerta"/></svg>';
       casa.style.bottom = (1.15 + Math.random() * 1.5).toFixed(2) + "rem";
-      casa.style.animationDuration = (28 + Math.random() * 14).toFixed(0) + "s";
+      casa.style.animationDuration = (20 + Math.random() * 7).toFixed(0) + "s";
       casa.addEventListener("animationend", function () { casa.remove(); });
       cielo_.appendChild(casa);
     }
@@ -310,9 +307,9 @@
 
     /* Casa distante cruzando el paisaje de vez en cuando */
     (function casasIntermitentes() {
-      var espera = 18000 + Math.random() * 14000;
+      var espera = 9000 + Math.random() * 7000;
       setTimeout(function () {
-        if (!document.hidden && clima.niebla < 0.85 && !cielo_.querySelector(".casa-pasa")) lanzarCasa();
+        if (!document.hidden && !cielo_.querySelector(".casa-pasa")) lanzarCasa();
         casasIntermitentes();
       }, espera);
     })();
