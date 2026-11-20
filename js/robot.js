@@ -1,10 +1,25 @@
-/* ASISTENTE FLOTANTE — aparece a los 30 s; recoge la consulta y la entrega por WhatsApp. */
+/* ASISTENTE FLOTANTE — aparece ocasionalmente a izquierda o derecha. */
 (function () {
+  "use strict";
   var C=window.CONFIG||{}, FOTO="img/robot%20red%20bull.webp";
+  var KEY_NOMBRE="ruta1371_nombre_negocio_v1";
+  function nombreCliente(){
+    try{return (localStorage.getItem(KEY_NOMBRE)||"").trim();}catch(e){return "";}
+  }
+  function saludo(){
+    var nombre=nombreCliente();
+    return nombre ? "¡Hola, "+nombre+"! 👋😊" : "¡Hola! 👋😊";
+  }
   function url(mensaje){return "https://wa.me/"+(C.whatsapp||"")+"?text="+encodeURIComponent(mensaje);}
+  function mensajeBase(consulta){
+    return saludo()+"\n\nVengo del catálogo web de Grupo Peñafiel 🥤. Me interesa conocer más sobre lo siguiente:\n\n• "+
+      (consulta||"Indícanos en qué podemos ayudarte")+
+      "\n\n¿Me puedes apoyar con información sobre mi problemática? 🙌\n\n¡Muchas gracias! 😊";
+  }
   function ocupado(){
     var carga=document.getElementById("pantalla-carga"), anuncio=document.getElementById("anuncio");
     return document.hidden || document.body.classList.contains("sin-scroll") ||
+      document.body.classList.contains("bienvenida-activa") ||
       (carga&&!carga.hidden) || (anuncio&&!anuncio.hidden) ||
       document.body.classList.contains("en-marca");
   }
@@ -13,9 +28,9 @@
     '<section class="robot__panel" hidden aria-label="Asistente de ventas">'+
       '<header class="chat-header"><span>Asistente Peñafiel</span><button class="robot__cerrar" type="button" aria-label="Cerrar">×</button></header>'+
       '<div class="chat-window"><ul class="message-list" aria-live="polite">'+
-        '<li class="mensaje mensaje--asistente">¡Hola! 👋 Soy tu asistente de ventas de Ruta 1371. ¿Qué producto o información te interesa conocer? 🥤</li>'+
+        '<li class="mensaje mensaje--asistente">¡Hola! 👋😊 Soy tu asistente de ventas de Ruta 1371. ¿En qué podemos ayudarte hoy? 🥤</li>'+
       '</ul></div>'+
-      '<form class="chat-input"><input class="message-input" type="text" maxlength="500" autocomplete="off" placeholder="Escribe tu consulta aquí..." aria-label="Tu consulta">'+
+      '<form class="chat-input"><input class="message-input" type="text" maxlength="500" autocomplete="off" placeholder="Cuéntanos en qué podemos ayudarte..." aria-label="Tu consulta">'+
       '<button class="send-button" type="submit">Enviar por WhatsApp</button></form>'+
       '<p class="robot__nota">Tu mensaje se abrirá en WhatsApp para que tu asesor pueda atenderte.</p>'+
     '</section>'+
@@ -25,13 +40,20 @@
       input=flota.querySelector(".message-input"), lista=flota.querySelector(".message-list");
   var reloj=null, abierto=false, conversacion=[];
   function programar(ms){clearTimeout(reloj);reloj=setTimeout(ciclo,ms);}
-  function ocultar(){flota.classList.remove("robot--visible","robot--nube");programar(60000);}
+  function elegirLado(){
+    flota.classList.toggle("robot--izquierda",Math.random()<0.5);
+  }
+  function ocultar(){
+    flota.classList.remove("robot--visible","robot--nube");
+    programar(45000+Math.floor(Math.random()*45000));
+  }
   function ciclo(){
     if(abierto)return;
-    if(ocupado()){programar(6000);return;}
+    if(ocupado()){programar(7000);return;}
+    elegirLado();
     flota.classList.add("robot--visible");
     setTimeout(function(){if(!abierto)flota.classList.add("robot--nube");},650);
-    reloj=setTimeout(function(){if(!abierto)ocultar();},12000);
+    reloj=setTimeout(function(){if(!abierto)ocultar();},11000);
   }
   function abrir(){
     abierto=true;clearTimeout(reloj);panel.hidden=false;
@@ -49,18 +71,30 @@
   form.addEventListener("submit",function(e){
     e.preventDefault();var texto=input.value.trim();if(!texto)return;
     conversacion.push(texto);burbuja(texto,"mensaje--usuario");input.value="";
-    var mensaje="¡Hola! 👋 Vengo del catálogo web de Grupo Peñafiel 🥤. Me interesa conocer más sobre lo siguiente:\n\n"+
-      conversacion.map(function(x){return "• "+x;}).join("\n")+
-      "\n\n¿Me puedes apoyar con información, disponibilidad y atención en mi visita? ¡Gracias! 😊";
+    var mensaje=mensajeBase(conversacion.join("; "));
     var a=document.createElement("a");a.href=url(mensaje);a.target="_blank";a.rel="noopener";a.style.display="none";
     document.body.appendChild(a);a.click();a.remove();
-    burbuja("Listo 😊 Abrí WhatsApp con tu consulta para que tu asesor pueda atenderte.","mensaje--asistente");
+    burbuja("¡Listo! 😊 Abrí WhatsApp con tu consulta para que tu asesor pueda atenderte. 🙌","mensaje--asistente");
   });
   flota.querySelector(".robot__boton").addEventListener("click",function(){if(abierto)cerrar();else abrir();});
   flota.querySelector(".robot__cerrar").addEventListener("click",cerrar);
   programar(30000);
+
   var boton=document.getElementById("contacto-boton"),nube=document.getElementById("contacto-nube");
-  if(boton)boton.href=url("¡Hola! 👋 Me interesa recibir información de los productos de Grupo Peñafiel. ¿Me puedes apoyar? 😊");
+  function actualizarContacto(){
+    if(!boton)return;
+    var listaProductos=window.Pedido&&window.Pedido.lista?window.Pedido.lista():[];
+    if(listaProductos.length&&window.Whatsapp){
+      boton.href=window.Whatsapp.url(listaProductos);
+    }else{
+      boton.href=url(mensajeBase(""));
+    }
+  }
+  if(boton){
+    actualizarContacto();
+    boton.addEventListener("click",function(){actualizarContacto();});
+    if(window.Pedido&&window.Pedido.alCambiar)window.Pedido.alCambiar(actualizarContacto);
+  }
   if(nube){
     function ver(){nube.classList.add("contacto__nube--ver");setTimeout(function(){nube.classList.remove("contacto__nube--ver");},3500);}
     setTimeout(ver,2000);setInterval(ver,9000);
