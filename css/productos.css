@@ -111,7 +111,7 @@ body.en-marca .marcas { display: none; }
 }
 .pres__info { grid-area: info; display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; }
 .pres__precios { grid-area: precios; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.5rem 1rem; }
-.pres__agregar { grid-area: boton; justify-self: stretch; justify-content: center; margin-top: 0.3rem; }
+.sabor--tema .pres__agregar { grid-area: boton; justify-self: stretch; justify-content: center; margin-top: 0.3rem; }
 .pres__foto { grid-area: foto; }
 
 .pres__tamano { font-family: var(--fuente-titulo); font-weight: 800; font-size: 1.2rem; }
@@ -139,7 +139,7 @@ body.en-marca .marcas { display: none; }
 .precio__consulta { font-size: 0.9rem; font-style: italic; color: var(--tinta-suave); }
 
 /* Botón Agregar con tapa corona */
-.pres__agregar {
+.sabor--tema .pres__agregar {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.3rem 1rem 0.3rem 0.3rem;
   border: 2px solid var(--tapa);
@@ -149,7 +149,7 @@ body.en-marca .marcas { display: none; }
   font-weight: 600;
   transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
 }
-.pres__agregar:active { transform: scale(0.94); }
+.sabor--tema .pres__agregar:active { transform: scale(0.94); }
 .pres__tapa {
   display: grid; place-items: center;
   width: 2rem; height: 2rem;
@@ -158,9 +158,9 @@ body.en-marca .marcas { display: none; }
   clip-path: polygon(50.0% 0.0%, 59.6% 8.1%, 71.7% 5.0%, 76.8% 16.4%, 89.1% 18.8%, 88.7% 31.3%, 98.7% 38.9%, 93.0% 50.0%, 98.7% 61.1%, 88.7% 68.7%, 89.1% 81.2%, 76.8% 83.6%, 71.7% 95.0%, 59.6% 91.9%, 50.0% 100.0%, 40.4% 91.9%, 28.3% 95.0%, 23.2% 83.6%, 10.9% 81.2%, 11.3% 68.7%, 1.3% 61.1%, 7.0% 50.0%, 1.3% 38.9%, 11.3% 31.3%, 10.9% 18.8%, 23.2% 16.4%, 28.3% 5.0%, 40.4% 8.1%);
   transition: transform 0.4s, background 0.2s, color 0.2s;
 }
-.pres__agregar:hover .pres__tapa { transform: rotate(60deg); }
-.pres__agregar[aria-pressed="true"] { background: var(--botella); border-color: var(--botella); color: #fff; }
-.pres__agregar[aria-pressed="true"] .pres__tapa { background: #fff; color: var(--botella); }
+.sabor--tema .pres__agregar:hover .pres__tapa { transform: rotate(60deg); }
+.sabor--tema .pres__agregar[aria-pressed="true"] { background: var(--botella); border-color: var(--botella); color: #fff; }
+.sabor--tema .pres__agregar[aria-pressed="true"] .pres__tapa { background: #fff; color: var(--botella); }
 
 @keyframes aparecer { from { opacity: 0; transform: translateY(0.8rem); } to { opacity: 1; transform: none; } }
 
@@ -279,11 +279,11 @@ body.en-marca .robot { display: none !important; }
   background: var(--sabor-base);
   color: var(--sabor-texto);
 }
-.sabor--tema .pres__agregar {
+.sabor--tema .sabor--tema .pres__agregar {
   border-color: var(--sabor-base);
   color: var(--sabor-acento);
 }
-.sabor--tema .pres__agregar .pres__tapa {
+.sabor--tema .sabor--tema .pres__agregar .pres__tapa {
   background: var(--sabor-base);
   color: var(--sabor-texto);
 }
@@ -300,7 +300,7 @@ body.en-marca .robot { display: none !important; }
 }
 
 /* Botón de interés: horizontal, limpio y con el color del producto */
-.pres__agregar {
+.sabor--tema .pres__agregar {
  position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:center;justify-content:center;gap:.65rem;
  width:100%;min-height:3.25rem;box-sizing:border-box;padding:.72rem 1rem;margin-top:.25rem;
  border:1px solid color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 75%,#fff);
@@ -309,15 +309,15 @@ body.en-marca .robot { display: none !important; }
  text-shadow:0 1px 2px rgba(0,0,0,.18);box-shadow:0 5px 13px color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 28%,transparent);
  transform:none!important;rotate:0deg!important;cursor:pointer;transition:filter .2s,box-shadow .2s,background .2s;
 }
-.pres__agregar::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 48%,transparent 72%);transform:translateX(-120%);animation:interes-brillo 4.5s ease-in-out infinite}
-.pres__agregar .pres__tapa{display:grid;place-items:center;flex:0 0 1.65rem;width:1.65rem;height:1.65rem;border-radius:50%;background:rgba(255,255,255,.94);color:var(--sabor-acento,var(--marca-efecto,#2a8fd6));font-size:1rem;font-weight:900;clip-path:none;transition:transform .25s}
-.pres__agregar .pres__texto{position:relative;z-index:1}
-.pres__agregar[aria-pressed="true"]{background:linear-gradient(115deg,#176b43,#23985e);border-color:#176b43;color:#fff}
-.pres__agregar[aria-pressed="true"] .pres__tapa{color:#176b43}
-@media(hover:hover){.pres__agregar:hover{filter:brightness(1.07);box-shadow:0 8px 18px color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 38%,transparent)}.pres__agregar:hover .pres__tapa{transform:translateX(3px)}}
-.pres__agregar:active{transform:scale(.985)!important}
+.sabor--tema .pres__agregar::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.3) 48%,transparent 72%);transform:translateX(-120%);animation:interes-brillo 4.5s ease-in-out infinite}
+.sabor--tema .pres__agregar .pres__tapa{display:grid;place-items:center;flex:0 0 1.65rem;width:1.65rem;height:1.65rem;border-radius:50%;background:rgba(255,255,255,.94);color:var(--sabor-acento,var(--marca-efecto,#2a8fd6));font-size:1rem;font-weight:900;clip-path:none;transition:transform .25s}
+.sabor--tema .pres__agregar .pres__texto{position:relative;z-index:1}
+.sabor--tema .pres__agregar[aria-pressed="true"]{background:linear-gradient(115deg,#176b43,#23985e);border-color:#176b43;color:#fff}
+.sabor--tema .pres__agregar[aria-pressed="true"] .pres__tapa{color:#176b43}
+@media(hover:hover){.sabor--tema .pres__agregar:hover{filter:brightness(1.07);box-shadow:0 8px 18px color-mix(in srgb,var(--sabor-base,var(--marca-efecto,#2a8fd6)) 38%,transparent)}.sabor--tema .pres__agregar:hover .pres__tapa{transform:translateX(3px)}}
+.sabor--tema .pres__agregar:active{transform:scale(.985)!important}
 @keyframes interes-brillo{0%,58%{transform:translateX(-120%)}85%,100%{transform:translateX(120%)}}
-@media(prefers-reduced-motion:reduce){.pres__agregar::before{animation:none}}
+@media(prefers-reduced-motion:reduce){.sabor--tema .pres__agregar::before{animation:none}}
 /* ---------- Contraste de textos dentro de las tarjetas ---------- */
 .sabor--tema .pres__tamano,
 .sabor--tema .precio__valor {
