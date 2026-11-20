@@ -33,3 +33,11 @@ html body {
 }
 .sabor--color .sabor__nombre { color: var(--sabor-oscuro); }
 .sabor--color .pres { border-top-color: var(--sabor-medio); }
+
+
+/* El tema de sabor no debe pisar el contraste del título de cada tarjeta */
+.sabor--color.sabor--tema .sabor__nombre {
+  color: var(--sabor-texto, #fff);
+  -webkit-text-fill-color: var(--sabor-texto, #fff);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.28);
+}
