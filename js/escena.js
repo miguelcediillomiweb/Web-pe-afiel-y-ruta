@@ -118,18 +118,13 @@
       return e;
     }
     capa("astro astro--sol"); capa("astro astro--luna"); capa("faro"); capa("cola-luz"); capa("sombra");
-    /* Siluetas de campo: magueyes, nopales y fauna rural */
-    var campo = capa("escena__campo");
-    campo.innerHTML =
-      '<svg viewBox="0 0 900 180" preserveAspectRatio="none" aria-hidden="true">' +
-      '<g class="campo__planta">' +
-      '<path d="M28 180 L28 120 Q8 100 15 76 Q28 82 34 110 Q43 76 60 72 Q62 105 40 125 L42 180 Z"/>' +
-      '<path d="M96 180 L100 122 L80 96 Q72 76 80 60 Q94 70 106 96 L115 70 Q126 56 136 58 Q133 84 116 112 L118 180 Z"/>' +
-      '<path d="M176 180 L174 120 Q145 106 150 78 Q164 86 180 110 Q187 78 206 72 Q204 104 188 124 L192 180 Z"/>' +
-      '<path d="M258 180 L258 114 Q236 90 242 62 Q257 75 266 100 Q274 70 291 66 Q290 94 274 120 L278 180 Z"/>' +
-      '<path d="M335 180 L348 114 L334 90 L344 60 L355 89 L368 54 L380 89 L365 115 L378 180 Z"/>' +
-      '<path d="M420 180 L420 132 Q390 120 395 94 Q411 103 426 125 Q432 93 451 90 Q448 118 435 135 L440 180 Z"/>' +
-      '</g><g class="campo__fauna" transform="translate(0 34) scale(1 .78)"><path d="M552 151 Q553 139 565 138 L579 139 Q588 141 591 150 L599 151 L597 156 L588 156 L586 169 L581 169 L580 157 L565 157 L562 169 L557 169 L558 156 L551 156 Z"/><path d="M650 151 Q650 140 661 139 L675 139 Q687 141 690 151 L698 152 L696 157 L688 157 L686 169 L681 169 L680 158 L665 158 L662 169 L657 169 L658 157 L650 156 Z"/></g></svg>';
+    /* Postes de carretera: apagados de día, con halo descendente de noche */
+    var postes = capa("escena__postes");
+    postes.innerHTML = '<svg viewBox="0 0 900 180" preserveAspectRatio="none" aria-hidden="true">' +
+      '<defs><linearGradient id="haz-lampara" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe7a0" stop-opacity=".5"/><stop offset="1" stop-color="#ffe7a0" stop-opacity="0"/></linearGradient></defs>' +
+      '<g class="poste poste--uno"><path class="poste__haz" d="M112 55 L76 180 L160 180 Z"/><path class="poste__palo" d="M109 52 L112 52 L118 180 L114 180 Z"/><path class="poste__brazo" d="M108 54 Q108 43 120 42 L139 42 L139 46 L120 46 Q114 46 114 54 Z"/><ellipse class="poste__foco" cx="139" cy="46" rx="5" ry="2.5"/></g>' +
+      '<g class="poste poste--dos"><path class="poste__haz" d="M438 40 L390 180 L488 180 Z"/><path class="poste__palo" d="M435 38 L439 38 L446 180 L441 180 Z"/><path class="poste__brazo" d="M435 41 Q435 29 449 29 L468 29 L468 33 L449 33 Q442 33 442 41 Z"/><ellipse class="poste__foco" cx="468" cy="33" rx="5" ry="2.5"/></g>' +
+      '<g class="poste poste--tres"><path class="poste__haz" d="M770 59 L730 180 L815 180 Z"/><path class="poste__palo" d="M767 56 L771 56 L778 180 L773 180 Z"/><path class="poste__brazo" d="M767 58 Q767 47 780 47 L799 47 L799 51 L780 51 Q774 51 774 58 Z"/><ellipse class="poste__foco" cx="799" cy="51" rx="5" ry="2.5"/></g></svg>';
     var lluviaEl = capa("lluvia"), gotas = [];
     for (var g = 0; g < 70; g++) {
       var go = document.createElement("i");
@@ -255,7 +250,7 @@
         '<path d="M4 28 L55 3 L106 28 Z" fill="currentColor"/><rect x="14" y="27" width="82" height="29" fill="currentColor"/>' +
         '<rect x="28" y="35" width="12" height="12" class="casa__ventana"/><rect x="66" y="32" width="17" height="24" class="casa__puerta"/></svg>';
       casa.style.bottom = (1.15 + Math.random() * 1.5).toFixed(2) + "rem";
-      casa.style.animationDuration = (20 + Math.random() * 7).toFixed(0) + "s";
+      casa.style.animationDuration = (16 + Math.random() * 7).toFixed(0) + "s";
       casa.addEventListener("animationend", function () { casa.remove(); });
       cielo_.appendChild(casa);
     }
@@ -307,9 +302,9 @@
 
     /* Casa distante cruzando el paisaje de vez en cuando */
     (function casasIntermitentes() {
-      var espera = 9000 + Math.random() * 7000;
+      var espera = 8000 + Math.random() * 4500;
       setTimeout(function () {
-        if (!document.hidden && !cielo_.querySelector(".casa-pasa")) lanzarCasa();
+        if (!document.hidden && cielo_.querySelectorAll(".casa-pasa").length < 2) lanzarCasa();
         casasIntermitentes();
       }, espera);
     })();
