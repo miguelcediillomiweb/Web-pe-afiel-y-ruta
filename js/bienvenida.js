@@ -12,6 +12,14 @@
   var nombre = "";
   try { nombre = (localStorage.getItem(KEY) || "").trim(); } catch (e) {}
 
+  /* Personaliza el encabezado si el negocio ya quedó guardado en este dispositivo. */
+  var clienteHero = document.getElementById("bienvenida-cliente");
+  if (clienteHero && nombre) {
+    var clienteTexto = clienteHero.querySelector("strong");
+    if (clienteTexto) clienteTexto.textContent = nombre;
+    clienteHero.hidden = false;
+  }
+
   /* Si entran directamente a una marca, no interrumpimos la navegación. */
   if (location.hash && location.hash.length > 1) {
     overlay.remove();
