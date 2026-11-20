@@ -30,7 +30,7 @@ body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-
 
 /* Contacto final: robot integrado y montado sobre el botón a todo lo ancho */
 .contacto{display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1rem 1.6rem}
-.contacto__fila{position:relative;display:block;width:100%;max-width:42rem;margin:2.2rem auto 0;padding-top:2.25rem;box-sizing:border-box}
+.contacto__fila{position:relative;display:block;width:100%;max-width:none;margin:2.2rem auto 0;padding-top:2.25rem;box-sizing:border-box}
 .contacto__robot{position:absolute;z-index:2;top:0;left:50%;transform:translate(-50%,-28%);pointer-events:none}
 .contacto__robot img{display:block;width:5.3rem;height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.35));animation:robot-flota 3s ease-in-out infinite}
 .contacto__nube{left:80%;bottom:66%;border-radius:1rem 1rem 1rem .2rem;transform-origin:bottom left}
