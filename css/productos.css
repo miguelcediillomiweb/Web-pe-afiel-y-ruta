@@ -398,3 +398,13 @@ body.en-marca .robot { display: none !important; }
 @media (prefers-reduced-motion: reduce) {
   .sabor--tema .pres::before { animation: none; }
 }
+
+
+/* Volver al inicio con mascota volcán a un costado */
+.vista__volver-grupo{display:flex;align-items:center;justify-content:flex-start;gap:.45rem;width:max-content;max-width:100%;margin:.15rem 0}
+.vista__volver-grupo--abajo{justify-content:center;width:100%;margin:1.8rem auto 0}
+.vista__volver-grupo .vista__volver{flex:0 1 auto}
+.vista__volver-grupo .vista__volver--abajo{margin:0}
+.vista__volcan{display:block;width:clamp(3.4rem,13vw,5.2rem);height:auto;object-fit:contain;filter:drop-shadow(0 3px 5px rgba(20,45,70,.22));transform-origin:50% 65%;animation:volcan-tintinea 2.8s ease-in-out infinite}
+@keyframes volcan-tintinea{0%,100%{transform:rotate(-4deg) translateY(0) scale(1)}18%{transform:rotate(5deg) translateY(-3px) scale(1.035)}32%{transform:rotate(-3deg) translateY(0) scale(1)}48%{filter:drop-shadow(0 0 7px rgba(255,191,46,.8)) drop-shadow(0 3px 5px rgba(20,45,70,.22))}}
+@media(prefers-reduced-motion:reduce){.vista__volcan{animation:none}}
