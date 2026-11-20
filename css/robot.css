@@ -1,81 +1,37 @@
-/* ---------- Robot flotante ---------- */
-.robot {
-  position: fixed; right: 0.6rem; bottom: calc(1rem + env(safe-area-inset-bottom, 0px)); z-index: 40;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem;
-  transform: translateX(130%); pointer-events: none;
-  transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-}
-.robot--visible { transform: none; pointer-events: auto; }
-body:has(.barra-pedido:not([hidden])) .robot { bottom: calc(5.4rem + env(safe-area-inset-bottom, 0px)); }
-
-.robot__boton {
-  position: relative; border: 0; background: none; padding: 0; cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-.robot__boton img {
-  display: block; width: clamp(4.4rem, 20vw, 5.6rem); height: auto;
-  filter: drop-shadow(0 4px 8px rgba(0, 30, 80, 0.4));
-  animation: robot-flota 3s ease-in-out infinite;
-}
-
-/* Nubecita de texto */
-.robot__nube, .contacto__nube {
-  position: absolute; white-space: nowrap;
-  background: #fff; color: #0b3a6b; font-weight: 700; font-size: 0.85rem;
-  padding: 0.45rem 0.8rem; box-shadow: 0 4px 14px rgba(0, 30, 80, 0.3);
-  opacity: 0; transform: scale(0.7); transition: opacity 0.3s, transform 0.3s;
-}
-.robot__nube { right: 72%; bottom: 62%; border-radius: 1rem 1rem 0.2rem 1rem; transform-origin: bottom right; }
-.robot--nube .robot__nube { opacity: 1; transform: none; }
-.robot--panel .robot__nube { opacity: 0; }
-
-/* Recuadro con el botón de WhatsApp */
-.robot__panel {
-  position: relative; width: min(18rem, calc(100vw - 1.4rem));
-  background: #fff; color: #0b2a4a; border-radius: 1.1rem; padding: 1rem 1rem 0.9rem;
-  box-shadow: 0 10px 30px rgba(0, 30, 80, 0.35);
-}
-.robot__panel[hidden] { display: none; }
-.robot__titulo { margin: 0 1.6rem 0.3rem 0; font-weight: 800; font-size: 1.05rem; }
-.robot__texto { margin: 0 0 0.8rem; font-size: 0.92rem; line-height: 1.35; }
-.robot__cerrar {
-  position: absolute; top: 0.35rem; right: 0.55rem; border: 0; background: none;
-  font-size: 1.6rem; line-height: 1; color: #506a85; cursor: pointer;
-}
-
-/* Botón verde de WhatsApp (recuadro y final de la página) */
-.robot__wa, .contacto__boton {
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  padding: 0.8rem 1.1rem; border-radius: 999px; text-decoration: none;
-  background: #25d366; color: #fff; font-weight: 800; text-align: center;
-  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45);
-}
-
-/* ---------- Robot y botón al final de la página ---------- */
-.contacto { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 2rem 1rem 1.6rem; }
-.contacto__robot { position: relative; }
-.contacto__robot img {
-  display: block; width: 6rem; height: auto;
-  filter: drop-shadow(0 4px 8px rgba(0, 30, 80, 0.35));
-  animation: robot-flota 3s ease-in-out infinite;
-}
-.contacto__nube { left: 80%; bottom: 66%; border-radius: 1rem 1rem 1rem 0.2rem; transform-origin: bottom left; }
-.contacto__nube--ver { opacity: 1; transform: none; }
-.contacto__boton { width: min(100%, 22rem); font-size: 1.02rem; animation: contacto-pulso 2.4s ease-out infinite; }
-
-@keyframes robot-flota { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-@keyframes contacto-pulso {
-  0% { box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.5); }
-  70%, 100% { box-shadow: 0 4px 14px rgba(37, 211, 102, 0.45), 0 0 0 0.9rem rgba(37, 211, 102, 0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .robot__boton img, .contacto__robot img, .contacto__boton { animation: none; }
-}
-
-
-/* ---------- Robot al lado del botón de WhatsApp, y botón de salida ---------- */
-.contacto__fila { display: flex; align-items: center; justify-content: center; gap: 0.7rem; width: min(100%, 28rem); margin-top: 1.8rem; }
-.contacto__fila .contacto__robot img { width: 4.6rem; }
-.contacto__fila .contacto__nube { left: 0; bottom: 100%; margin-bottom: 0.25rem; border-radius: 1rem 1rem 1rem 0.2rem; transform-origin: bottom left; }
-.contacto .contacto__fila .contacto__boton { flex: 1 1 auto; width: auto; min-width: 0; line-height: 1.2; }
-.contacto .contacto__salir { width: min(100%, 22rem); }
+/* Asistente flotante y contacto */
+.robot{position:fixed;right:.65rem;bottom:calc(1rem + env(safe-area-inset-bottom,0px));z-index:80;display:flex;flex-direction:column;align-items:flex-end;gap:.6rem;transform:translateX(135%);pointer-events:none;transition:transform .55s cubic-bezier(.2,.9,.3,1.2)}
+.robot--visible{transform:none;pointer-events:auto}
+body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-inset-bottom,0px))}
+.robot__boton{position:relative;border:0;background:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.robot__boton img{display:block;width:clamp(4.4rem,20vw,5.6rem);height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.4));animation:robot-flota 3s ease-in-out infinite}
+.robot__nube,.contacto__nube{position:absolute;white-space:nowrap;background:#fff;color:#0b3a6b;font-weight:700;font-size:.85rem;padding:.45rem .8rem;box-shadow:0 4px 14px rgba(0,30,80,.3);opacity:0;transform:scale(.7);transition:opacity .3s,transform .3s}
+.robot__nube{right:72%;bottom:62%;border-radius:1rem 1rem .2rem 1rem;transform-origin:bottom right}
+.robot--nube .robot__nube{opacity:1;transform:none}
+.robot--panel .robot__nube{opacity:0}
+.robot__panel{position:relative;display:flex;flex-direction:column;width:min(21rem,calc(100vw - 1.3rem));height:min(27rem,66svh);overflow:hidden;background:#f5f8fc;color:#102c48;border:1px solid rgba(20,80,130,.2);border-radius:1.15rem;box-shadow:0 14px 38px rgba(0,25,60,.35)}
+.robot__panel[hidden]{display:none}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:.85rem 1rem;background:linear-gradient(120deg,#0b3158,#1679ad);color:#fff;font-weight:800}
+.robot__cerrar{border:0;background:rgba(255,255,255,.15);color:#fff;border-radius:50%;width:2rem;height:2rem;font-size:1.45rem;line-height:1;cursor:pointer}
+.chat-window{flex:1;min-height:0;overflow-y:auto;padding:.85rem;background:radial-gradient(circle at top right,rgba(54,165,210,.12),transparent 55%),#f5f8fc}
+.message-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.65rem}
+.mensaje{max-width:88%;padding:.65rem .8rem;border-radius:1rem;font-size:.88rem;line-height:1.4;overflow-wrap:anywhere}
+.mensaje--asistente{align-self:flex-start;background:#fff;border:1px solid #dce7f0;border-bottom-left-radius:.25rem}
+.mensaje--usuario{align-self:flex-end;background:#d9f3e4;color:#174b31;border-bottom-right-radius:.25rem}
+.chat-input{display:flex;flex-direction:column;gap:.5rem;padding:.75rem;background:#fff;border-top:1px solid #dce7f0}
+.message-input{width:100%;min-width:0;box-sizing:border-box;border:1px solid #c8d8e6;border-radius:.7rem;padding:.7rem .8rem;font:inherit;font-size:.9rem;color:#17324c;outline:none}
+.message-input:focus{border-color:#1685ba;box-shadow:0 0 0 3px rgba(22,133,186,.12)}
+.send-button{border:0;border-radius:.7rem;padding:.72rem .8rem;background:#20a85a;color:#fff;font-weight:800;font-size:.86rem;cursor:pointer}
+.send-button:active{transform:scale(.98)}
+.robot__nota{margin:0;padding:0 .8rem .6rem;background:#fff;color:#65778a;font-size:.7rem;text-align:center}
+.contacto{display:flex;flex-direction:column;align-items:center;gap:.8rem;padding:2rem 1rem 1.6rem}
+.contacto__robot{position:relative}
+.contacto__robot img{display:block;width:6rem;height:auto;filter:drop-shadow(0 4px 8px rgba(0,30,80,.35));animation:robot-flota 3s ease-in-out infinite}
+.contacto__nube{left:80%;bottom:66%;border-radius:1rem 1rem 1rem .2rem;transform-origin:bottom left}
+.contacto__nube--ver{opacity:1;transform:none}
+.contacto__boton{display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.8rem 1.1rem;border-radius:999px;text-decoration:none;background:#25d366;color:#fff;font-weight:800;text-align:center;box-shadow:0 4px 14px rgba(37,211,102,.45)}
+.contacto__fila{display:flex;align-items:center;justify-content:center;gap:.7rem;width:min(100%,28rem);margin-top:1.8rem}
+.contacto__fila .contacto__robot img{width:4.6rem}
+.contacto__fila .contacto__nube{left:0;bottom:100%;margin-bottom:.25rem}
+.contacto .contacto__fila .contacto__boton{flex:1 1 auto;width:auto;min-width:0;line-height:1.2}
+@keyframes robot-flota{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:reduce){.robot__boton img,.contacto__robot img{animation:none}}
