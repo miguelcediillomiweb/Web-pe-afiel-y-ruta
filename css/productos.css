@@ -414,3 +414,10 @@ body.en-marca .robot { display: none !important; }
 .sabor--tema .pres::before {
   background: var(--sabor-base, var(--marca-efecto, #d9291c));
 }
+
+
+/* Las presentaciones muestran solo datos e imagen: sin botón repetido por producto. */
+.sabor--tema .pres {
+  grid-template-areas:"info foto" "precios foto";
+}
+.sabor--tema .pres__agregar { display:none !important; }
