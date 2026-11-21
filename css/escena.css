@@ -333,3 +333,14 @@
 .avion--noche .avion__cuerpo {color:#e9f5ff;filter:drop-shadow(0 0 4px rgba(255,255,255,.4));}
 .avion--noche .avion__luz--roja {width:5px;height:5px;box-shadow:0 0 9px 3px rgba(255,45,35,.95),0 0 16px rgba(255,45,35,.65);}
 .avion--noche .avion__luz--blanca {width:5px;height:5px;box-shadow:0 0 10px 3px rgba(255,255,255,.98),0 0 18px rgba(255,255,255,.7);}
+
+
+/* Ajustes solicitados: paisaje limpio, estrellas discretas y postes que quedan atrás */
+.escena__campo { display: none !important; }
+.escena__postes { z-index: 3; }
+.postes__pista { display:flex; width:200%; height:100%; animation: postes-avanzan 18s linear infinite; will-change:transform; }
+.postes__pista > svg { flex:0 0 50%; width:50%; height:100%; display:block; }
+@keyframes postes-avanzan { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+.estrella { animation-duration: calc(var(--ciclo) * 1.8); }
+.estrella--brillo { box-shadow:0 0 2px rgba(255,255,255,.45); }
+.fugaz { box-shadow:0 0 3px rgba(255,255,255,.55); }
