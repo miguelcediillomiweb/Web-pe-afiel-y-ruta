@@ -59,9 +59,9 @@
   function estrellas(contenedor) {
     var semilla = 7;
     function azar() { semilla = (semilla * 9301 + 49297) % 233280; return semilla / 233280; }
-    for (var i = 0; i < 95; i++) {
+    for (var i = 0; i < 22; i++) {
       var e = document.createElement("i");
-      var grande = azar() > 0.82;
+      var grande = azar() > 0.94;
       e.className = "estrella" + (grande ? " estrella--brillo" : "");
       e.style.left = (azar() * 98 + 1) + "%";
       e.style.top = (azar() * 62 + 3) + "%";
@@ -125,6 +125,11 @@
       '<g class="poste poste--uno"><path class="poste__haz" d="M112 55 L76 180 L160 180 Z"/><path class="poste__palo" d="M109 52 L112 52 L118 180 L114 180 Z"/><path class="poste__brazo" d="M108 54 Q108 43 120 42 L139 42 L139 46 L120 46 Q114 46 114 54 Z"/><ellipse class="poste__foco" cx="139" cy="46" rx="5" ry="2.5"/></g>' +
       '<g class="poste poste--dos"><path class="poste__haz" d="M438 40 L390 180 L488 180 Z"/><path class="poste__palo" d="M435 38 L439 38 L446 180 L441 180 Z"/><path class="poste__brazo" d="M435 41 Q435 29 449 29 L468 29 L468 33 L449 33 Q442 33 442 41 Z"/><ellipse class="poste__foco" cx="468" cy="33" rx="5" ry="2.5"/></g>' +
       '<g class="poste poste--tres"><path class="poste__haz" d="M770 59 L730 180 L815 180 Z"/><path class="poste__palo" d="M767 56 L771 56 L778 180 L773 180 Z"/><path class="poste__brazo" d="M767 58 Q767 47 780 47 L799 47 L799 51 L780 51 Q774 51 774 58 Z"/><ellipse class="poste__foco" cx="799" cy="51" rx="5" ry="2.5"/></g></svg>';
+    var pistaPostes = document.createElement("div");
+    pistaPostes.className = "postes__pista";
+    pistaPostes.appendChild(postes.firstElementChild);
+    pistaPostes.appendChild(pistaPostes.firstElementChild.cloneNode(true));
+    postes.appendChild(pistaPostes);
     var lluviaEl = capa("lluvia"), gotas = [];
     for (var g = 0; g < 70; g++) {
       var go = document.createElement("i");
@@ -293,7 +298,7 @@
       if (estado.oscuridad < 0.35 && clima.lluvia === 0 && clima.niebla < 0.5 &&
           Math.random() < 0.02 + 0.09 * libre && cielo_.querySelectorAll(".ave").length < 2) lanzarAve();
       if (estado.oscuridad > 0.85 && clima.lluvia === 0 && clima.cobertura < 0.7 &&
-          Math.random() < 0.07 + 0.24 * libre && !cielo_.querySelector(".fugaz")) lanzarFugaz();
+          Math.random() < 0.0025 && !cielo_.querySelector(".fugaz")) lanzarFugaz();
       if (estado.oscuridad < 0.5 && clima.lluvia === 0 && clima.niebla < 0.6 && clima.cobertura < 0.8 &&
           Math.random() < 0.012 && !cielo_.querySelector(".avion")) lanzarAvion();
       if (estado.oscuridad > 0.85 && clima.cobertura < 0.9 && Math.random() < 0.025 &&
