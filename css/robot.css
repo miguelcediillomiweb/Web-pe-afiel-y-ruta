@@ -44,3 +44,31 @@ body:has(.barra-pedido:not([hidden])) .robot{bottom:calc(5.4rem + env(safe-area-
 @keyframes robot-flota-izq{0%,100%{transform:translateY(0) scaleX(-1)}50%{transform:translateY(-5px) scaleX(-1)}}
 @media(max-width:360px){.contacto__fila{max-width:100%}.contacto__robot img{width:4.8rem}.contacto__boton{font-size:.9rem}}
 @media(prefers-reduced-motion:reduce){.robot__boton img,.contacto__robot img{animation:none}}
+
+
+/* Flujo único de contacto: el robot lleva al botón y el botón abre esta tarjeta. */
+.robot__panel.contacto__consulta {
+  position:relative;
+  width:100%;
+  height:auto;
+  max-height:min(27rem,70svh);
+  margin:.9rem auto 0;
+  z-index:3;
+}
+.contacto__boton {
+  border:0;
+  font:inherit;
+  cursor:pointer;
+}
+.contacto__boton--destello {
+  animation: contacto-destello .72s ease-in-out 4;
+  outline:3px solid rgba(255,255,255,.9);
+  outline-offset:4px;
+}
+@keyframes contacto-destello {
+  0%,100% { filter:brightness(1); transform:scale(1); box-shadow:0 4px 14px rgba(37,211,102,.35); }
+  50% { filter:brightness(1.22); transform:scale(1.025); box-shadow:0 0 0 9px rgba(37,211,102,.22),0 0 26px rgba(37,211,102,.8); }
+}
+.contacto__consulta .chat-window { min-height:5rem; }
+.contacto__consulta .message-input { resize:vertical; min-height:5.2rem; }
+@media(prefers-reduced-motion:reduce){.contacto__boton--destello{animation:none;}}
