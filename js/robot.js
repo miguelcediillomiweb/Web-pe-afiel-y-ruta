@@ -1,4 +1,4 @@
-/* ASISTENTE FLOTANTE — aparece ocasionalmente a izquierda o derecha. */
+/* ASISTENTE FLOTANTE — el robot guía al contacto; el formulario se abre desde el botón inferior. */
 (function () {
   "use strict";
   var C=window.CONFIG||{}, FOTO="img/robot%20red%20bull.webp";
@@ -10,11 +10,12 @@
     var nombre=nombreCliente();
     return nombre ? "¡Hola, "+nombre+"! 👋😊" : "¡Hola! 👋😊";
   }
-  function url(mensaje){return "https://wa.me/"+(C.whatsapp||"")+"?text="+encodeURIComponent(mensaje);}
+  function url(mensaje){
+    return "https://wa.me/"+(C.whatsapp||"")+"?text="+encodeURIComponent(mensaje);
+  }
   function mensajeBase(consulta){
-    return saludo()+"\n\nVengo del catálogo web de Grupo Peñafiel 🥤. Me interesa conocer más sobre lo siguiente:\n\n• "+
-      (consulta||"Indícanos en qué podemos ayudarte")+
-      "\n\n¿Me puedes apoyar con información sobre mi problemática? 🙌\n\n¡Muchas gracias! 😊";
+    return saludo()+"\n\nVengo del catálogo web de Grupo Peñafiel 🥤. Me gustaría recibir información sobre lo siguiente:\n\n"+
+      consulta+"\n\n¿Me puedes apoyar con información, por favor? 🙌\n\n¡Muchas gracias! 😊";
   }
   function ocupado(){
     var carga=document.getElementById("pantalla-carga"), anuncio=document.getElementById("anuncio");
@@ -23,80 +24,77 @@
       (carga&&!carga.hidden) || (anuncio&&!anuncio.hidden) ||
       document.body.classList.contains("en-marca");
   }
+
   var flota=document.createElement("div"); flota.className="robot";
-  flota.innerHTML=
-    '<section class="robot__panel" hidden aria-label="Asistente de ventas">'+
-      '<header class="chat-header"><span>Asistente Peñafiel</span><button class="robot__cerrar" type="button" aria-label="Cerrar">×</button></header>'+
-      '<div class="chat-window"><ul class="message-list" aria-live="polite">'+
-        '<li class="mensaje mensaje--asistente">¡Hola! 👋😊 Soy tu asistente de ventas de Ruta 1371. ¿En qué podemos ayudarte hoy? 🥤</li>'+
-      '</ul></div>'+
-      '<form class="chat-input"><input class="message-input" type="text" maxlength="500" autocomplete="off" placeholder="Cuéntanos en qué podemos ayudarte..." aria-label="Tu consulta">'+
-      '<button class="send-button" type="submit">Enviar por WhatsApp</button></form>'+
-      '<p class="robot__nota">Tu mensaje se abrirá en WhatsApp para que tu asesor pueda atenderte.</p>'+
-    '</section>'+
-    '<button class="robot__boton" type="button" aria-label="Abrir asistente de ventas"><span class="robot__nube">¿Te ayudo? 👋</span><img src="'+FOTO+'" alt=""></button>';
+  flota.innerHTML='<button class="robot__boton" type="button" aria-label="Ir a contacto con tu asesor"><span class="robot__nube">¿Te ayudo? 👋</span><img src="'+FOTO+'" alt=""></button>';
   document.body.appendChild(flota);
-  var panel=flota.querySelector(".robot__panel"), form=flota.querySelector(".chat-input"),
-      input=flota.querySelector(".message-input"), lista=flota.querySelector(".message-list");
-  var reloj=null, abierto=false, conversacion=[];
+  var reloj=null;
   function programar(ms){clearTimeout(reloj);reloj=setTimeout(ciclo,ms);}
   function elegirLado(){
-    var izquierda = Math.random() < 0.5;
-    flota.classList.toggle("robot--izquierda", izquierda);
-    flota.dataset.lado = izquierda ? "izquierda" : "derecha";
+    var izquierda=Math.random()<0.5;
+    flota.classList.toggle("robot--izquierda",izquierda);
   }
   function ocultar(){
     flota.classList.remove("robot--visible","robot--nube");
     programar(45000+Math.floor(Math.random()*45000));
   }
   function ciclo(){
-    if(abierto)return;
     if(ocupado()){programar(7000);return;}
     elegirLado();
     flota.classList.add("robot--visible");
-    setTimeout(function(){if(!abierto)flota.classList.add("robot--nube");},650);
-    reloj=setTimeout(function(){if(!abierto)ocultar();},11000);
+    setTimeout(function(){if(flota.classList.contains("robot--visible"))flota.classList.add("robot--nube");},650);
+    reloj=setTimeout(ocultar,11000);
   }
-  function abrir(){
-    abierto=true;clearTimeout(reloj);panel.hidden=false;
-    flota.classList.add("robot--visible","robot--panel");flota.classList.remove("robot--nube");
-    setTimeout(function(){input.focus();},80);
+
+  var boton=document.getElementById("contacto-boton");
+  var contacto=document.getElementById("contacto");
+  var fila=document.querySelector(".contacto__fila");
+  var nube=document.getElementById("contacto-nube");
+  var panel=document.createElement("section");
+  panel.className="robot__panel contacto__consulta";
+  panel.hidden=true;
+  panel.setAttribute("aria-label","Escribe tu consulta para tu asesor");
+  panel.innerHTML=
+    '<header class="chat-header"><span>Asistente Peñafiel 🥤</span><button class="robot__cerrar" type="button" aria-label="Cerrar">×</button></header>'+
+    '<div class="chat-window"><p class="mensaje mensaje--asistente">¡Hola! 👋😊 Cuéntanos qué información necesitas sobre nuestros productos y con gusto te atenderemos.</p></div>'+
+    '<form class="chat-input"><textarea class="message-input" maxlength="700" rows="3" required placeholder="Escribe aquí tu consulta..." aria-label="Tu consulta"></textarea>'+
+    '<button class="send-button" type="submit">Enviar por WhatsApp</button></form>'+
+    '<p class="robot__nota">Tu consulta se abrirá en WhatsApp para que puedas enviársela a tu asesor.</p>';
+  if(fila)fila.appendChild(panel);
+  var form=panel.querySelector(".chat-input"), input=panel.querySelector(".message-input");
+  function abrirConsulta(){
+    if(!panel.hidden){input.focus();return;}
+    panel.hidden=false;
+    if(boton)boton.setAttribute("aria-expanded","true");
+    panel.scrollIntoView({behavior:"smooth",block:"center"});
+    setTimeout(function(){input.focus({preventScroll:true});},350);
   }
-  function cerrar(){
-    abierto=false;panel.hidden=true;flota.classList.remove("robot--panel");
-    clearTimeout(reloj);reloj=setTimeout(ocultar,1200);
+  function cerrarConsulta(){
+    panel.hidden=true;
+    if(boton)boton.setAttribute("aria-expanded","false");
   }
-  function burbuja(texto,clase){
-    var li=document.createElement("li");li.className="mensaje "+clase;li.textContent=texto;
-    lista.appendChild(li);lista.parentNode.scrollTop=lista.parentNode.scrollHeight;
-  }
+  panel.querySelector(".robot__cerrar").addEventListener("click",cerrarConsulta);
+  if(boton)boton.addEventListener("click",abrirConsulta);
   form.addEventListener("submit",function(e){
-    e.preventDefault();var texto=input.value.trim();if(!texto)return;
-    conversacion.push(texto);burbuja(texto,"mensaje--usuario");input.value="";
-    var mensaje=mensajeBase(conversacion.join("; "));
-    var a=document.createElement("a");a.href=url(mensaje);a.target="_blank";a.rel="noopener";a.style.display="none";
-    document.body.appendChild(a);a.click();a.remove();
-    burbuja("¡Listo! 😊 Abrí WhatsApp con tu consulta para que tu asesor pueda atenderte. 🙌","mensaje--asistente");
+    e.preventDefault();
+    var texto=input.value.trim();
+    if(!texto)return;
+    var enlace=document.createElement("a");
+    enlace.href=url(mensajeBase(texto));
+    enlace.target="_blank";enlace.rel="noopener";
+    document.body.appendChild(enlace);enlace.click();enlace.remove();
   });
-  flota.querySelector(".robot__boton").addEventListener("click",function(){if(abierto)cerrar();else abrir();});
-  flota.querySelector(".robot__cerrar").addEventListener("click",cerrar);
+
+  flota.querySelector(".robot__boton").addEventListener("click",function(){
+    if(!contacto||!boton)return;
+    contacto.scrollIntoView({behavior:"smooth",block:"center"});
+    boton.classList.remove("contacto__boton--destello");
+    void boton.offsetWidth;
+    boton.classList.add("contacto__boton--destello");
+    setTimeout(function(){boton.classList.remove("contacto__boton--destello");},3600);
+  });
   programar(30000);
 
-  var boton=document.getElementById("contacto-boton"),nube=document.getElementById("contacto-nube");
-  function actualizarContacto(){
-    if(!boton)return;
-    var listaProductos=window.Pedido&&window.Pedido.lista?window.Pedido.lista():[];
-    if(listaProductos.length&&window.Whatsapp){
-      boton.href=window.Whatsapp.url(listaProductos);
-    }else{
-      boton.href=url(mensajeBase(""));
-    }
-  }
-  if(boton){
-    actualizarContacto();
-    boton.addEventListener("click",function(){actualizarContacto();});
-    if(window.Pedido&&window.Pedido.alCambiar)window.Pedido.alCambiar(actualizarContacto);
-  }
   if(nube){
     function ver(){nube.classList.add("contacto__nube--ver");setTimeout(function(){nube.classList.remove("contacto__nube--ver");},3500);}
     setTimeout(ver,2000);setInterval(ver,9000);
