@@ -18,13 +18,6 @@
     return p;
   }
 
-  function estadoBoton(b, agregado) {
-    b.setAttribute("aria-pressed", agregado ? "true" : "false");
-    b.querySelector(".pres__tapa").textContent = agregado ? "✓" : "↗";
-    b.querySelector(".pres__texto").textContent = agregado ? "En mi lista de interés" : "Me interesa conocerlo";
-    b.dataset.estado = agregado ? "seleccionado" : "disponible";
-  }
-
   function crearFila(marca, sabor, f) {
     var li = el("li", "pres");
     if (f.imagen) {
@@ -52,20 +45,7 @@
       if (f.precioPublico != null) precios.appendChild(precio("Público", f.precioPublico, "precio--publico"));
     }
 
-    var b = el("button", "pres__agregar");
-    b.type = "button";
-    b.dataset.id = f.id;
-    b.append(el("span", "pres__tapa", "↗"), el("span", "pres__texto"));
-    estadoBoton(b, window.Pedido.tiene(f.id));
-    b.addEventListener("click", function () {
-      window.Pedido.alternar({
-        id: f.id, marca: marca.nombre, sabor: sabor.nombre, tamano: f.tamano,
-        presentacion: f.presentacion, nota: f.nota, piezas: f.piezas,
-        precioCaja: f.precioCaja, precioPublico: f.precioPublico
-      });
-    });
-
-    li.append(info, precios, b);
+    li.append(info, precios);
     return li;
   }
 
@@ -180,13 +160,6 @@
     document.body.classList.remove("en-marca");
     window.scrollTo({ top: 0, behavior: "instant" });
   }
-
-  /* Si el pedido cambia, los botones visibles se ponen al día */
-  window.Pedido.alCambiar(function () {
-    document.querySelectorAll(".pres__agregar").forEach(function (b) {
-      estadoBoton(b, window.Pedido.tiene(b.dataset.id));
-    });
-  });
 
   window.Productos = { mostrar: mostrar, ocultar: ocultar };
 })();
