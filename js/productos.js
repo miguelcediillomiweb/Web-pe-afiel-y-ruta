@@ -26,6 +26,8 @@
       img.src = f.imagen;
       img.alt = (sabor.nombre + " " + (f.tamano || "")).trim();
       img.loading = "lazy";
+      img.decoding = "async";
+      img.fetchPriority = "low";
       img.addEventListener("error", function () { foto.hidden = true; });
       foto.appendChild(img);
       li.appendChild(foto);
