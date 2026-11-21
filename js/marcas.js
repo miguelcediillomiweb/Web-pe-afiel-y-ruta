@@ -23,6 +23,7 @@
     var img = new Image();
     img.alt = m.nombre;
     img.decoding = "async";
+    img.loading = "lazy";
     img.onerror = texto;
     img.src = m.logo;
     caja.appendChild(img);
@@ -43,12 +44,16 @@
     var esquinero = document.createElement("img");
     esquinero.className = "marca__decoracion marca__decoracion--esquinero";
     esquinero.src = "img/esquineros.jpg";
+    esquinero.loading = "lazy";
+    esquinero.decoding = "async";
     esquinero.alt = "";
     esquinero.setAttribute("aria-hidden", "true");
 
     var volcan = document.createElement("img");
     volcan.className = "marca__decoracion marca__decoracion--volcan";
     volcan.src = "img/volcan.png";
+    volcan.loading = "lazy";
+    volcan.decoding = "async";
     volcan.alt = "";
     volcan.setAttribute("aria-hidden", "true");
 
