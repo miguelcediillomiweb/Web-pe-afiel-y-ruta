@@ -320,11 +320,18 @@
 .escena__postes svg {width:100%;height:100%;display:block;overflow:visible;}
 .poste__palo,.poste__brazo {fill:#27313b;stroke:#111b25;stroke-width:1.2;}
 .poste__foco {fill:#87909a;stroke:#303a43;stroke-width:1;}
-.poste__haz {fill:url(#haz-lampara);opacity:0;transition:opacity 1s ease;}
-.poste__foco {fill:#ffe7a0;opacity:var(--noche,0);filter:drop-shadow(0 0 5px #ffe7a0);transition:opacity 1s ease;}
-.escena[style*="--noche: 0."] .poste__haz {opacity:0;}
-.escena[style*="--noche: 1."] .poste__haz {opacity:.0;}
-.poste__haz {opacity:var(--noche,0);transition:opacity 1s ease;}
+.poste__haz {
+  fill:url(#haz-lampara);
+  opacity:calc(var(--noche,0) * .92);
+  filter:drop-shadow(0 0 9px rgba(255,218,132,.72));
+  transition:opacity 1s ease;
+}
+.poste__foco {
+  fill:#fff0b0;
+  opacity:var(--noche,0);
+  filter:drop-shadow(0 0 5px #ffe7a0) drop-shadow(0 0 11px rgba(255,210,105,.95));
+  transition:opacity 1s ease;
+}
 .casa__puerta {fill:#26362a;}
 @keyframes casa-cruza {from {right:-8rem;} to {right:110%;}}
 .estrella--brillo {box-shadow:0 0 5px 1.5px rgba(255,255,255,.95),0 0 12px rgba(183,211,255,.55);}
@@ -344,3 +351,8 @@
 .estrella { animation-duration: calc(var(--ciclo) * 1.8); }
 .estrella--brillo { box-shadow:0 0 2px rgba(255,255,255,.45); }
 .fugaz { box-shadow:0 0 3px rgba(255,255,255,.55); }
+
+
+/* Refuerzo de iluminación nocturna de los postes */
+.escena__postes .poste__haz { opacity:calc(var(--noche,0) * .92); }
+.escena__postes .poste__foco { opacity:var(--noche,0); }
