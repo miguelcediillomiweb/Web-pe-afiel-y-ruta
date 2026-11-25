@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="css/base.css?v=31">
   <link rel="stylesheet" href="css/hero.css?v=32">
   <link rel="stylesheet" href="css/reloj.css?v=32">
-  <link rel="stylesheet" href="css/escena.css?v=35">
+  <link rel="stylesheet" href="css/escena.css?v=36">
   <link rel="stylesheet" href="css/carrusel.css?v=32">
   <link rel="stylesheet" href="css/marcas.css?v=35">
   <link rel="stylesheet" href="css/pie.css?v=31">
@@ -91,64 +91,40 @@
           <span class="saludo__emoji" id="saludo-emoji" aria-hidden="true"></span>
           <span id="saludo-texto"></span>
         </p>
-        <!-- Camión que avanza por el día: sol o luna arriba, cielo que cambia -->
+        <!-- Nueva animación de paisaje: reemplaza por completo la escena anterior -->
         <div class="escena" id="escena" aria-hidden="true">
-          <div class="escena__cielo">
-            <div class="escena__estrellas" id="escena-estrellas"></div>
-            <div class="escena__nubes"><i class="nube nube--1"></i><i class="nube nube--2"></i><i class="nube nube--3"></i></div>
-            <div class="escena__cuerpo" id="escena-cuerpo"></div>
-            <svg class="escena__lomas" viewBox="0 0 400 100" preserveAspectRatio="none">
-              <path class="loma loma--atras" d="M0 62 C60 22 120 32 190 56 S330 22 400 52 L400 100 L0 100 Z"/>
-              <path class="loma loma--frente" d="M0 82 C80 52 150 88 230 68 S350 48 400 72 L400 100 L0 100 Z"/>
-            </svg>
-            <div class="escena__camino"><span class="escena__rayas"></span></div>
-            <svg class="escena__camion" id="escena-camion" viewBox="0 0 320 150" aria-hidden="true">
-              <defs>
-                <linearGradient id="camion-caja" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#2b86dc"/><stop offset="1" stop-color="#0e4c94"/>
-                </linearGradient>
-                <linearGradient id="camion-vidrio" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stop-color="#dcf3fc"/><stop offset="1" stop-color="#86c3e4"/>
-                </linearGradient>
-              </defs>
-              <ellipse cx="160" cy="140" rx="152" ry="5" fill="rgba(0,0,0,0.3)"/>
-              <!-- chasis -->
-              <rect x="8" y="104" width="298" height="12" rx="3" fill="#2d2d33"/>
-              <!-- caja azul con letrero -->
-              <rect x="8" y="16" width="198" height="92" rx="7" fill="url(#camion-caja)"/>
-              <rect x="8" y="16" width="198" height="9" rx="4" fill="#e9eef3"/>
-              <path d="M8 94 Q52 80 96 94 T184 94 T206 90 V108 H8 Z" fill="rgba(255,255,255,0.16)"/>
-              <circle cx="30" cy="44" r="6" fill="rgba(255,255,255,0.3)"/>
-              <circle cx="44" cy="34" r="3.5" fill="rgba(255,255,255,0.3)"/>
-              <circle cx="176" cy="38" r="5" fill="rgba(255,255,255,0.3)"/>
-              <circle cx="190" cy="50" r="3" fill="rgba(255,255,255,0.3)"/>
-              <text x="107" y="72" text-anchor="middle" font-size="35" font-weight="800" font-style="italic"
-                    fill="#d9291c" stroke="#ffffff" stroke-width="4.5" paint-order="stroke" stroke-linejoin="round"
-                    font-family="'Bricolage Grotesque','Arial Black',Arial,sans-serif">Peñafiel</text>
-              <!-- cabina -->
-              <path d="M206 40 H258 Q270 40 277 52 L298 84 Q304 92 304 100 V108 H206 Z" fill="#f6f7f9"/>
-              <path d="M215 49 H255 Q261 49 265 56 L279 79 H215 Z" fill="url(#camion-vidrio)"/>
-              <path d="M236 50 L226 79" stroke="rgba(255,255,255,0.75)" stroke-width="5"/>
-              <path d="M238 82 V106" stroke="#c4c9d0" stroke-width="2"/>
-              <rect x="244" y="89" width="12" height="3.5" rx="1.7" fill="#98a0a9"/>
-              <path d="M206 98 H304" stroke="#d9291c" stroke-width="4"/>
-              <rect x="297" y="84" width="8" height="9" rx="2" fill="#ffe28a"/>
-              <rect x="292" y="102" width="18" height="8" rx="3" fill="#3a3a42"/>
-              <rect x="201" y="52" width="6" height="16" rx="2" fill="#2d2d33"/>
-              <!-- arcos y ruedas -->
-              <path d="M48 110 a22 22 0 0 1 44 0 Z" fill="#17171b"/>
-              <path d="M232 110 a22 22 0 0 1 44 0 Z" fill="#17171b"/>
-              <g class="rueda"><circle cx="70" cy="118" r="19" fill="#1b1b1f"/><circle cx="70" cy="118" r="11" fill="#d3d7dc"/><path d="M70 109v18M61 118h18" stroke="#8b929b" stroke-width="3"/><circle cx="70" cy="118" r="3.5" fill="#555a62"/></g>
-              <g class="rueda"><circle cx="254" cy="118" r="19" fill="#1b1b1f"/><circle cx="254" cy="118" r="11" fill="#d3d7dc"/><path d="M254 109v18M245 118h18" stroke="#8b929b" stroke-width="3"/><circle cx="254" cy="118" r="3.5" fill="#555a62"/></g>
-            </svg>
-          </div>
-          <div class="escena__etiquetas">
-            <span class="etiqueta" data-fase="manana" style="--p:0.125">Mañana</span>
-            <span class="etiqueta" data-fase="tarde"  style="--p:0.40">Tarde</span>
-            <span class="etiqueta" data-fase="noche"  style="--p:0.77">Noche</span>
-          </div>
+          <section class="scene" id="scene" data-period="day" data-weather="clear">
+           <div class="sky">
+            <div class="stars" id="stars"></div><div class="shooting-star"></div>
+            <div class="sun" id="sun"></div><div class="moon-wrap" id="moonWrap"><div class="moon" id="moon"></div></div>
+            <div class="cloud-layer" id="clouds"><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i></div>
+            <div class="birds" id="birds" aria-hidden="true"><svg viewBox="0 0 180 76"><g class="bird b1"><path class="wing left" d="M0 0 Q12 -13 25 0"/><path class="wing right" d="M25 0 Q38 -13 50 0"/></g><g class="bird b2"><path class="wing left" d="M0 0 Q10 -11 21 0"/><path class="wing right" d="M21 0 Q32 -11 43 0"/></g><g class="bird b3"><path class="wing left" d="M0 0 Q9 -10 18 0"/><path class="wing right" d="M18 0 Q27 -10 36 0"/></g></svg></div>
+            <div class="balloons" aria-hidden="true"><div class="balloon ba1"><i></i><b></b></div><div class="balloon ba2"><i></i><b></b></div><div class="balloon ba3"><i></i><b></b></div></div>
+            <div class="plane"><span class="plane-body">✈<span class="plane-lights"><i class="red"></i><i class="white"></i></span></span></div>
+           </div>
+           <div class="far-hills"></div><div class="near-hills"></div>
+           <div class="world" id="world">
+            <div class="distant-town">
+             <div class="house h1"><i></i><i></i><i></i><i></i></div><div class="house h2"><i></i><i></i><i></i><i></i></div><div class="house h3"><i></i><i></i><i></i><i></i></div><div class="house h4"><i></i><i></i><i></i><i></i></div>
+             <div class="cactus ca1"></div><div class="cactus ca2"></div><div class="pole p1"></div><div class="pole p2"></div><div class="pole p3"></div>
+            </div>
+            <div class="road"><div class="road-lines"></div></div>
+           </div>
+           <div class="weather-fog"></div><div class="rain-layer"></div><div class="rain-splashes"></div><div class="lightning"></div>
+           <div class="headlight-beam"></div>
+           <svg class="truck" viewBox="0 0 420 190" role="img" aria-label="Camión Peñafiel">
+           <defs><linearGradient id="boxBlue" x2="0" y2="1"><stop stop-color="#318cdd"/><stop offset="1" stop-color="#0d4a8e"/></linearGradient><linearGradient id="glass" x2="1" y2="1"><stop stop-color="#e4f8ff"/><stop offset="1" stop-color="#7cb8dc"/></linearGradient></defs>
+           <ellipse cx="210" cy="177" rx="199" ry="8" fill="#0005"/><rect x="10" y="130" width="396" height="16" rx="4" fill="#252a31"/>
+           <rect x="10" y="22" width="264" height="111" rx="8" fill="url(#boxBlue)" stroke="#dfe8ef" stroke-width="4"/><path d="M10 111q60-17 120 0t144-3v25H10z" fill="#ffffff20"/>
+           <text x="143" y="91" text-anchor="middle" font-size="43" font-weight="900" font-style="italic" fill="#d9291c" stroke="white" stroke-width="5" paint-order="stroke" font-family="Arial">Peñafiel</text>
+           <path d="M274 55h83q15 0 23 15l29 48v15H274z" fill="#f4f5f6" stroke="#9aa5af" stroke-width="3"/><path d="M286 64h65q8 0 13 10l17 32h-95z" fill="url(#glass)" stroke="#667d8d" stroke-width="3"/><path d="M326 65l-13 40" stroke="#fff9" stroke-width="5"/><path d="M274 121h133" stroke="#d9291c" stroke-width="5"/>
+           <rect x="395" y="112" width="12" height="16" rx="3" fill="#fff1a3" class="front-lamp"/><rect x="5" y="114" width="12" height="22" rx="2" fill="#ef3030" class="rear-lamp"/><rect x="374" y="49" width="10" height="7" rx="2" fill="#ffc52f" class="cab-marker"/>
+           <g class="side-markers" fill="#ffc536"><circle cx="23" cy="128" r="4"/><circle cx="263" cy="128" r="4"/><circle cx="286" cy="128" r="4"/></g>
+           <g class="wheel"><circle cx="76" cy="148" r="26" fill="#17191d"/><circle cx="76" cy="148" r="15" fill="#bfc7cf"/><circle cx="76" cy="148" r="5" fill="#626a73"/></g><g class="wheel"><circle cx="331" cy="148" r="26" fill="#17191d"/><circle cx="331" cy="148" r="15" fill="#bfc7cf"/><circle cx="331" cy="148" r="5" fill="#626a73"/></g>
+           </svg>
+           <div class="moon-label" id="moonLabel"></div><div class="scene-label" id="sceneLabel">Día · clima actual</div>
+          </section>
         </div>
-
         <p class="reloj" id="reloj" role="timer" aria-label="Hora actual"></p>
         <p class="saludo__dia" id="fecha-dia"></p>
         <p class="reloj reloj--fecha" id="fecha" aria-label="Fecha de hoy"></p>
@@ -230,7 +206,7 @@
   <script src="js/agrupar.js?v=34"></script>
   <script src="js/datos.js?v=32"></script>
   <script src="js/reloj.js?v=31"></script>
-  <script src="js/escena.js?v=34"></script>
+  <script src="js/escena.js?v=36"></script>
   <script src="js/marcas.js?v=33"></script>
   <script src="js/carrusel.js?v=32"></script>
   <script src="js/pedido.js?v=31"></script>
