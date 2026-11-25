@@ -1,6 +1,6 @@
 /* ESCENA — nuevo paisaje compacto de Ruta 1371. Clima real + ciclo solar/lunar. */
 (function(){
-  var raiz=document.getElementById("escena"),scene,moon,moonLabel,label,rainBox,starBox;
+  var raiz=document.getElementById("escena"),scene,moon,rainBox,starBox;
   var lat=(window.CONFIG&&window.CONFIG.clima&&window.CONFIG.clima.latitud)||19.71;
   var lon=(window.CONFIG&&window.CONFIG.clima&&window.CONFIG.clima.longitud)||-98.97;
   var iniciado=false;
@@ -11,7 +11,7 @@
     var shadow=(p<.5?-1:1)*110*Math.sin(Math.PI*p);
     moon.style.setProperty("--shadow-x",shadow+"%");
     scene.classList.toggle("new-moon",name==="Luna nueva");
-    moonLabel.textContent=name==="Luna nueva"?"Luna nueva":name+" · "+Math.round((1-Math.cos(2*Math.PI*p))/2*100)+"%";
+
   }
   function localPeriod(){
     var now=new Date(),h=now.getHours()+now.getMinutes()/60;
@@ -36,7 +36,7 @@
     scene.dataset.period=p;
     scene.classList.remove("day","sunset","night","dawn","noon","afternoon");
     scene.classList.add(p);
-    label.textContent=({dawn:"Amanecer",noon:"Mediodía",afternoon:"Atardecer",night:"Noche"})[p]||p;
+
     positionLights(new Date(),p);
   }
   function weatherName(code,cloud,visibility,precip){
@@ -66,7 +66,7 @@
     if(iniciado||!raiz)return;
     iniciado=true;scene=raiz.querySelector(".scene");
     if(!scene)return;
-    moon=raiz.querySelector(".moon");moonLabel=raiz.querySelector(".moon-label");label=raiz.querySelector(".scene-label");
+    moon=raiz.querySelector(".moon");
     rainBox=raiz.querySelector(".rain-layer");starBox=raiz.querySelector(".stars");
     for(var i=0;i<115;i++){
       var drop=document.createElement("i");drop.style.left=(Math.random()*110-5)+"%";
